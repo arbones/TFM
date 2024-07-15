@@ -1,37 +1,41 @@
 ---
-title: La Palma Earthquakes
+title: Adipose & MAFLD
 author:
-  - name: Steve Purves
+  - name: Jose M. Arbones Mainar
     orcid: 0000-0002-0760-5497
-    corresponding: true
-    email: steve@curvenote.com
+    email: jmarbones.iacs@aragon.es
     roles:
       - Investigation
       - Project administration
       - Software
       - Visualization
     affiliations:
-      - Curvenote
-  - name: Rowan Cockett
+      - Instituto Aragonés de Ciencias de la Salud
+      - Instituto de Investigación Sanitaria Aragón
+      - Ciber Obesidad y Nutrición
+  - name: Laura Puente
     orcid: 0000-0002-7859-8394
-    corresponding: false
-    roles: []
+    roles: 
+      - Supervision
     affiliations:
-      - Curvenote
+      - Instituto Aragonés de Ciencias de la Salud
+  - name: Alberto Cebollada
+    orcid: 0000-0002-7859-8394
+    roles: 
+      - Supervision
+    affiliations:
+      - Instituto Aragonés de Ciencias de la Salud
 keywords:
-  - La Palma
-  - Earthquakes
+  - Adipose
+  - Liver disease
+  - Multiomics
+  - eQTL
 abstract: |
-  In September 2021, a significant jump in seismic activity on the island of La Palma (Canary Islands, Spain) signaled the start of a volcanic crisis that still continues at the time of writing. Earthquake data is continually collected and published by the Instituto Geográphico Nacional (IGN). ...
-plain-language-summary: |
-  Earthquake data for the island of La Palma from the September 2021 eruption is found ...
-key-points:
-  - A web scraping script was developed to pull data from the Instituto Geogràphico Nacional into a machine-readable form for analysis
-  - Earthquake events on La Palma are consistent with the presence of both mantle and crustal reservoirs.
+  White adipose tissue (WAT) is a metabolic organ of paramount importance in the regulation of whole-body energy homeostasis. ...
 date: last-modified
 bibliography: references.bib
 citation:
-  container-title: Earth and Space Science
+  container-title: Journal of Parampount Bullshit
 number-sections: true
 ---
 
