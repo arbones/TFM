@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Master of Science in Omics Data Analysis",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "Front Page",
     "crumbs": [
-      "Preface"
+      "Front Page"
     ]
   },
   {
@@ -187,6 +187,26 @@
     "crumbs": [
       "Supplementary Material",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bulk RNAseq</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#master-of-science-in-omics-data-analysis",
+    "href": "index.html#master-of-science-in-omics-data-analysis",
+    "title": "Master of Science in Omics Data Analysis",
+    "section": "Master of Science in Omics Data Analysis",
+    "text": "Master of Science in Omics Data Analysis\n\n\nMaster Thesis",
+    "crumbs": [
+      "Front Page"
+    ]
+  },
+  {
+    "objectID": "index.html#title-of-the-work",
+    "href": "index.html#title-of-the-work",
+    "title": "Master of Science in Omics Data Analysis",
+    "section": "Title of the work",
+    "text": "Title of the work\nby Jose Miguel Arbonés Mainar\nSupervisor: Laura Puente PhD, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\nCo-supervisor: Alberto Cebollada MsSc, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\nAcademic tutor:\nBiosciences Department\nUniversity of Vic – Central University of Catalonia\nSeptember 9th, 2024",
+    "crumbs": [
+      "Front Page"
     ]
   }
 ]
