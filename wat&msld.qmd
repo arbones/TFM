@@ -1,0 +1,193 @@
+---
+title: "Adipose tissue and MASLD"
+---
+
+Adipose tissue (AT) is a dynamic and complex component of the human body, crucial in regulating various aspects of human physiology.
+Traditionally viewed as merely a fat storage site, AT is now recognized as a multifaceted organ essential in metabolic processes, energy balance, insulin sensitivity, and immune responses.
+Its role extends beyond fat storage, influencing whole-body physiology and contributing to various conditions, notably obesity and its complications such as metabolic dysfunction-associated steatotic liver disease (MASLD).
+
+Understanding the complexity and functionality of WAT is vital in unraveling the pathophysiological mechanisms underlying obesity and its metabolic complications.
+This knowledge is essential for developing effective biomarkers and therapeutic strategies targeting WAT dysfunction to prevent associated comorbidities.
+
+## Adipose Tissue physiology
+
+### Types and Location of Adipose Tissue
+
+AT is integral to the human body, crucial in metabolic regulation, energy balance, and overall health [@lopez-yus2024].
+AT comprises white adipose tissue (WAT) and brown adipose tissue (BAT), each with distinct functions and cellular composition.
+WAT primarily stores energy, while BAT generates heat by uncoupling oxidative phosphorylation [@rosen2014].
+Beige or brite AT can switch between energy storage and thermogenesis, depending on physiological demands.
+Cold exposure and exercise induce WAT beiging to increase thermogenesis, while heat stress absence or a high-fat diet inhibits this process [@pilkington2021].
+
+![**Adipose tissue distribution in humans**. White adipose tissue (WAT), represented in yellow, is primarily responsible for energy storage, while brown adipose tissue (BAT), in brown, is a thermogenic tissue.](images/fat_distribution.png){#fig-distribution}
+
+WAT, more abundant than BAT, varies in individual distribution due to genetic and environmental influences.
+It constitutes a significant proportion of total body weight, ranging from 5% to 60%.
+WAT is predominantly located in subcutaneous and visceral depots, with smaller amounts in bone marrow and muscle tissue [@zwick2018].
+Subcutaneous WAT (scWAT) contains over 80% of total body fat, while visceral WAT (visWAT) comprises 10–20% of total body fat in men and 5–10% in women [@ibrahim2009].
+
+Metabolic differences between subcutaneous and visceral AT significantly affect overall health.
+scWAT is generally considered metabolically healthier than visWAT [@després2012].
+It efficiently stores lipids and has a lower association with metabolic diseases.
+In contrast, visWAT, found around internal organs, is metabolically active and releases fatty acids into the portal circulation, leading to insulin resistance and increased risks of metabolic syndrome and cardiovascular diseases [@després2012].
+
+### Composition and Cellular Types of White Adipose Tissue
+
+WAT comprises mainly mature adipocytes responsible for energy storage.
+Adipogenesis is how adipose-derived mesenchymal stem cells (ADMSCs) differentiate into adipocytes, maintaining adipocyte populations and contributing to the tissue’s regenerative capacity [@ghaben2019].
+
+WAT also includes various non-adipocyte cells, such as endothelial cells, blood cells, neurons, fibroblast, pericytes,and immune cells, contributing to its functionality in metabolic processes.These non-adipocyte cells perform physiological and pathophysiological functions, interacting with adipocytes through secreted factors.Their diversity and number vary with obesity and metabolic dysfunction development [@lynes2017].
+
+## Metabolic Functions of Adipose Tissue
+
+The primary function of WAT is to regulate energy balance by storing and releasing fatty acids (FAs) in response to changes in energy availability.
+However, WAT also secretes various hormones and cytokines, known as adipokines, that play essential roles in regulating multiple physiological processes [@scherer2006].
+
+![**Functions of white adipose tissue (WAT)**. WAT regulates energy balance by storing (lipogenesis) and releasing (lipolysis) non-esterified fatty acids (NEFA). WAT also secretes a variety of molecules that play essential roles in the regulation of multiple physiological processes. Abbreviation: ACC, acetyl CoA-carboxylase; ATGL, adipose triglyceride lipase; CCL2, CC-chemokin-ligand-2; DGAT, diacylglycerol-O-acyltransferasen; FAS, fatty acid synthase; NEFA, non-esterified fatty acid; HSL, hormone-sensitive lipase; IL-8, interleukin 8; IL-10, interleukin 10; IMGL, monoacylglycerol lipase; TG, triglyceride; and TNF-α, tumor necrosis factor α](images/fat_function.png){#fig-function}
+
+### Lipids Storage and Mobilization
+
+WAT regulates energy balance through storing and releasing FAs, governed by the balance between lipogenesis and lipolysis.
+This balance is crucial for maintaining energy homeostasis during fasting or exercise.
+
+Lipogenesis synthesizes new lipids from excess glucose or dietary FAs.This process, occurring in adipocyte cytoplasm, is tightly regulated by hormones and enzymes.
+Insulin, the primary hormone regulating this process, promotes glucose and FA uptake into adipocytes and stimulates key enzymes in lipid synthesis, such as acetyl CoA-carboxylase (ACC) and fatty acid synthase (FAS) [@carpentier2021].
+
+Lipolysis breaks down stored lipids in AT to release energy for peripheral organs.
+It is critical during fasting or exercise when glucose levels are low, and the body relies on stored fat for energy.
+Lipolysis is regulated by lipases, activated by sympathetic nervous system signals mediated mainly by norepinephrine but also by epinephrine.
+The main lipases are adipose triglyceride lipase (ATGL), hormone-sensitive lipase (HSL), and monoacylglycerol lipase (MGL) [@grabner2021].
+
+### Endocrine Function
+
+WAT acts as an endocrine organ, secreting adipokines that regulate metabolic, inflammatory, and immune processes throughout the body.
+The endocrine function of WAT is regulated by nutritional status, physical activity, hormonal levels, and environmental cues, closely linked to its metabolic and storage functions [@scheja2019].
+
+Adipokines include over 100 proteins that communicate with other cells and tissues.
+Leptin and adiponectin are the most abundant and well-characterized adipokines.
+Leptin regulates appetite and energy expenditure, providing feedback to the brain about AT size and status [@friedman2019].
+Adiponectin enhances insulin sensitivity and FA oxidation in skeletal muscle and liver, helping maintain glucose and lipid homeostasis [@kadowaki2005].
+Pro-inflammatory factors like tumor necrosis factor-α (TNF-α), interleukin 6 (IL-6), interleukin 8 (IL-8), interleukin 18 (IL-18), interleukin 1β (IL-1β), and chemokine ligand 2 (CCL2) are also produced by WAT and increased in obesity [@al-mansoori2021].
+
+## Adipose Tissue Dysfunction in Obesity
+
+### Adipose Tissue expandability
+
+The adipose tissue expandability hypothesis is central to understanding obesity-related comorbidities, including MASLD.
+This hypothesis suggests that the body's ability to store excess calories in scWAT is limited and varies among individuals .
+When scWAT reaches its maximal storage capacity, AT can no longer store lipids effectively, leading to lipid redirection to other organs [@virtue2010].
+This causes ectopic fat accumulation, mainly in visWAT and the liver, resulting in insulin resistance and related metabolic complications through lipotoxic and inflammation-driven mechanisms [@Torres-Perez2015].
+
+![**Adipose tissue expansion during obesity**. AT, adipose tissue; scWAT, subcutaneous white adipose tissue; visWAT, visceral white adipose tissue](images/fat_expansion.png){#fig-expand}
+
+Visceral WAT expansion leads to adipocyte hypertrophy (increased adipocyte size) and hyperplasia (new adipocyte formation from precursor differentiation), contributing to tissue dysfunction [@arner2019].
+As adipocytes expand, they experience mechanical stress, increased contact with neighboring cells and extracellular matrix components, and hypoxia due to insufficient angiogenesis.
+Hypertrophic adipocytes and damaged cells release pro-inflammatory cytokines, attracting and activating immune cells, promoting chronic low-grade inflammation that severely alters AT functionality [@després2012].
+
+## Adipose Tissue Expandability and Liver Fat Deposition
+
+### Connection between AT Expandability and MASLD
+
+The imbalance between energy intake and AT's storage capacity is crucial in MASLD development.
+Excessive caloric intake, especially when scWAT expandability is limited, leads to hepatic fat deposition.
+This hepatic fat accumulation, or steatosis, is MASLD's hallmark and sets the stage for further liver damage.
+
+![**Adipose tissue—liver cross-talk in the progression of NAFLD/NASH associated with obesity**. AT, adipose tissue; FFA, free fatty acids; MASLD, metabolic dysfunction-associated steatotic liver disease; and MASH, metabolic dysfunction-associated steatohepatitis.](images/fat_masld.png){#fig-masld}
+
+MASLD, formerly known as Non-alcoholic fatty liver disease (NAFLD), is a progressive liver disease characterized by the build-up of fat in the liver of individuals with little or no alcohol intake.
+While diagnosing NAFLD mainly involved excluding significant or excessive alcohol consumption, MASLD include metabolic risk factors in their diagnostic criteria [@rinella2023].
+
+### Hepatic Response to Ectopic Fat Accumulation
+
+In MASLD, hepatocytes are the primary cells affected by ectopic fat deposition.The accumulation of triglycerides in hepatocytes, initially a protective response to excess circulating free fatty acids, leads to cellular stress and damage (Figure 4).This stress manifests in several ways:
+
+-   **Lipotoxicity**: Elevated lipid levels, especially saturated fatty acids and toxic lipid species like diacylglycerol (DAG) and ceramide, induce lipotoxic stress in hepatocytes, causing dysfunction and apoptosis [@alkhouri2009].
+
+-   **Inflammatory Response**: Ectopic liver fat triggers an inflammatory response, drawing immune cells and producing pro-inflammatory cytokines.
+    Chronic inflammation results in significant histological changes, such as hepatocyte necrosis and apoptosis, neutrophil chemotaxis, activation of hepatic stellate cells, and Mallory body production.
+    This inflammation is crucial in the disease's progression from steatosis to MASH (Metabolic Associated SteatoHepatitis) and fibrosis, and may promote carcinogenesis, leading to hepatocarcinoma (HCC) [@duplessis2015].
+
+-   **Oxidative Stress**: When lipid overflow surpasses the capacities of mitochondria and peroxisomes, respiratory oxidation is impaired, leading to the production of harmful metabolites and excess reactive oxygen species (ROS) [@dellibovi2021].
+    These molecules induce oxidative stress, which aggravates hepatic necro-inflammatory processes and damages mitochondria.
+    ROS and oxidized low-density lipoproteins (LDL) activate Kupffer and hepatic stellate cells, resulting in collagen deposition and secondary liver fibrosis [@paradies2014].
+
+-   **Endoplasmic Reticulum (ER) Stress**: Accumulated lipids disrupt ER function in hepatocytes, initiating an unfolded protein response and further contributing to cellular stress and apoptosis [@zhang2014].
+
+-   **Altered Metabolism**: Hepatocytes in a fatty liver display altered carbohydrate and lipid metabolism, often associated with insulin resistance.
+    This exacerbates lipid accumulation and impairs liver function [@jacome-sosa2014].
+
+### Liver biopsy for the diagnosis and assesment of NAFLD
+
+Liver biopsy remains the gold standard for gaining insights into the architectural distortion and complex anatomical relationships among cellular injury, inflammation, and fibrosis.
+Histological evaluation of MASLD aims to achieve three main goals: to diagnose the disease, grade necroinflammatory activity, and stage the severity of fibrosis [@rinella2023a].
+
+Fibrosis stage is the most reliable long-term outcome predictor in multivariable analyses, while ballooning injury and portal inflammation serve as short-term predictors of fibrosis progression or regression.
+These are frequently used together as measures of disease grade.
+Composite histological scores, such as the NAFLD activity score (NAS), integrate these features and are employed in clinical studies to provide a structured overall assessment of disease severity.
+Specifically, the NAS is defined as the unweighted sum of the scores for steatosis (0-3), lobular inflammation (0-3), and ballooning (0-2); thus ranging from 0 to 8.
+Fibrosis, which is both less reversible and generally thought to be a result of disease activity, is not included as a component of the activity score [@Kleiner2005].
+
+## Diagnostic Approaches and Biomarkers for Adipose Tissue Dysfunction
+
+The rising global prevalence of obesity presents a significant public health challenge, given its association with numerous diseases.
+Accurate diagnosis is essential for preventing, detecting, and managing obesity to mitigate its health and economic impacts.
+Various diagnostic approaches have been proposed to classify obesity phenotypes and anticipate metabolic complications.
+
+### Anthropometric Parameters
+
+Anthropometric parameters are widely used for diagnosing obesity and its metabolic complications due to their non-invasive and cost-effective nature.The body mass index (BMI) is the most common method to estimate body fat [@nuttall2015].
+However, since BMI cannot detect regional variations in fat deposition, other measures like waist circumference (WC) or waist/hip ratio (WHR, waist circumference divided by hip circumference) are also used [@guzmán-garcía2022].
+However, these parameters do not differentiate regarding the contribution of subcutaneous or visceral fat either.
+
+### Imaging Techniques for Adipose Tissue Analysis
+
+Advanced imaging techniques have significantly enhanced the diagnosis and understanding of obesity, particularly in assessing adipose tissue (AT) distribution [@kim2018].
+Techniques such as Bioimpedance Analysis (BIA), which uses electrical signals to estimate body composition, are non-invasive and widely accessible, making them a standard tool for initial body composition assessments [@brunani2021].
+Dual-Energy X-ray Absorptiometry (DXA) offers detailed analysis of body composition, distinguishing between bone, lean, and fat mass, and is particularly effective for evaluating bone density and fat distribution [@kim2018].
+Computed Tomography (CT) and Magnetic Resonance Imaging (MRI) are considered the gold standard for quantitatively evaluating intra-abdominal AT distribution [@kim2018].
+
+These methods allow for precise differentiation between subcutaneous and visceral fat depots, providing detailed images of fat distribution that are crucial for understanding the relationships between fat compartments and metabolic health.
+The ratio of subcutaneous to visceral fat (sc/vis ratio), determined through CT or MRI, is a critical indicator of metabolic health, with a higher proportion of visceral fat associated with greater risks of metabolic syndromes, including insulin resistance, diabetes, and cardiovascular disease [@lopez-yus2023].
+
+### Clasical Circulating Biomarkers
+
+Identifying circulating biomarkers reflecting underlying biological mechanisms for increased disease risk is an alternative approach to characterize relevant obesity phenotypes.
+Several circulating molecules have been identified as obesity-associated biomarkers, classified into adipokines, markers of the glucose-insulin pathway, and inflammatory markers.
+Adipokines like leptin and adiponectin are critical, with leptin levels associated with obesity complications and hypertension [@perakakis2021], while adiponectin levels inversely correlate with obesity and related diseases such as IR, T2DM, and CVD [@kishida2014; @hong2023].
+Other adipokines like FABP-4 and visfatin are linked to chronic diseases but are less understood [@würfel2023].
+Glucose-insulin pathway markers, including fasting insulin and IGF-1, correlate with obesity severity and diabetes risk [@talia2021; @wiebe2022].
+Inflammatory markers like CRP are elevated in obesity, indicating systemic inflammation and increasing the risk of cardiovascular and metabolic diseases [@graßmann2017].
+
+### Omics-Based Biomarkers
+
+Omics approaches integrate data to uncover molecular patterns linked with obesity.
+Research in genomics, transcriptomics, and metabolomics has identified genes, RNA, and metabolites linked to obesity.
+Novel omic-based biomarkers include epigenomics, proteomics, glycomics, and microbiomics.
+
+#### Genomics
+
+Genetic susceptibility to obesity is determined by multiple genetic variants [@loos2017; @loos2021].
+Genome-wide association studies (GWAS) identify critical genetic variants in obesity that may serve as biomarkers [@müller2018].
+A recent GWAS identified 941 near-independent SNPs associated with BMI [@yengo2018].
+Fewer variants have been linked to body fat distribution.
+A meta-analysis identified and replicated 49 loci [@genetic2015].
+The FTO gene is the strongest and most replicated, with variants linked to appetite regulation [@melhorn2018], adipocyte browning and energy expenditure [@claussnitzer2015], or circadian rhythm [@wang2015], and chronic diseases, including cancers [@lan2020], among others.
+
+#### Transcriptomics
+
+Adipocyte transcriptomes from both subcutaneous and visceral WAT reveal genes with altered expression in obese versus lean individuals and genes correlated with metabolic complications [@nasias2020] and particularly fatty liver disease [@lopez-yus2022].
+Recent advancements in single-cell transcriptomics offer insights into adipose tissue heterogeneity and dynamics, identifying gene signatures associated with adipocyte differentiation, lipid metabolism, and adipokine secretion [@bäckdahl2021; @hildreth2021].
+Non-coding RNAs (ncRNAs), such as miRNAs and long ncRNAs (lncRNAs), are also promising biomarkers in obesity, with important regulatory roles in adipocytes and detectable in the bloodstream as circulating miRNAs (cmiRNAs) [@ortiz-dosal2019].
+
+#### Metabolomics
+
+Alterations in many metabolites are associated with obesity, including higher plasma levels of branched-chain amino acids (BCAA) and aromatic amino acids (AAA), and lower glycine levels [@rangel-huerta2019a].
+These biomarkers are linked to IR and higher T2DM risk [@tulipani2016; @auguet2023].
+Lipidomics, a metabolomics branch, reveals plasma lipids as mediators of metabolic dysfunction and obesity-related diseases [@wenk2010].
+Lipid profile analysis has been fundamental in assessing dyslipidemia [@klop2013].
+A recent review showed a variable decrease in polyunsaturated fatty acids in phospholipids and non-esterified fatty acids in fatty liver disease patients, both in plasma and liver [@herrera-marcos2024].
+
+## Bibliography {.unnumbered}
+
+::: {#refs}
+:::

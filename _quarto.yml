@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  cover-image: images/uvic_logo.png
+  title: Master of Science in Omics Data Analysis
+  date: today
+  author: 
+    - name: Jose Miguel Arbones Mainar
+      orcid: 0000-0002-8982-3737
+      email: jmarbones.iacs@aragon.es
+      affiliation: Unidad de Investigación Traslacional<br>Hospital Universitario Miguel Servet<br>Instituto Aragonés de Ciencias de la Salud
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: Supplementary Material
+      chapters: 
+        - wat&msld.qmd
+        - rnaseq.qmd
+bibliography: references.bib
+csl: diabetologia.csl
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

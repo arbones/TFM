@@ -1,0 +1,20 @@
+---
+author: 
+  - name: Jose Miguel Arbones Mainar
+    orcid: 0000-0002-8982-3737
+    email: jmarbones.iacs@aragon.es
+    url: www.adipofat.com
+    affiliation: Unidad de Investigación Traslacional<br>Hospital Universitario Miguel Servet<br>Instituto Aragonés de Ciencias de la Salud
+date: today
+format: 
+  html: 
+    number-sections: true
+---  
+# __Manuscript__ {.unnumbered}
+# TITULO {.unnumbered}
+## Abstract
+## Introduction
+## Material and methods
+## Results
+## Discusion
+## Bibliography{.unnumbered}
