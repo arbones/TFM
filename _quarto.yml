@@ -9,7 +9,7 @@ book:
         href: https://github.com/arbones/TFM
   title: Master of Science in Omics Data Analysis
   chapters:
-    - index.md
+    - index.qmd
     - intro.qmd
     - part: Supplementary Material
       chapters: 
