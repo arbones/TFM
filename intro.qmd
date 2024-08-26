@@ -9,12 +9,20 @@ date: today
 format: 
   html: 
     number-sections: true
----  
-# __Manuscript__ {.unnumbered}
+---
+
+# **Manuscript** {.unnumbered}
+
 # TITULO {.unnumbered}
+
 ## Abstract
+
 ## Introduction
+
 ## Material and methods
+
 ## Results
+
 ## Discusion
-## Bibliography{.unnumbered}
+
+## Bibliography {.unnumbered}

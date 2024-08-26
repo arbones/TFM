@@ -8,11 +8,6 @@ book:
       - icon: github
         href: https://github.com/arbones/TFM
   title: Master of Science in Omics Data Analysis
-  author: 
-    - name: Jose Miguel Arbones Mainar
-      orcid: 0000-0002-8982-3737
-      email: jmarbones.iacs@aragon.es
-      affiliation: Unidad de Investigación Traslacional<br>Hospital Universitario Miguel Servet<br>Instituto Aragonés de Ciencias de la Salud
   chapters:
     - index.md
     - intro.qmd
@@ -20,6 +15,7 @@ book:
       chapters: 
         - wat&msld.qmd
         - rnaseq.qmd
+        - wes.qmd
 bibliography: references.bib
 csl: diabetologia.csl
 

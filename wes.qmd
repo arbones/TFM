@@ -1,0 +1,438 @@
+---
+title: "Whole exome sequencing"
+execute: 
+  echo: true
+  warning: false
+format:
+  html:
+    code-fold: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+library(SNPassoc)
+library(snpStats)
+library(SNPRelate)
+library(compareGroups)
+library(ggrepel)
+library(qqman)
+library(biomaRt)
+
+
+library(conflicted)
+conflicts_prefer(dplyr::select)
+conflicts_prefer(dplyr::filter)
+conflicts_prefer(base::setdiff)
+conflicts_prefer(base::intersect)
+conflicts_prefer(S4Vectors::unname)
+```
+
+## Introduction
+
+Adipose tissue dysfunction and liver steatosis are closely linked metabolic disorders that significantly impact global health. Both conditions are highly heritable, underscoring the importance of genetic studies for understanding their etiology and progression. Exome sequencing, which focuses on the coding regions of the genome, presents a robust approach for uncovering the genetic underpinnings of these disorders and identifying potential biomarkers for early detection and therapeutic intervention.
+
+The advantages of exome sequencing are manifold. By targeting the exonic regions, which harbor the majority of disease-related variants, this method offers a cost-effective yet comprehensive strategy to capture the genetic diversity underlying complex traits like adipose tissue dysfunction and liver steatosis. Such precision is crucial for dissecting the biological mechanisms at play and for the eventual translation of genetic insights into clinical practice.
+
+Genetic association studies, including Genome-Wide Association Studies (GWAS) and Exome-Wide Association Studies (EWAS), are instrumental in this research. GWAS examines common genetic variants across the genome to identify those associated with a trait, whereas EWAS focuses specifically on variants within the exome. The latter can be particularly revealing for diseases believed to be influenced by coding variants, providing a more focused view of potential causal mutations.
+
+Significant genes identified in the context of adipose tissue dysfunction and liver steatosis include PNPLA3, TM6SF2, and GCKR, among others [@anstee2013]. These genes have been implicated in metabolic processes and fat distribution within cells, highlighting their roles in the pathophysiology of these conditions.
+
+Expression Quantitative Trait Loci (eQTL) analysis further enriches our understanding by linking specific genetic variants with gene expression levels. This integration of genomics and transcriptomics in a multi-omic approach allows researchers to elucidate the functional consequences of genetic variants, particularly how they impact gene expression in different tissues under various physiological and pathological states.
+
+In the context of obesity, where both adipose tissue and liver function are often compromised, a multi-omic strategy is invaluable. It enables the identification of biomarkers that are not only indicative of disease presence but also of its progression and response to treatment. Such biomarkers are crucial for developing targeted therapies that address the specific molecular profiles of individual patients.
+
+## Experimental design
+
+### DNA isolation and extraction
+
+### Library Preparation and Sequencing
+
+::: column-margin
+![Library Preparation Workflow](images/exon_lib.png){#fig-libr height="400"}
+:::
+
+The genomic DNA was randomly sheared into short fragments with the size of 180-280 bp. The obtained fragments were end repaired, A-tailed, and further ligated with Illumina adapters. The fragments with adapters were PCR amplified, size selected, and purified. Hybridization capture of libraries was proceeded according to the following procedures. Briefly, the prepped libraries were hybridized in the buffer with biotin-labeled probes, and magnetic beads with streptavidin were used to capture the exons of genes. Subsequently, non-hybridized fragments were washed out and probes were digested. The captured libraries were enriched by PCR amplification (@fig-libr).
+
+The library was checked with Qubit and real-time PCR for quantification and bioanalyzer for size distribution detection. Quantified libraries were pooled and sequenced on Illumina platforms, according to effective library concentration and data amount required.
+
+## Sequencing results
+
+
+
+## Computational Analysis: Variant Calling
+
+The analysis adhered to the Genome Analysis Toolkit (GATK) best practices for variant discovery, which includes recommendations for quality score recalibration and variant filtering. This approach enhances the accuracy and reliability of the variant calling process by applying stringent quality controls and leveraging the comprehensive analytical capabilities of GATK tools.
+
+### Nextflow Workflow Management
+
+The computational analyses were conducted using Nextflow (v23.10.1), a workflow management system that enables scalable and reproducible scientific workflows using software containers. The analyses were orchestrated through the nf-core framework, which provides community-curated bioinformatics pipelines [@ewels2020].
+
+### Variant Calling with Sarek Pipeline
+
+The variant calling was performed using the **nf-core/sarek** pipeline ([version 3.4.1](https://nf-co.re/sarek/3.4.1)) [@garcia2020]. This pipeline is specifically designed for the analysis of whole-genome sequencing (WGS) and targeted sequencing data from cancer studies, facilitating comprehensive genomic analyses from raw sequencing data to annotated variants.
+
+The pipeline was executed with the following command:
+
+::: {list-code1}
+``` bash
+nextflow run nf-core/sarek -r 3.4.1\
+-profile docker\
+-bg\
+-resume\
+--wes\
+--input samplesheet.csv\
+--outdir /Resultados\
+--genome GATK.GRCh38\
+--tools freebayes
+```
+:::
+
+### Pipeline Configuration:
+
+| Option/Flag                              | Description                                                                                                            |
+|-------------------|-----------------------------------------------------|
+| `nextflow run nf-core/sarek`             | Initiates the execution of the nf-core/sarek pipeline using Nextflow.                                                  |
+| `-r 3.4.1`                               | Specifies that version 3.4.1 of the sarek pipeline should be used, ensuring reproducibility of the analysis.           |
+| `-profile docker`                        | Configures the pipeline to run using Docker containers, which encapsulate all necessary software dependencies.         |
+| `-bg`                                    | Runs the Nextflow process in the background, allowing other tasks to be performed simultaneously without interruption. |
+| `-resume`                                | Enables the pipeline to resume from the last checkpoint if interrupted, saving time and computational resources.       |
+| `--wes`                                  | Indicates that the pipeline is configured to process Whole Exome Sequencing (WES) data.                                |
+| `--input /mnt/jmarbones/samplesheet.csv` | Specifies the path to the CSV file containing metadata about the samples to be analyzed.                               |
+| `--outdir /mnt/jmarbones/Resultados`     | Designates the directory where all output from the pipeline will be stored.                                            |
+| `--genome GATK.GRCh38`                   | Sets the reference genome to GATK GRCh38, a standard human genome assembly used in genomic analysis.                   |
+| `--tools freebayes`                      | Specifies Freebayes as the tool for calling genetic variants, effective for detecting SNPs and small indels.           |
+
+### Pipeline Execution
+
+The pipeline was configured to run in a Docker containerized environment, ensuring that all dependencies were consistently managed and the computational environment was isolated. This setup facilitates the reproducibility of results across different computing platforms. The analysis was executed in the background, allowing other processes to run simultaneously without interruption. In the event of an interruption, the pipeline was designed to resume from the last successful step, optimizing resource use and reducing redundancy.
+
+### Data input and processing
+
+Input data (clean fastq.gz files) were organized in a CSV file (samplesheet.csv), which included essential metadata such as sample identifiers and sequencing data paths. The output was directed to a designated directory Resultados for organized storage and easy access to results.
+
+The human reference genome GATK GRCh38 was utilized to align sequencing data and call variants, providing a standardized basis for the analysis. Variant calling was performed using Freebayes, a tool known for its effectiveness in detecting small variants like SNPs and indels [@garrison2012].
+
+The called variants were stored in Variant Call Format (VCF) files, which include detailed metadata and structured data about each variant detected.
+
+### VCF processing anf PLINK transformation
+
+The next computational steps were carried out with the programs `bcftools` and `PLINK` in the command line using . Normalization, performed using `bcftools norm`, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the `bcftools merge` command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using `bcftools norm` with the `--rm-dup` option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.
+
+The final preprocessing step involved transforming the VCF file for compatibility with the PLINK toolset, a widely used software package for genome association studies. The `plink` command was utilized to convert VCF data into binary ped files while applying several filters: only SNPs with a minor allele frequency (MAF) of at least 0.05 were retained, and variants with more than 30% missing genotyping information were excluded. Additionally, a stringent Hardy-Weinberg equilibrium threshold was set to minimize the inclusion of potentially erroneous genotypes. This transformation prepares the dataset for robust statistical analyses, allowing for the exploration of genetic associations and population structure with high reliability.
+
+```{bash}
+#| eval: false
+
+
+#########################################
+### 1) Script to normalize and merge vcfs
+#########################################
+
+#!/bin/bash
+
+# Set the directory to search for VCF files
+VCF_DIR=$1
+
+# Check if directory is provided
+if [ -z "$VCF_DIR" ]; then
+  echo "Usage: $0 /path/to/vcf_directory"
+  exit 1
+fi
+
+# Create a temporary directory for normalized files
+TEMP_DIR=$(mktemp -d)
+echo "Temporary directory for normalized VCFs: $TEMP_DIR"
+
+# Find all .vcf.gz files recursively in the directory
+VCF_FILES=$(find "$VCF_DIR" -name "*.vcf.gz")
+
+# Normalize each VCF file and index it
+for INPUT_VCF in $VCF_FILES; do
+  OUTPUT_VCF="$TEMP_DIR/$(basename "$INPUT_VCF" .vcf.gz).norm.vcf.gz"
+  echo "Normalizing $INPUT_VCF to $OUTPUT_VCF"
+  
+  # Normalize using bcftools
+  bcftools norm -m -both -o "$OUTPUT_VCF" -O z "$INPUT_VCF" --threads 8
+  
+  # Check if normalization was successful
+  if [ -s "$OUTPUT_VCF" ]; then
+    # Index the normalized VCF if it's not empty
+    tabix -p vcf "$OUTPUT_VCF"
+  else
+    echo "Warning: Normalized VCF $OUTPUT_VCF is empty."
+  fi
+done
+
+# List all normalized VCF files
+NORMALIZED_VCFS=$(find "$TEMP_DIR" -name "*.norm.vcf.gz")
+
+# Check if any normalized VCF files exist
+if [ -z "$NORMALIZED_VCFS" ]; then
+  echo "Error: No normalized VCF files found. Exiting."
+  rm -rf "$TEMP_DIR"
+  exit 1
+fi
+
+# Merge all normalized VCF files into one using bcftools merge
+echo "Merging normalized VCF files into merged_output.vcf"
+bcftools merge $NORMALIZED_VCFS -o merged_output.vcf -O v --threads 8
+
+# Check if the merge resulted in a non-empty file
+if [ -s merged_output.vcf ]; then
+  echo "Merged VCF saved as merged_output.vcf"
+else
+  echo "Error: Merged VCF is empty. Something went wrong."
+fi
+
+# Clean up temporary directory
+rm -rf "$TEMP_DIR"
+
+##################################################
+### 2) Remove duplicate variants (snps & indels)
+#################################################
+bcftools norm --rm-dup both merged_output.vcf -o merged_output_nodup.vcf
+
+
+##################################################
+### 3) Transform into PLINK
+#################################################
+
+./plink --vcf merged_output_nodup.vcf \
+--make-bed \
+--maf 0.05  \
+--geno 0.3   \
+--hwe 0.0000001 \
+--snps-only \
+--double-id \
+--set-missing-var-ids @:# \
+--out only_snps_cleaned 
+
+ # only include SNPs with MAF >= 0.05
+ # include only SNPs with a 70% genotyping rate (30% missing) use
+ # causes both family and within-family IDs to be set to the sample ID to avoid the error because the presence of "_" in the sample ID
+ 
+ 
+
+```
+
+The conversion from VCF to PLINK format produced three key files: `.bed`, which contains genotype data; `.bim`, which lists all variants and their genomic positions; and `.fam`, which provides participant identifiers and traits. The `.bim` file contained 10,832,436 variants, of which 9,248,936 were successfully loaded, demonstrating a comprehensive coverage of the genetic data. During this process, missing variant identifiers were appropriately assigned.
+
+Despite this substantial data inclusion, the overall genotyping rate was notably low at 3.57% after removing 9,184,238 variants due to extensive missing genotype data. Furthermore, deviations observed in Hardy-Weinberg equilibrium resulted in the elimination of 4,504 variants through an exact test for Hardy-Weinberg equilibrium. An additional 11,342 variants were excluded based on minor allele frequency thresholds.
+
+After enforcing all quality control measures and variant filters, only 48,852 variants across 80 individuals remained, meeting the criteria for inclusion in further analyses.The significantly low genotyping rate observed could be attributed to the high number of SNPs unique to individual VCF files and not replicated across the cohort. This uniqueness might stem from intrinsic biological diversity or variations in sample processing techniques.
+
+### Experimental design
+
+For this exercise, a standard **case-control** analysis was carried out comparing 29 obese individuals with no steatosis *vs*. 25 individuals with more than 33% of statosis.
+
+## Results
+
+```{r}
+# phenotype data
+pheno <- read_csv("data/20240813_metadata.csv") |> 
+    distinct(sample, .keep_all = T) |> 
+    mutate(sample = paste0("DNA_",sample)) |> 
+    column_to_rownames("sample") |> 
+    # recode steatosis categories into a new variable with only 3 levels
+     mutate(steatosis_3cat=fct_recode(Steatosis,`>33%`=">33-66%",`>33%`=">66%"),
+         steatosis_3cat=factor(steatosis_3cat,levels=c("<5%", "5-33%", ">33%"))) |> 
+    # recode sex as the .fam file 
+    mutate(sex = fct_recode(sexo, "1" = "hombre",  "2" ="mujer"))
+
+
+# load genotype data that are in PLINK format (bed,bim, and fam files).
+# List containing the genotypes, the family structure and the SNP annotation.
+plink <- read.plink("/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed") 
+
+# store genotype, annotation, and family data in different files for downstream analyses
+geno0 <- plink$genotypes
+annotation <- plink$map
+family0 <- plink$fam 
+
+# rownames and patient IDs from the demographics data are different from the plink object.
+# change rownames to IDs
+rownames(family0) <- str_sub(rownames(family0),1,7)
+rownames(geno0) <- str_sub(rownames(geno0),1,7)
+
+# new genotype, annotation, and family files containing the same individuals in the same order
+ids <- intersect(rownames(pheno),rownames(geno0))
+geno <- geno0[ids,]
+pheno <- pheno[ids, ]
+family <- family0[ids,] |> 
+    mutate(sex = pheno$sex)
+```
+
+### Descriptive analysis of phenotype and covariates
+
+A total of `r nrow(pheno)` individuals with genotype and phenotype data available were segmented into three groups based on liver fat content (\<5%, 5-33%, \>33%). There were no statistically significant differences across any of the variables assessed, including age, gender, body mass index (BMI), and liver fibrosis stages (@tbl-pheno). Median age distributions across the groups were 47, 51, and 51 years, respectively, with a p-value of 0.505, indicating uniform age distribution across the groups. Gender ratios were similarly consistent, comprising approximately 75% females and 25% males in each group, with a p-value of 0.913. BMI values, with medians of 49.2, 43.9, and 45.9 for the respective groups, also showed no significant variation (p=0.563). Even the categorization of liver fibrosis stages from F0 to F4 did not demonstrate significant differences across the groups (p=0.172), underscoring a lack of correlation between the variables studied and the percentage of liver fat. This uniformity highlights the absence of significant demographic or clinical variations among the different levels of liver steatosis within the cohort.
+
+```{r}
+#| label: tbl-pheno
+#| tbl-cap: "Main phenotypic characterists in the genotyped cohort according to liver fat percentage."
+
+# tables with the descriptive analysis of phenotype
+cdesc <- compareGroups (steatosis_3cat ~ edad + sexo + imc + Fibrosis.cat ,pheno, method=2)
+tdesc <- createTable(cdesc, show.p.mul = T, show.all = T)
+export2md(tdesc, caption = "") |> 
+    kable_styling(font_size = 11) |> 
+    remove_column(c(7,9)) 
+
+```
+
+Data represent median[IQR] or number of cases (%).    
+p.overall: Kruskal-Wallis´ associated p-value.   
+p.5-33% vs >33%: p- value for the comparison between <5% vs >33% steatosis (Mann-Whithney)  
+
+### Population structure
+
+First, we aimed to investigate population structure and ancestry, utilizing Principal Component Analysis (PCA) to explore genetic variation. We first transformed genetic data from PLINK to GDS format for efficiency and applied linkage disequilibrium (LD) pruning to focus on significant SNPs, essential for PCA's computational efficiency. The pruned SNPs were analyzed using PCA to visualize the population structure, revealing no distinct clustering by sex but some dispersion related to liver steatosis levels (@fig-ancestry).
+
+The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in genome-wide association studies (GWAS). Given this variability, we recommend incorporating principal components as covariates in GWAS to adjust for underlying population structure, thereby enhancing the robustness of GWAS findings. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors, demonstrating the strategic integration of data transformation, pruning, and analysis in genetic studies.
+
+```{r}
+#| output: false
+
+
+# Transform PLINK data into GDS format for more efficient data manipulation
+snpgdsBED2GDS("/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed", 
+              "/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.fam",
+              "/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bim", 
+              out.gdsfn ="GDS")
+
+# Open the GDS file for further analysis
+genofile <- snpgdsOpen("GDS")
+
+# Set a random seed for reproducibility in stochastic processes
+set.seed(12345)
+
+# Retrieve column names from genofile, which include SNP identifiers
+snps.qc <- colnames(geno)
+
+# Perform linkage disequilibrium (LD) pruning to reduce SNP redundancy
+snp.prune <- snpgdsLDpruning(genofile, ld.threshold = 0.2,
+                             snp.id = snps.qc)
+
+# Extract SNP IDs after LD pruning for use in population ancestry analysis
+snps.ibd <- unlist(snp.prune, use.names=FALSE)
+
+# Calculate identity by descent (IBD) matrix using pruned SNPs
+ibd <- snpgdsIBDMoM(genofile, kinship=TRUE,
+                    snp.id = snps.ibd,
+                    num.thread = 6)
+```
+
+```{r}
+#| label: fig-ancestry
+#| fig-cap: "Population structure obtained by plotting the first two axes of the genetic variation (PC1 and PC2) from PCA of the SNP matrix. Each point corresponds to an individual, coloured according to sex and steatosis category"
+# Perform PCA on the genomic data to investigate population structure
+pca <- snpgdsPCA(genofile, sample.id=family$member,
+                 snp.id = snps.ibd, 
+                 num.thread=8,
+                 verbose = F)
+
+# Close the GDS file after analysis to free resources
+closefn.gds(genofile)
+
+
+# Bind the PCA components t othe phenotype data
+pca.comp <- cbind(ID=pca$sample.id,pca$eigenvect[, 1:2]) |> 
+    as.data.frame() |> 
+    set_names(c("ID", "PC1","PC2"))
+
+rownames(pca.comp) <- substr(pca.comp$ID,1,7)
+pca.comp$ID <-  NULL
+
+pheno.qc.pca <- pca.comp[match(rownames(pheno),rownames(pca.comp)),] |> 
+    bind_cols(pheno) |> 
+    filter(steatosis_3cat != "5-33%") |> 
+    mutate(sexo = as.factor (sexo)) |> 
+    mutate(steatosis_3cat =droplevels(steatosis_3cat )) |> 
+    mutate(across(c(PC1,PC2), \(x) as.numeric(x)))
+
+
+geno.qc <- geno[rownames(pheno.qc.pca ),]
+
+# Plot the first two principal components to visualize population structure
+ggplot (pheno.qc.pca,aes(x=PC1, y=PC2, colour = steatosis_3cat, shape = sex))+
+    geom_point(size=4, alpha= 0.5)+
+    theme_minimal()
+
+```
+
+## Genome-wide association analysis
+
+In our study, we assessed the risk of potential inflation in genetic associations due to undetected latent variables using a quantile-quantile (Q-Q) plot. This plot is crucial for evaluating whether the observed chi-squared (χ2) statistics from our genetic associations deviate from the expected distribution under the null hypothesis of no association. A Q-Q plot helps identify potential inflation caused by population stratification, cryptic relatedness, or other confounding factors. In our results, as shown in @fig-qq, the Q-Q plot demonstrated that the observed χ2 values closely aligned with the expected values, indicated by a lambda (λ) close to 1. This suggests that our estimates are not significantly inflated, providing confidence in the validity of our genetic association findings.
+
+```{r}
+#| label: fig-qq
+#| fig-cap: "QQ plot of observed vs expected p values"
+
+# Perform single SNP tests for the 'steatosis_3cat' trait using phenotype and genotype data
+res <- single.snp.tests(steatosis_3cat, data=pheno.qc.pca, snp.data=geno.qc)
+
+# Calculate chi-squared statistics from the test results
+chi2 <- chi.squared(res, df=1)
+
+# Generate a Q-Q plot of the chi-squared statistics to assess inflation
+qq.chisq(chi2, main = "")
+
+
+```
+
+In our genetic association study, we utilized the `snp.rhs.tests` function from the `snpStats` package to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.
+
+```{r}
+#| cache: true
+#| label: fig-manhattan
+#| fig-cap: "Plot of the p-values for each SNP in the GWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10$^{-6}$, 0.0001 in blue)"
+
+# Perform SNP-based tests adjusting for principal components PC1 and PC2
+res.adj <- snp.rhs.tests(steatosis_3cat ~ sex + PC1 + PC2, data=pheno.qc.pca, snp.data=geno.qc,
+                         family = "binomial", robust = T)
+
+# Extract p-values and genomic annotations for SNPs
+pvals <- data.frame(SNP=annotation$snp.name, 
+                    CHR=annotation$chromosome,
+                    BP=annotation$position,
+                    P=p.value(res.adj))
+
+# Calculate Bonferroni correction threshold for significance
+bonferroni <- 0.05/ncol(geno.qc)
+bonferroni.log <- -log10(bonferroni)
+
+# Plot Manhattan plot of p-values across the genome
+manhattan(pvals, col=c("lightblue", "blue"),
+          annotatePval = FALSE,annotateTop = FALSE,
+          genomewideline = FALSE,suggestiveline = FALSE,
+          ylim=c(0,7.2), cex=2)
+
+# Add significance threshold lines to the plot
+abline(h = bonferroni.log, col="red", lwd=2, lty=2)
+abline(h = -log10(0.0001), col="darkblue", lwd=1)
+
+# Significant SNPs
+topSNPs <- pvals |> 
+    filter(P<0.0001)
+```
+
+
+```{r}
+#| eval: false
+
+# Connect to Ensembl database using biomaRt
+ensembl <- useEnsembl(biomart = "snps", dataset = "hsapiens_snp")
+
+snp_mart <- getBM(
+  attributes = c('refsnp_id', 'chr_name', 'clinical_significance'),
+  filters = c('chr_name', 'start', 'end'),
+  values = list(topSNPs$CHR,topSNPs$BP, topSNPs$BP),
+  mart = ensembl)
+
+```
+
+The results of these analyses were visualized using a Manhattan plot (@fig-manhattan), created by the `manhattan` function from the `qqman` package, which effectively illustrates the distribution of p-values across all chromosomes. Significance at Bonferroni level was set at p = 10$^{-6}$as we tested `r nrow(pvals)` SNPs. The level corresponds to -log10(P) = `r round(bonferroni.log,2)`. Notably, while no SNP surpassed the stringent Bonferroni threshold, `r nrow(topSNPs)` SNPs did exhibit p-values below 0.0001. These results suggest subtle genetic influences that could potentially impact steatosis.
+
+

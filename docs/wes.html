@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.4">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Whole exome sequencing – Master of Science in Omics Data Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./rnaseq.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./wat&amp;msld.html">Supplementary Material</a></li><li class="breadcrumb-item"><a href="./wes.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Whole exome sequencing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Master of Science in Omics Data Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/arbones/TFM" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Front Page</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>Manuscript</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Supplementary Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wat&amp;msld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Adipose tissue and MASLD</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rnaseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNAseq</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Whole exome sequencing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
+  <li><a href="#experimental-design" id="toc-experimental-design" class="nav-link" data-scroll-target="#experimental-design"><span class="header-section-number">3.2</span> Experimental design</a>
+  <ul class="collapse">
+  <li><a href="#dna-isolation-and-extraction" id="toc-dna-isolation-and-extraction" class="nav-link" data-scroll-target="#dna-isolation-and-extraction"><span class="header-section-number">3.2.1</span> DNA isolation and extraction</a></li>
+  <li><a href="#library-preparation-and-sequencing" id="toc-library-preparation-and-sequencing" class="nav-link" data-scroll-target="#library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</a></li>
+  </ul></li>
+  <li><a href="#sequencing-results" id="toc-sequencing-results" class="nav-link" data-scroll-target="#sequencing-results"><span class="header-section-number">3.3</span> Sequencing results</a></li>
+  <li><a href="#computational-analysis-variant-calling" id="toc-computational-analysis-variant-calling" class="nav-link" data-scroll-target="#computational-analysis-variant-calling"><span class="header-section-number">3.4</span> Computational Analysis: Variant Calling</a>
+  <ul class="collapse">
+  <li><a href="#nextflow-workflow-management" id="toc-nextflow-workflow-management" class="nav-link" data-scroll-target="#nextflow-workflow-management"><span class="header-section-number">3.4.1</span> Nextflow Workflow Management</a></li>
+  <li><a href="#variant-calling-with-sarek-pipeline" id="toc-variant-calling-with-sarek-pipeline" class="nav-link" data-scroll-target="#variant-calling-with-sarek-pipeline"><span class="header-section-number">3.4.2</span> Variant Calling with Sarek Pipeline</a></li>
+  <li><a href="#pipeline-configuration" id="toc-pipeline-configuration" class="nav-link" data-scroll-target="#pipeline-configuration"><span class="header-section-number">3.4.3</span> Pipeline Configuration:</a></li>
+  <li><a href="#pipeline-execution" id="toc-pipeline-execution" class="nav-link" data-scroll-target="#pipeline-execution"><span class="header-section-number">3.4.4</span> Pipeline Execution</a></li>
+  <li><a href="#data-input-and-processing" id="toc-data-input-and-processing" class="nav-link" data-scroll-target="#data-input-and-processing"><span class="header-section-number">3.4.5</span> Data input and processing</a></li>
+  <li><a href="#vcf-processing-anf-plink-transformation" id="toc-vcf-processing-anf-plink-transformation" class="nav-link" data-scroll-target="#vcf-processing-anf-plink-transformation"><span class="header-section-number">3.4.6</span> VCF processing anf PLINK transformation</a></li>
+  <li><a href="#experimental-design-1" id="toc-experimental-design-1" class="nav-link" data-scroll-target="#experimental-design-1"><span class="header-section-number">3.4.7</span> Experimental design</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">3.5</span> Results</a>
+  <ul class="collapse">
+  <li><a href="#descriptive-analysis-of-phenotype-and-covariates" id="toc-descriptive-analysis-of-phenotype-and-covariates" class="nav-link" data-scroll-target="#descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.5.1</span> Descriptive analysis of phenotype and covariates</a></li>
+  <li><a href="#population-structure" id="toc-population-structure" class="nav-link" data-scroll-target="#population-structure"><span class="header-section-number">3.5.2</span> Population structure</a></li>
+  </ul></li>
+  <li><a href="#genome-wide-association-analysis" id="toc-genome-wide-association-analysis" class="nav-link" data-scroll-target="#genome-wide-association-analysis"><span class="header-section-number">3.6</span> Genome-wide association analysis</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./wat&amp;msld.html">Supplementary Material</a></li><li class="breadcrumb-item"><a href="./wes.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Whole exome sequencing</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Whole exome sequencing</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPassoc)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(snpStats)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPRelate)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(compareGroups)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qqman)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(biomaRt)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>select)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>filter)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>setdiff)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>intersect)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(S4Vectors<span class="sc">::</span>unname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="introduction" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
+<p>Adipose tissue dysfunction and liver steatosis are closely linked metabolic disorders that significantly impact global health. Both conditions are highly heritable, underscoring the importance of genetic studies for understanding their etiology and progression. Exome sequencing, which focuses on the coding regions of the genome, presents a robust approach for uncovering the genetic underpinnings of these disorders and identifying potential biomarkers for early detection and therapeutic intervention.</p>
+<p>The advantages of exome sequencing are manifold. By targeting the exonic regions, which harbor the majority of disease-related variants, this method offers a cost-effective yet comprehensive strategy to capture the genetic diversity underlying complex traits like adipose tissue dysfunction and liver steatosis. Such precision is crucial for dissecting the biological mechanisms at play and for the eventual translation of genetic insights into clinical practice.</p>
+<p>Genetic association studies, including Genome-Wide Association Studies (GWAS) and Exome-Wide Association Studies (EWAS), are instrumental in this research. GWAS examines common genetic variants across the genome to identify those associated with a trait, whereas EWAS focuses specifically on variants within the exome. The latter can be particularly revealing for diseases believed to be influenced by coding variants, providing a more focused view of potential causal mutations.</p>
+<p>Significant genes identified in the context of adipose tissue dysfunction and liver steatosis include PNPLA3, TM6SF2, and GCKR, among others <span class="citation" data-cites="anstee2013">[<a href="wat&amp;msld.html#ref-anstee2013" role="doc-biblioref">1</a>]</span>. These genes have been implicated in metabolic processes and fat distribution within cells, highlighting their roles in the pathophysiology of these conditions.</p>
+<p>Expression Quantitative Trait Loci (eQTL) analysis further enriches our understanding by linking specific genetic variants with gene expression levels. This integration of genomics and transcriptomics in a multi-omic approach allows researchers to elucidate the functional consequences of genetic variants, particularly how they impact gene expression in different tissues under various physiological and pathological states.</p>
+<p>In the context of obesity, where both adipose tissue and liver function are often compromised, a multi-omic strategy is invaluable. It enables the identification of biomarkers that are not only indicative of disease presence but also of its progression and response to treatment. Such biomarkers are crucial for developing targeted therapies that address the specific molecular profiles of individual patients.</p>
+</section>
+<section id="experimental-design" class="level2 page-columns page-full" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="experimental-design"><span class="header-section-number">3.2</span> Experimental design</h2>
+<section id="dna-isolation-and-extraction" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="dna-isolation-and-extraction"><span class="header-section-number">3.2.1</span> DNA isolation and extraction</h3>
+</section>
+<section id="library-preparation-and-sequencing" class="level3 page-columns page-full" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</h3>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<div id="fig-libr" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-libr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/exon_lib.png" height="400" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-libr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Library Preparation Workflow
+</figcaption>
+</figure>
+</div>
+</div></div><p>The genomic DNA was randomly sheared into short fragments with the size of 180-280 bp. The obtained fragments were end repaired, A-tailed, and further ligated with Illumina adapters. The fragments with adapters were PCR amplified, size selected, and purified. Hybridization capture of libraries was proceeded according to the following procedures. Briefly, the prepped libraries were hybridized in the buffer with biotin-labeled probes, and magnetic beads with streptavidin were used to capture the exons of genes. Subsequently, non-hybridized fragments were washed out and probes were digested. The captured libraries were enriched by PCR amplification (<a href="#fig-libr" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>).</p>
+<p>The library was checked with Qubit and real-time PCR for quantification and bioanalyzer for size distribution detection. Quantified libraries were pooled and sequenced on Illumina platforms, according to effective library concentration and data amount required.</p>
+</section>
+</section>
+<section id="sequencing-results" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sequencing-results"><span class="header-section-number">3.3</span> Sequencing results</h2>
+</section>
+<section id="computational-analysis-variant-calling" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="computational-analysis-variant-calling"><span class="header-section-number">3.4</span> Computational Analysis: Variant Calling</h2>
+<p>The analysis adhered to the Genome Analysis Toolkit (GATK) best practices for variant discovery, which includes recommendations for quality score recalibration and variant filtering. This approach enhances the accuracy and reliability of the variant calling process by applying stringent quality controls and leveraging the comprehensive analytical capabilities of GATK tools.</p>
+<section id="nextflow-workflow-management" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="nextflow-workflow-management"><span class="header-section-number">3.4.1</span> Nextflow Workflow Management</h3>
+<p>The computational analyses were conducted using Nextflow (v23.10.1), a workflow management system that enables scalable and reproducible scientific workflows using software containers. The analyses were orchestrated through the nf-core framework, which provides community-curated bioinformatics pipelines <span class="citation" data-cites="ewels2020">[<a href="wat&amp;msld.html#ref-ewels2020" role="doc-biblioref">2</a>]</span>.</p>
+</section>
+<section id="variant-calling-with-sarek-pipeline" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="variant-calling-with-sarek-pipeline"><span class="header-section-number">3.4.2</span> Variant Calling with Sarek Pipeline</h3>
+<p>The variant calling was performed using the <strong>nf-core/sarek</strong> pipeline (<a href="https://nf-co.re/sarek/3.4.1">version 3.4.1</a>) <span class="citation" data-cites="garcia2020">[<a href="wat&amp;msld.html#ref-garcia2020" role="doc-biblioref">3</a>]</span>. This pipeline is specifically designed for the analysis of whole-genome sequencing (WGS) and targeted sequencing data from cancer studies, facilitating comprehensive genomic analyses from raw sequencing data to annotated variants.</p>
+<p>The pipeline was executed with the following command:</p>
+<div class="{list-code1}">
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/sarek <span class="at">-r</span> 3.4.1<span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>-profile docker<span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>-bg<span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-resume<span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>--wes<span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>--input samplesheet.csv<span class="dt">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>--outdir /Resultados<span class="dt">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>--genome GATK.GRCh38<span class="dt">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>--tools freebayes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="pipeline-configuration" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="pipeline-configuration"><span class="header-section-number">3.4.3</span> Pipeline Configuration:</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option/Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nextflow run nf-core/sarek</code></td>
+<td>Initiates the execution of the nf-core/sarek pipeline using Nextflow.</td>
+</tr>
+<tr class="even">
+<td><code>-r 3.4.1</code></td>
+<td>Specifies that version 3.4.1 of the sarek pipeline should be used, ensuring reproducibility of the analysis.</td>
+</tr>
+<tr class="odd">
+<td><code>-profile docker</code></td>
+<td>Configures the pipeline to run using Docker containers, which encapsulate all necessary software dependencies.</td>
+</tr>
+<tr class="even">
+<td><code>-bg</code></td>
+<td>Runs the Nextflow process in the background, allowing other tasks to be performed simultaneously without interruption.</td>
+</tr>
+<tr class="odd">
+<td><code>-resume</code></td>
+<td>Enables the pipeline to resume from the last checkpoint if interrupted, saving time and computational resources.</td>
+</tr>
+<tr class="even">
+<td><code>--wes</code></td>
+<td>Indicates that the pipeline is configured to process Whole Exome Sequencing (WES) data.</td>
+</tr>
+<tr class="odd">
+<td><code>--input /mnt/jmarbones/samplesheet.csv</code></td>
+<td>Specifies the path to the CSV file containing metadata about the samples to be analyzed.</td>
+</tr>
+<tr class="even">
+<td><code>--outdir /mnt/jmarbones/Resultados</code></td>
+<td>Designates the directory where all output from the pipeline will be stored.</td>
+</tr>
+<tr class="odd">
+<td><code>--genome GATK.GRCh38</code></td>
+<td>Sets the reference genome to GATK GRCh38, a standard human genome assembly used in genomic analysis.</td>
+</tr>
+<tr class="even">
+<td><code>--tools freebayes</code></td>
+<td>Specifies Freebayes as the tool for calling genetic variants, effective for detecting SNPs and small indels.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pipeline-execution" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="pipeline-execution"><span class="header-section-number">3.4.4</span> Pipeline Execution</h3>
+<p>The pipeline was configured to run in a Docker containerized environment, ensuring that all dependencies were consistently managed and the computational environment was isolated. This setup facilitates the reproducibility of results across different computing platforms. The analysis was executed in the background, allowing other processes to run simultaneously without interruption. In the event of an interruption, the pipeline was designed to resume from the last successful step, optimizing resource use and reducing redundancy.</p>
+</section>
+<section id="data-input-and-processing" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="data-input-and-processing"><span class="header-section-number">3.4.5</span> Data input and processing</h3>
+<p>Input data (clean fastq.gz files) were organized in a CSV file (samplesheet.csv), which included essential metadata such as sample identifiers and sequencing data paths. The output was directed to a designated directory Resultados for organized storage and easy access to results.</p>
+<p>The human reference genome GATK GRCh38 was utilized to align sequencing data and call variants, providing a standardized basis for the analysis. Variant calling was performed using Freebayes, a tool known for its effectiveness in detecting small variants like SNPs and indels <span class="citation" data-cites="garrison2012">[<a href="wat&amp;msld.html#ref-garrison2012" role="doc-biblioref">4</a>]</span>.</p>
+<p>The called variants were stored in Variant Call Format (VCF) files, which include detailed metadata and structured data about each variant detected.</p>
+</section>
+<section id="vcf-processing-anf-plink-transformation" class="level3" data-number="3.4.6">
+<h3 data-number="3.4.6" class="anchored" data-anchor-id="vcf-processing-anf-plink-transformation"><span class="header-section-number">3.4.6</span> VCF processing anf PLINK transformation</h3>
+<p>The next computational steps were carried out with the programs <code>bcftools</code> and <code>PLINK</code> in the command line using . Normalization, performed using <code>bcftools norm</code>, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the <code>bcftools merge</code> command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using <code>bcftools norm</code> with the <code>--rm-dup</code> option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.</p>
+<p>The final preprocessing step involved transforming the VCF file for compatibility with the PLINK toolset, a widely used software package for genome association studies. The <code>plink</code> command was utilized to convert VCF data into binary ped files while applying several filters: only SNPs with a minor allele frequency (MAF) of at least 0.05 were retained, and variants with more than 30% missing genotyping information were excluded. Additionally, a stringent Hardy-Weinberg equilibrium threshold was set to minimize the inclusion of potentially erroneous genotypes. This transformation prepares the dataset for robust statistical analyses, allowing for the exploration of genetic associations and population structure with high reliability.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">### 1) Script to normalize and merge vcfs</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the directory to search for VCF files</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_DIR</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if directory is provided</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> /path/to/vcf_directory"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary directory for normalized files</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="va">TEMP_DIR</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span> <span class="at">-d</span><span class="va">)</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Temporary directory for normalized VCFs: </span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all .vcf.gz files recursively in the directory</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_FILES</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.vcf.gz"</span><span class="va">)</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize each VCF file and index it</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> INPUT_VCF <span class="kw">in</span> <span class="va">$VCF_FILES</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="va">OUTPUT_VCF</span><span class="op">=</span><span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">/</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> .vcf.gz<span class="va">)</span><span class="st">.norm.vcf.gz"</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Normalizing </span><span class="va">$INPUT_VCF</span><span class="st"> to </span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize using bcftools</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bcftools</span> norm <span class="at">-m</span> <span class="at">-both</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="at">-O</span> z <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> <span class="at">--threads</span> 8</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if normalization was successful</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Index the normalized VCF if it's not empty</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">tabix</span> <span class="at">-p</span> vcf <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Warning: Normalized VCF </span><span class="va">$OUTPUT_VCF</span><span class="st"> is empty."</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co"># List all normalized VCF files</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="va">NORMALIZED_VCFS</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.norm.vcf.gz"</span><span class="va">)</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if any normalized VCF files exist</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$NORMALIZED_VCFS</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: No normalized VCF files found. Exiting."</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all normalized VCF files into one using bcftools merge</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Merging normalized VCF files into merged_output.vcf"</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> merge <span class="va">$NORMALIZED_VCFS</span> <span class="at">-o</span> merged_output.vcf <span class="at">-O</span> v <span class="at">--threads</span> 8</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge resulted in a non-empty file</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> merged_output.vcf <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Merged VCF saved as merged_output.vcf"</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: Merged VCF is empty. Something went wrong."</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up temporary directory</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">### 2) Remove duplicate variants (snps &amp; indels)</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> norm <span class="at">--rm-dup</span> both merged_output.vcf <span class="at">-o</span> merged_output_nodup.vcf</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="co">### 3) Transform into PLINK</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="ex">./plink</span> <span class="at">--vcf</span> merged_output_nodup.vcf <span class="dt">\</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>--make-bed <span class="dt">\</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>--maf 0.05  <span class="dt">\</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>--geno 0.3   <span class="dt">\</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>--hwe 0.0000001 <span class="dt">\</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>--snps-only <span class="dt">\</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>--double-id <span class="dt">\</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>--set-missing-var-ids @:# <span class="dt">\</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>--out only_snps_cleaned </span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a> <span class="co"># only include SNPs with MAF &gt;= 0.05</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a> <span class="co"># include only SNPs with a 70% genotyping rate (30% missing) use</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a> <span class="co"># causes both family and within-family IDs to be set to the sample ID to avoid the error because the presence of "_" in the sample ID</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The conversion from VCF to PLINK format produced three key files: <code>.bed</code>, which contains genotype data; <code>.bim</code>, which lists all variants and their genomic positions; and <code>.fam</code>, which provides participant identifiers and traits. The <code>.bim</code> file contained 10,832,436 variants, of which 9,248,936 were successfully loaded, demonstrating a comprehensive coverage of the genetic data. During this process, missing variant identifiers were appropriately assigned.</p>
+<p>Despite this substantial data inclusion, the overall genotyping rate was notably low at 3.57% after removing 9,184,238 variants due to extensive missing genotype data. Furthermore, deviations observed in Hardy-Weinberg equilibrium resulted in the elimination of 4,504 variants through an exact test for Hardy-Weinberg equilibrium. An additional 11,342 variants were excluded based on minor allele frequency thresholds.</p>
+<p>After enforcing all quality control measures and variant filters, only 48,852 variants across 80 individuals remained, meeting the criteria for inclusion in further analyses.The significantly low genotyping rate observed could be attributed to the high number of SNPs unique to individual VCF files and not replicated across the cohort. This uniqueness might stem from intrinsic biological diversity or variations in sample processing techniques.</p>
+</section>
+<section id="experimental-design-1" class="level3" data-number="3.4.7">
+<h3 data-number="3.4.7" class="anchored" data-anchor-id="experimental-design-1"><span class="header-section-number">3.4.7</span> Experimental design</h3>
+<p>For this exercise, a standard <strong>case-control</strong> analysis was carried out comparing 29 obese individuals with no steatosis <em>vs</em>. 25 individuals with more than 33% of statosis.</p>
+</section>
+</section>
+<section id="results" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="results"><span class="header-section-number">3.5</span> Results</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotype data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/20240813_metadata.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(sample, <span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,sample)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode steatosis categories into a new variable with only 3 levels</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">steatosis_3cat=</span><span class="fu">fct_recode</span>(Steatosis,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;33-66%"</span>,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;66%"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis_3cat=</span><span class="fu">factor</span>(steatosis_3cat,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">"&lt;5%"</span>, <span class="st">"5-33%"</span>, <span class="st">"&gt;33%"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode sex as the .fam file </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_recode</span>(sexo, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"hombre"</span>,  <span class="st">"2"</span> <span class="ot">=</span><span class="st">"mujer"</span>))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load genotype data that are in PLINK format (bed,bim, and fam files).</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># List containing the genotypes, the family structure and the SNP annotation.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plink <span class="ot">&lt;-</span> <span class="fu">read.plink</span>(<span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed"</span>) </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># store genotype, annotation, and family data in different files for downstream analyses</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>geno0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>genotypes</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>annotation <span class="ot">&lt;-</span> plink<span class="sc">$</span>map</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>family0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>fam </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames and patient IDs from the demographics data are different from the plink object.</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># change rownames to IDs</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(family0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(family0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(geno0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(geno0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># new genotype, annotation, and family files containing the same individuals in the same order</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(geno0))</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> geno0[ids,]</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> pheno[ids, ]</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>family <span class="ot">&lt;-</span> family0[ids,] <span class="sc">|&gt;</span> </span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> pheno<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="descriptive-analysis-of-phenotype-and-covariates" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.5.1</span> Descriptive analysis of phenotype and covariates</h3>
+<p>A total of 80 individuals with genotype and phenotype data available were segmented into three groups based on liver fat content (&lt;5%, 5-33%, &gt;33%). There were no statistically significant differences across any of the variables assessed, including age, gender, body mass index (BMI), and liver fibrosis stages (<a href="#tbl-pheno" class="quarto-xref">Table&nbsp;<span>3.1</span></a>). Median age distributions across the groups were 47, 51, and 51 years, respectively, with a p-value of 0.505, indicating uniform age distribution across the groups. Gender ratios were similarly consistent, comprising approximately 75% females and 25% males in each group, with a p-value of 0.913. BMI values, with medians of 49.2, 43.9, and 45.9 for the respective groups, also showed no significant variation (p=0.563). Even the categorization of liver fibrosis stages from F0 to F4 did not demonstrate significant differences across the groups (p=0.172), underscoring a lack of correlation between the variables studied and the percentage of liver fat. This uniformity highlights the absence of significant demographic or clinical variations among the different levels of liver steatosis within the cohort.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tables with the descriptive analysis of phenotype</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cdesc <span class="ot">&lt;-</span> <span class="fu">compareGroups</span> (steatosis_3cat <span class="sc">~</span> edad <span class="sc">+</span> sexo <span class="sc">+</span> imc <span class="sc">+</span> Fibrosis.cat ,pheno, <span class="at">method=</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tdesc <span class="ot">&lt;-</span> <span class="fu">createTable</span>(cdesc, <span class="at">show.p.mul =</span> T, <span class="at">show.all =</span> T)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">export2md</span>(tdesc, <span class="at">caption =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">11</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_column</span>(<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">9</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-pheno" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pheno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Main phenotypic characterists in the genotyped cohort according to liver fat percentage.
+</figcaption>
+<div aria-describedby="tbl-pheno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">[ALL]</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">&lt;5%</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">5-33%</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">&gt;33%</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p.overall</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p.&lt;5% vs &gt;33%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-style: italic; border-bottom: 1px solid grey;"></td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;">N=80</td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;">N=29</td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;">N=26</td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;">N=25</td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;"></td>
+<td style="text-align: center; font-style: italic; border-bottom: 1px solid grey;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad</td>
+<td style="text-align: center;">49.0 [41.0;55.0]</td>
+<td style="text-align: center;">47.0 [41.0;52.0]</td>
+<td style="text-align: center;">51.0 [42.5;56.8]</td>
+<td style="text-align: center;">51.0 [41.0;54.0]</td>
+<td style="text-align: center;">0.505</td>
+<td style="text-align: center;">0.497</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sexo:</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.913</td>
+<td style="text-align: center;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">hombre</td>
+<td style="text-align: center;">20 (25.0%)</td>
+<td style="text-align: center;">7 (24.1%)</td>
+<td style="text-align: center;">6 (23.1%)</td>
+<td style="text-align: center;">7 (28.0%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">mujer</td>
+<td style="text-align: center;">60 (75.0%)</td>
+<td style="text-align: center;">22 (75.9%)</td>
+<td style="text-align: center;">20 (76.9%)</td>
+<td style="text-align: center;">18 (72.0%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">imc</td>
+<td style="text-align: center;">45.9 [41.6;50.5]</td>
+<td style="text-align: center;">49.2 [41.5;51.3]</td>
+<td style="text-align: center;">43.9 [41.6;50.4]</td>
+<td style="text-align: center;">45.9 [42.7;46.9]</td>
+<td style="text-align: center;">0.563</td>
+<td style="text-align: center;">0.695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fibrosis.cat:</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.172</td>
+<td style="text-align: center;">0.161</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">F0</td>
+<td style="text-align: center;">59 (74.7%)</td>
+<td style="text-align: center;">25 (89.3%)</td>
+<td style="text-align: center;">19 (73.1%)</td>
+<td style="text-align: center;">15 (60.0%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">F1</td>
+<td style="text-align: center;">13 (16.5%)</td>
+<td style="text-align: center;">2 (7.14%)</td>
+<td style="text-align: center;">4 (15.4%)</td>
+<td style="text-align: center;">7 (28.0%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">F2</td>
+<td style="text-align: center;">6 (7.59%)</td>
+<td style="text-align: center;">1 (3.57%)</td>
+<td style="text-align: center;">3 (11.5%)</td>
+<td style="text-align: center;">2 (8.00%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">F2-F4</td>
+<td style="text-align: center;">1 (1.27%)</td>
+<td style="text-align: center;">0 (0.00%)</td>
+<td style="text-align: center;">0 (0.00%)</td>
+<td style="text-align: center;">1 (4.00%)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Data represent median[IQR] or number of cases (%).<br>
+p.overall: Kruskal-Wallis´ associated p-value.<br>
+p.5-33% vs &gt;33%: p- value for the comparison between &lt;5% vs &gt;33% steatosis (Mann-Whithney)</p>
+</section>
+<section id="population-structure" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="population-structure"><span class="header-section-number">3.5.2</span> Population structure</h3>
+<p>First, we aimed to investigate population structure and ancestry, utilizing Principal Component Analysis (PCA) to explore genetic variation. We first transformed genetic data from PLINK to GDS format for efficiency and applied linkage disequilibrium (LD) pruning to focus on significant SNPs, essential for PCA’s computational efficiency. The pruned SNPs were analyzed using PCA to visualize the population structure, revealing no distinct clustering by sex but some dispersion related to liver steatosis levels (<a href="#fig-ancestry" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>).</p>
+<p>The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in genome-wide association studies (GWAS). Given this variability, we recommend incorporating principal components as covariates in GWAS to adjust for underlying population structure, thereby enhancing the robustness of GWAS findings. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors, demonstrating the strategic integration of data transformation, pruning, and analysis in genetic studies.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform PLINK data into GDS format for more efficient data manipulation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsBED2GDS</span>(<span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed"</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.fam"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bim"</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">out.gdsfn =</span><span class="st">"GDS"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the GDS file for further analysis</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="st">"GDS"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a random seed for reproducibility in stochastic processes</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve column names from genofile, which include SNP identifiers</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>snps.qc <span class="ot">&lt;-</span> <span class="fu">colnames</span>(geno)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linkage disequilibrium (LD) pruning to reduce SNP redundancy</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>snp.prune <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                             <span class="at">snp.id =</span> snps.qc)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SNP IDs after LD pruning for use in population ancestry analysis</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>snps.ibd <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snp.prune, <span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate identity by descent (IBD) matrix using pruned SNPs</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>ibd <span class="ot">&lt;-</span> <span class="fu">snpgdsIBDMoM</span>(genofile, <span class="at">kinship=</span><span class="cn">TRUE</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">snp.id =</span> snps.ibd,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.thread =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA on the genomic data to investigate population structure</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">sample.id=</span>family<span class="sc">$</span>member,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">snp.id =</span> snps.ibd, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">num.thread=</span><span class="dv">8</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">verbose =</span> F)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file after analysis to free resources</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">closefn.gds</span>(genofile)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind the PCA components t othe phenotype data</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>pca.comp <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">ID=</span>pca<span class="sc">$</span>sample.id,pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"PC1"</span>,<span class="st">"PC2"</span>))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pca.comp) <span class="ot">&lt;-</span> <span class="fu">substr</span>(pca.comp<span class="sc">$</span>ID,<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>pca.comp<span class="sc">$</span>ID <span class="ot">&lt;-</span>  <span class="cn">NULL</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>pheno.qc.pca <span class="ot">&lt;-</span> pca.comp[<span class="fu">match</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(pca.comp)),] <span class="sc">|&gt;</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_cols</span>(pheno) <span class="sc">|&gt;</span> </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(steatosis_3cat <span class="sc">!=</span> <span class="st">"5-33%"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sexo =</span> <span class="fu">as.factor</span> (sexo)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">steatosis_3cat =</span><span class="fu">droplevels</span>(steatosis_3cat )) <span class="sc">|&gt;</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(PC1,PC2), \(x) <span class="fu">as.numeric</span>(x)))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>geno.qc <span class="ot">&lt;-</span> geno[<span class="fu">rownames</span>(pheno.qc.pca ),]</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first two principal components to visualize population structure</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> (pheno.qc.pca,<span class="fu">aes</span>(<span class="at">x=</span>PC1, <span class="at">y=</span>PC2, <span class="at">colour =</span> steatosis_3cat, <span class="at">shape =</span> sex))<span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">alpha=</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-ancestry" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ancestry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="wes_files/figure-html/fig-ancestry-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ancestry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Population structure obtained by plotting the first two axes of the genetic variation (PC1 and PC2) from PCA of the SNP matrix. Each point corresponds to an individual, coloured according to sex and steatosis category
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="genome-wide-association-analysis" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="genome-wide-association-analysis"><span class="header-section-number">3.6</span> Genome-wide association analysis</h2>
+<p>In our study, we assessed the risk of potential inflation in genetic associations due to undetected latent variables using a quantile-quantile (Q-Q) plot. This plot is crucial for evaluating whether the observed chi-squared (χ2) statistics from our genetic associations deviate from the expected distribution under the null hypothesis of no association. A Q-Q plot helps identify potential inflation caused by population stratification, cryptic relatedness, or other confounding factors. In our results, as shown in <a href="#fig-qq" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>, the Q-Q plot demonstrated that the observed χ2 values closely aligned with the expected values, indicated by a lambda (λ) close to 1. This suggests that our estimates are not significantly inflated, providing confidence in the validity of our genetic association findings.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform single SNP tests for the 'steatosis_3cat' trait using phenotype and genotype data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">single.snp.tests</span>(steatosis_3cat, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared statistics from the test results</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>chi2 <span class="ot">&lt;-</span> <span class="fu">chi.squared</span>(res, <span class="at">df=</span><span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a Q-Q plot of the chi-squared statistics to assess inflation</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qq.chisq</span>(chi2, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>           N      omitted       lambda 
+48852.000000     0.000000     1.002291 </code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="wes_files/figure-html/fig-qq-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: QQ plot of observed vs expected p values
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In our genetic association study, we utilized the <code>snp.rhs.tests</code> function from the <code>snpStats</code> package to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform SNP-based tests adjusting for principal components PC1 and PC2</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res.adj <span class="ot">&lt;-</span> <span class="fu">snp.rhs.tests</span>(steatosis_3cat <span class="sc">~</span> sex <span class="sc">+</span> PC1 <span class="sc">+</span> PC2, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">robust =</span> T)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract p-values and genomic annotations for SNPs</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SNP=</span>annotation<span class="sc">$</span>snp.name, </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">CHR=</span>annotation<span class="sc">$</span>chromosome,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">BP=</span>annotation<span class="sc">$</span>position,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P=</span><span class="fu">p.value</span>(res.adj))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Bonferroni correction threshold for significance</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>bonferroni <span class="ot">&lt;-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="fu">ncol</span>(geno.qc)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>bonferroni.log <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(bonferroni)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Manhattan plot of p-values across the genome</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">manhattan</span>(pvals, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"blue"</span>),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">annotatePval =</span> <span class="cn">FALSE</span>,<span class="at">annotateTop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">genomewideline =</span> <span class="cn">FALSE</span>,<span class="at">suggestiveline =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">7.2</span>), <span class="at">cex=</span><span class="dv">2</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add significance threshold lines to the plot</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> bonferroni.log, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.0001</span>), <span class="at">col=</span><span class="st">"darkblue"</span>, <span class="at">lwd=</span><span class="dv">1</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Significant SNPs</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>topSNPs <span class="ot">&lt;-</span> pvals <span class="sc">|&gt;</span> </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(P<span class="sc">&lt;</span><span class="fl">0.0001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-manhattan" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="wes_files/figure-html/fig-manhattan-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Plot of the p-values for each SNP in the GWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10<span class="math inline">\(^{-6}\)</span>, 0.0001 in blue)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to Ensembl database using biomaRt</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">"snps"</span>, <span class="at">dataset =</span> <span class="st">"hsapiens_snp"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>snp_mart <span class="ot">&lt;-</span> <span class="fu">getBM</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">'refsnp_id'</span>, <span class="st">'chr_name'</span>, <span class="st">'clinical_significance'</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">filters =</span> <span class="fu">c</span>(<span class="st">'chr_name'</span>, <span class="st">'start'</span>, <span class="st">'end'</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">list</span>(topSNPs<span class="sc">$</span>CHR,topSNPs<span class="sc">$</span>BP, topSNPs<span class="sc">$</span>BP),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mart =</span> ensembl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The results of these analyses were visualized using a Manhattan plot (<a href="#fig-manhattan" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>), created by the <code>manhattan</code> function from the <code>qqman</code> package, which effectively illustrates the distribution of p-values across all chromosomes. Significance at Bonferroni level was set at p = 10<span class="math inline">\(^{-6}\)</span>as we tested 48852 SNPs. The level corresponds to -log10(P) = 5.99. Notably, while no SNP surpassed the stringent Bonferroni threshold, 9 SNPs did exhibit p-values below 0.0001. These results suggest subtle genetic influences that could potentially impact steatosis.</p>
+
+
+<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="ref-anstee2013" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Anstee QM, Day CP (2013) The genetics of NAFLD. Nature Reviews Gastroenterology &amp; Hepatology 10(11):645–655. <a href="https://doi.org/10.1038/nrgastro.2013.182">https://doi.org/10.1038/nrgastro.2013.182</a></div>
+</div>
+<div id="ref-ewels2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Ewels PA, Peltzer A, Fillinger S, et al (2020) The nf-core framework for community-curated bioinformatics pipelines. Nature Biotechnology 38(3):276–278. <a href="https://doi.org/10.1038/s41587-020-0439-x">https://doi.org/10.1038/s41587-020-0439-x</a></div>
+</div>
+<div id="ref-garcia2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Garcia M, Juhos S, Larsson M, et al (2020) Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants. F1000Research 9:63. <a href="https://doi.org/10.12688/f1000research.16665.2">https://doi.org/10.12688/f1000research.16665.2</a></div>
+</div>
+<div id="ref-garrison2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Garrison E, Marth G (2012) Haplotype-based variant detection from short-read sequencing. <a href="https://doi.org/10.48550/ARXIV.1207.3907">https://doi.org/10.48550/ARXIV.1207.3907</a></div>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./rnaseq.html" class="pagination-link" aria-label="Bulk RNAseq">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNAseq</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

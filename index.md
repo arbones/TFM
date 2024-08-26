@@ -1,18 +1,19 @@
+---
+toc: false
+---
+
 <center>
 
-# Front Page {.unnumbered}
+# Front Page {.hidden .unnumbered}
 
-
+# Master Thesis {.unnumbered}
 
 ![](images/uvic_logo.png)
 
-
-
-### Master Thesis
-
 ## Title of the work
 
-by **Jose Miguel Arbonés Mainar**
+by
+__Name of the student__
 
 Supervisor: Laura Puente PhD, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\
 Co-supervisor: Alberto Cebollada MsSc, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\
