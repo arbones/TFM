@@ -1,5 +1,5 @@
 ---
-title: "Bulk RNAseq"
+title: "Bulk RNA sequencing"
 execute: 
   echo: true
   warning: false
@@ -12,10 +12,9 @@ editor_options:
 
 ```{r}
 library(tidyverse)
-library(cowplot)
 library(DESeq2)
 library(org.Hs.eg.db)
-library(clusterProfiler)
+library(gprofiler2)
 
 
 # libraries for visualization
@@ -31,23 +30,13 @@ conflicted::conflicts_prefer(dplyr::select(),
 options(scipen=999)
 ```
 
-
 ## Introduction
 
-Recent advancements in omics technologies and the decreasing costs of next-generation sequencing (NGS) have transformed high-throughput data generation and analysis. Companies like Novogene and BGI, which specialize in outsourcing, have played a key role in this shift. As these technologies evolve, the large volumes of data produced daily require advanced and customizable analytical methods.
+Recent advancements in omics technologies, fueled by the decreasing costs of next-generation sequencing (NGS) and the role of outsourcing companies like Novogene and BGI, have significantly enhanced the capacity for high-throughput data generation and analysis. As the volume of omics data escalates, the demand for advanced, customizable analytical tools increases. These tools are broadly categorized into graphical user interface (GUI) tools, which are accessible and user-friendly, and command line interface (CLI) tools, which offer greater flexibility and are suited for users with bioinformatics expertise. GUI tools are divided into web-based applications, like Galaxy or Partek Flow, and local applications; the former offers constant updates while the latter provides stability for reproducible results. CLI tools, often developed in scripting languages like Bash, R, Python, Perl, and Groovy, are essential for efficient data processing, particularly in parallel computing environments. The open-source nature of R and Python further enhances their utility in bioinformatics. Specialized pipeline tools such as Nextflow and Snakemake improve the scalability and reproducibility of bioinformatics workflows [@wratten2021].
 
-There are two main types of analysis tools: graphical user interface (GUI) tools and command line interface (CLI) tools. GUI tools are user-friendly and accessible to researchers without advanced programming skills, offering robust capabilities for omics data analysis. These tools can be either web-based or local applications. Web-based applications, such as Galaxy or Partek Flow, are frequently updated and provide access to the latest database versions. However, they may be less stable compared to local applications, which are more reliable for reproducible results.
-
-CLI tools, on the other hand, require bioinformatics expertise but offer greater flexibility and powerful features for customizing and automating complex analyses. Programs written in Bash, R, Python, Perl, and Groovy are particularly efficient for high-throughput data processing, especially in parallel computing environments. The open-source nature of R and Python, along with their extensive libraries and packages, has made them widely adopted in bioinformatics.
-
-Specialized tools for pipeline development, such as Nextflow, Snakemake, WDL, and Cromwell, have enhanced the scalability and reproducibility of bioinformatics workflows. Nextflow stands out for its ability to adapt pipelines written in various scripting languages and for its active user community that maintains and shares curated nf-core pipelines.
-
-In RNA sequencing (RNAseq) data analysis, a typical pipeline involves several stages: upstream data processing, quality control, visualization of count matrices, and downstream functional analysis. Different tools excel at various stages, and integrating these tools can create a more comprehensive and customized analytical approach. This project leverages the strengths of Nextflow's nf-core rnaseq pipeline and the versatility of R and its packages to develop a robust and flexible RNA-seq data analysis pipeline.
-
-https://www.biorxiv.org/content/10.1101/2023.10.15.562329v3.full
+In the context of this study, we leverage Nextflow’s `nf-core:rnaseq` pipeline alongside R to develop a robust, flexible pipeline for RNA-seq data analysis, aiming to elucidate the molecular mechanisms of steatosis in obese individuals through a cross-tissue transcriptomics analysis of subcutaneous adipose tissue (scWAT) and liver. This approach integrates various analytical stages, from data processing to downstream functional analysis, to identify potential therapeutic targets and biomarkers, enhancing our understanding of tissue-specific metabolic disruptions during steatosis.
 
 ## Experimental design
-
 
 ### RNA isolation and extraction
 
@@ -56,7 +45,6 @@ Total RNA was isolated from paired frozen biopsies of scWAT (n=80) and liver (n=
 After centrifugation, three phases were formed. The aqueous phase containing the RNA was isolated, and 0.5 ml of 100% isopropanol was added to precipitate the RNA. The mixture was incubated on ice for 10 minutes and centrifuged again at 12,000 g for 15 minutes at 4°C. The supernatant was removed by decanting, and the RNA pellet was resuspended in 1 ml of 75% ethanol for washing. The pellet was homogenized, centrifuged at 7,500 g for 5 minutes at 4°C, and the supernatant was removed. The pellet was then dried for 5 minutes at room temperature before resuspending the RNA in DEPC water. To remove any genomic DNA, the RNA samples were treated with RNase-Free DNase (Life Technologies). The concentration and purity of the RNA were measured by absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).
 
 ### RNA quality assessment
-
 
 ```{r}
 
@@ -70,8 +58,8 @@ gg_hist <- function(){list(
         scale_x_continuous(breaks = 4:10, limits = c(4,10)),
         theme_minimal(),
         theme(panel.grid.minor = element_blank(),
-          axis.title = element_text(size=15),
-          axis.text = element_text(size=12))
+          axis.title = element_text(size=18),
+          axis.text = element_text(size=14))
 )} 
 
 r1 <- ggplot(rin |> filter (tissue=="liver"), aes(RIN_SCT))+
@@ -83,7 +71,6 @@ r2 <- ggplot(rin |> filter (tissue=="scWAT"), aes(RIN_SCT))+
 ```
 
 ::: column-margin
-
 ```{r}
 #| echo: false
 #| label: fig-rin
@@ -92,7 +79,6 @@ r2 <- ggplot(rin |> filter (tissue=="scWAT"), aes(RIN_SCT))+
 plot_grid(r2,r1,labels = c('scWAT', 'Liver'), 
           label_size=18,label_x = 0.3, ncol = 1)
 ```
-
 :::
 
 RNA integrity was assessed using the RNA integrity number (RIN). The RIN was measured with the Agilent 2200 TapeStation and the RNA ScreenTape assay, following the manufacturer’s protocol. For liver tissue samples, the average RIN was 6.8 ± 1.0, with values ranging from 4.8 to 8.9. In contrast, scWAT samples showed higher RNA integrity, with an average RIN of 8.1 ± 0.6, ranging from 6.3 to 9.0. The higher RIN values in scWAT suggest better RNA preservation, likely due to lower enzymatic activity that degrades RNA (@fig-rin).
@@ -105,19 +91,19 @@ Libraries were checked with Qubit and real-time PCR for quantification and bioan
 
 ### mRNAseq mapping and quantification workflow
 
-We used the nf-core/rnaseq pipeline with Nextflow (version 23.10.1) to process RNA sequencing data (compressed fastq files). The analysis was containerized using Docker to ensure reproducibility. Input data, including sample metadata, was provided via a CSV file, and the workflow was performed by the [Biocomputation Core](https://www.iacs.es/servicios/biocomputacion/) on the Core Cluster of the Instituto Aragonés de Ciencias de la Salud. We employed the STAR aligner with Salmon for quantification, using the GRCh38.p13 reference genome and Gencode v40 gene annotations. The pipeline was configured to skip marking duplicate reads and using custom genome references rather than default settings. The workflow was based on the nf-core repository at [](https://github.com/nf-core/rnaseq).
+We used the [`nf-core/rnaseq` pipeline](https://github.com/nf-core/rnaseq){target="_blank"} [@ewels2020] in Nextflow (version 23.10.1) to process RNA sequencing data (compressed fastq files). The pipeline was configured to run in a `Docker` containerized environment , ensuring that all dependencies were consistently managed and the computational environment was isolated. Input data, including sample metadata, was provided via a CSV file, and the workflow was performed by the [Biocomputation Core](https://www.iacs.es/servicios/biocomputacion/) on the Core Cluster of the Instituto Aragonés de Ciencias de la Salud. The pipeline was configured to use `Cutadapt` for trimming adapters or primer sequnces [@martin2011], the `STAR` aligner [@dobin2012] with `Salmon` for quantification [@patro2017], and the GRCh38.p13 as reference genome and Gencode v40 gene annotations.
 
-### Quality control and reads preprocessing
+### Quality control (QC) and reads preprocessing
 
-In our study, the initial analysis of raw sequencing data from RNAseq experiments involving liver and subcutaneous adipose tissue (scWAT) showed similar average (mean ± sd) outputs before trimming, with liver samples yielding 50.4 ± 10 million reads per sample (forward + reverse) and scWAT 52.1 ± 11 million reads. The variability in sequencing depth between samples was evidenced by ranges extending from 31.0 to 85.3 million reads per sample for liver, and 20.3 to 83.0 million reads for scWAT. ([Multiqc report](docs/multiqcReport_rnaseq-RAW.html){target="_blank"})
+All QC results from the differents steps in the `nf-core/rnaseq` pipeline were summarized in the ([Multiqc report](documents/multiqc_report_rnaseq.html){target="_blank"}). In brief, the initial analysis of raw sequencing data from RNAseq experiments involving paired biopsies of liver and subcutaneous adipose tissue (scWAT) showed similar average (mean ± sd) outputs before trimming, with liver samples yielding 50.4 ± 10 million reads per sample (forward + reverse) and scWAT 52.1 ± 11 million reads. The variability in sequencing depth between samples was evidenced by ranges extending from 31.0 to 85.3 million reads per sample for liver, and 20.3 to 83.0 million reads for scWAT.
 
-Post-sequencing data processing with Cutadapt revealed a mean trimming percentage of 1.02 ± 0.19% for liver samples and 1.41 ± 0.44% for SCWAT, suggesting a higher incidence of adapter contamination or low-quality bases in SCWAT samples.
+Post-sequencing data processing with `Cutadapt` revealed a mean trimming percentage of 1.02 ± 0.19% for liver samples and 1.41 ± 0.44% for SCWAT, suggesting a higher incidence of adapter contamination or low-quality bases in SCWAT samples.
 
-Mapping efficiencies, assessed using STAR, demonstrated robust alignment with an average of 89.6 ± 2.9% of sequences uniquely mapping to the reference genome (GRCh38) for liver samples, and a similar mapping performance 90.2 ± 1.64% for scWAT. Reads mapping to multiple loci were also similar between tissues, with 8.18 ± 1.59% for liver and 8.45 ± 1.46% for scWAT.
+Mapping efficiencies, assessed using `STAR`, demonstrated robust alignment with an average of 89.6 ± 2.9% of sequences uniquely mapping to the reference genome (GRCh38) for liver samples, and a similar mapping performance 90.2 ± 1.64% for scWAT. Reads mapping to multiple loci were also similar between tissues, with 8.18 ± 1.59% for liver and 8.45 ± 1.46% for scWAT.
 
-## Gene expression analysis according to steatosis using `DESeq2` 
+## Gene expression analysis according to steatosis using `DESeq2`
 
-The analysis began by loading essential R packages: `tidyverse` [@tidyverse]for data manipulation, `DESeq2` [@DESeq2] for differential expression analysis, and `org.Hs.eg.db` [@org.Hs.eg.db] for gene annotation. Metadata were imported, and sample identifiers were established as row names. Steatosis was recategorized into three distinct groups. Gene count data were subsequently loaded, and values were rounded to the nearest integer. To enhance the robustness of the analysis, we performed a pre-filtering step to keep only those genes that had a count > 15 in at least 30 samples (out of 155). Counts of the autosomal regions (PAR) were added to their homologous sequence. Gene identifiers initially provided in ENSEMBL format were converted to HGNC symbols via a mapping process that involved the creation of a dictionary through joins between the ensembl and symbol tables, linking ENSEMBL IDs to their respective HGNC counterparts. This conversion facilitated the utilization of more standardized and widely recognized gene names in subsequent analytical processes.
+The analysis began by loading essential R packages: `tidyverse` (version `r packageVersion("tidyverse")`) [@tidyverse]for data manipulation, `DESeq2` (version `r packageVersion("DESeq2")`) [@DESeq2] for differential expression analysis, `org.Hs.eg.db` (version `r packageVersion("org.Hs.eg.db")`) [@org.Hs.eg.db] for gene annotation, and `gprofiler2` (version `r packageVersion("gprofiler2")`) [@gprofiler2]. Metadata were imported, and sample identifiers were established as row names. Steatosis was recategorized into three distinct groups. Gene count data were subsequently loaded, and values were rounded to the nearest integer. To enhance the robustness of the analysis, we performed a pre-filtering step to keep only those genes that had a count \> 15 in at least 30 samples (out of 155). Counts of the autosomal regions (PAR) were added to their homologous sequence. Gene identifiers initially provided in ENSEMBL format were mapped to gene symbols. This conversion facilitated the utilization of more standardized gene names in subsequent processes.
 
 ```{r}
 
@@ -201,11 +187,9 @@ vst_liver <- vst(dds_liver, blind = FALSE)
 
 ```
 
-
-
 ### Data quality assessment
 
-Data quality assessment and quality control are pivotal initial steps in any RNAseq analysis, particularly aimed at ensuring the fitness of data for detecting differentially expressed genes. These procedures are designed to identify and exclude samples and or data points compromised by experimental anomalies, thereby safeguarding the integrity of the analysis.
+Data quality assessment and quality control are pivotal initial steps in any RNAseq analysis. These procedures are designed to identify and exclude samples and or data points compromised by experimental anomalies, thereby safeguarding the integrity of the analysis.
 
 Boxplots in @fig-raw_counts1 display log2-transformed raw counts grouped by tissue and steatosis severity levels. The data across steatosis categories ("\<5%", "5-33%", "\>33%") are visualized with varying colors (gree, orange, and red) to highlight differences in expression profiles. In both scWAT and liver all samples showed similar dispersion and central tendencies in gene expression counts. The uniformity in distribution across all steatosis levels suggested that library depth and average counts per sample were consistent, precluding any library bias in the analysis.
 
@@ -287,7 +271,7 @@ plot_grid(p1, p2, labels = c('a', 'b'))
 
 ```
 
-To further observe the distribution of samples, read counts across samples were normalized using the variance stabilizing transformation (VST) [@tibshirani1988] and their dimension was reduced via principal component analysis (PCA) and visualized the results within combinations of the two principal components. The biplot (@fig-pca1) shows tight clusters for both scWAT (a) and liver (b) samples. This clustering indicates that samples within the same group (based on steatosis level or gender) have similar expression profiles, suggesting strong internal consistency.
+To further observe the distribution of samples, read counts across samples were normalized using the variance stabilizing transformation (VST) [@tibshirani1988] and their dimension was reduced via principal component analysis (PCA) and visualized the results within combinations of the two principal components. The biplot (@fig-pca1) shows no outliers and tight clusters for both scWAT (a) and liver (b) samples. This clustering indicates that samples within the same group (based on steatosis level or gender) have similar expression profiles, suggesting strong internal consistency.
 
 ```{r}
 #| label: fig-pca1
@@ -329,7 +313,6 @@ plot_grid(p3, p4, labels = c('scWAT', 'Liver'))
 
 ```
 
-
 ### Differential expression in scWAT
 
 #### Modeling raw counts
@@ -337,6 +320,7 @@ plot_grid(p3, p4, labels = c('scWAT', 'Liver'))
 In our study, the `DESeq2` package was employed to analyze differential gene expression across scWAT samples with varying degrees of liver steatosis. Initially, we configured the `DESeq2` object using the Likelihood Ratio Test (LRT) method, suitable for handling complex comparisons involving multiple levels of a factor.
 
 ```{r}
+#| cache: true
 
 # Perform differential expression analysis for scWAT data
 # Run DESeq2 using the likelihood ratio test (LRT) controlling for the effect of gender (sexo)
@@ -346,12 +330,11 @@ dex_sc <- DESeq(dds_sc, test = "LRT", reduced = ~ sexo)
 
 ```
 
-Under the hood of the `DESeq` function the normalization of count data was performed using the median of ratios method, ensuring that variations in library size did not bias the analysis. This method adjusted each sample's read counts by a size factor, calculated to equalize the median of ratios across all samples (@fig-fs_sc). 
-
+::: column-margin
 ```{r}
 #| label: fig-fs_sc
 #| fig-cap: "Calculated factor sizes for each sample using the median of ratios method."  
-#| fig-height: 10
+#| fig-height: 18
 
 ## Extract and visualize size factors from the DESeq2 object
 sizeFactors(dex_sc) |> as.data.frame() |> 
@@ -361,8 +344,13 @@ sizeFactors(dex_sc) |> as.data.frame() |>
   ggplot(aes(x=Sample, y= `Size Factors`))+
   geom_col(col="darkgrey", fill = "grey")+
   coord_flip()+
-  theme_minimal()
+  theme_minimal()+
+  theme(axis.title = element_text(size = 20),
+        axis.text = element_text(size=18))
 ```
+:::
+
+Under the hood of the `DESeq` function the normalization of count data was performed using the median-of-ratios method [@anders2010], ensuring that variations in library size did not bias the analysis. This method adjusted each sample's read counts by a size factor, calculated to equalize the median of ratios across all samples (@fig-fs_sc).
 
 To address the intrinsic variability in count data, `DESeq2` estimates gene-wise dispersion, which reflects the variance deviation from the mean for each gene. This step is crucial because RNA-seq data typically exhibit variance that exceeds the mean, particularly when expression levels are low. Dispersion parameters were calculated for each gene (Black dots in @fig-disp_sc), taking into account the mean expression levels and observed variance.
 
@@ -379,9 +367,9 @@ d2 <- plotDispEsts(dex_sc)
 
 ```
 
-The gene-wise dispersions were then modeled through a curve-fitting process, to generalize dispersion behavior across the dataset. The curve, represented in red in @fig-disp_sc, illustrates the inverse relationship between mean expression and dispersion, a typical observation in RNA-seq data. The final analytical step involved shrinking the initial raw dispersion estimates towards the values predicted by the fitted curve (Blue dots). 
+The gene-wise dispersions were then modeled through a curve-fitting process, to generalize dispersion behavior across the dataset. The curve, represented in red in @fig-disp_sc, illustrates the inverse relationship between mean expression and dispersion, a typical observation in RNA-seq data. The final analytical step involved shrinking the initial raw dispersion estimates towards the values predicted by the fitted curve (Blue dots).
 
-Our analysis revealed a pattern where dispersion generally decreased with increasing mean expression levels, indicating a stable and consistent data quality across our sample set. The limited shrinkage observed was attributable to the large number of biological replicates, which provided a robust basis for the dispersion estimates. 
+Our analysis revealed a pattern where dispersion generally decreased with increasing mean expression levels, indicating a stable and consistent data quality across our sample set. The limited shrinkage observed was attributable to the large number of biological replicates, which provided a robust basis for the dispersion estimates.
 
 #### Testing for differential expression
 
@@ -407,32 +395,34 @@ down <- sum(res_sc_df$log2FoldChange < 0, na.rm = TRUE)
 
 ```
 
-
-In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the subcutaneous white adipose tissue (scWAT) of individuals with the highest steatosis compared to those with no steatosis. However, after applying a stringent false discovery rate (FDR) cutoff of less than 0.05, the number of statistically significant differentially expressed genes (DEGs) was greatly reduced to `r nrow(degs_sc)`. Of these, only `r sum(degs_sc$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_sc$log2FoldChange<0)` were downregulated (@tbl-degs_sc)
-
+In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the subcutaneous white adipose tissue (scWAT) of individuals according their steatosis degree. Because we were mostly interested in transcriptional changes that may precede the initiation of the steatosis process, we focused on the contrast between those individuals with the highest liver steatosis extension (\>33%) and their counterparts with no steatosis. Comparing these two groups and applying a false discovery rate (FDR) cutoff of less than 0.05, the number of statistically significant differentially expressed genes (DEGs) was greatly reduced to `r nrow(degs_sc)`. Of these, only `r sum(degs_sc$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_sc$log2FoldChange<0)` were downregulated (@tbl-degs_sc)
 
 ```{r}
 #| label: tbl-degs_sc
-#| tbl-cap: "Differentially expressed genes (DEGs) in scWAT. fdr: false discovery rate"
+#| tbl-cap: "Differentially expressed genes (DEGs) in scWAT. FDR: false discovery rate"
 
 # Select relevant columns from the significant DEGs in scWAT data
 degs_sc |> 
   # Select the log2 fold change, p-value, and adjusted p-value (FDR)
-  select(log2FoldChange, pvalue, fdr = "padj") |> 
+  select(log2FoldChange, pvalue, FDR = "padj") |> 
   # Arrange the results by the FDR (adjusted p-value) in ascending order
-  arrange(fdr) |> 
+  arrange(FDR) |> 
+  # Change p-value formats
+  mutate(pvalue = format.pval(pvalue,eps = 0.00001, digits =1),
+         FDR = format.pval(FDR, eps = 0.001, digits = 1)) |> 
   # Create a formatted table with specified number of digits for each column
   kbl(digits = c(2, 5, 3)) |> 
   # Apply striped styling to the table for better visual presentation
-  kable_styling("striped")
+  kable_styling("striped") |> 
+  column_spec(1,italic = T)
 
 ```
 
-In this regard, the volcano plot (@fig-volcano_sc) illustrates the differential expression of genes in subcutaneous white adipose tissue (scWAT) according to liver steatosis. Among the thousands of genes analyzed, those genes displayed in red showed both statistically significant p-values (FDR < 0.05) and substantial changes in expression (Log2 FC > 1).
+In this regard, the @fig-volcano_sc illustrates the differential expression of genes in subcutaneous white adipose tissue (scWAT) according to liver steatosis. Among the thousands of genes analyzed, those genes displayed in red showed statistically significant changes (FDR \< 0.05).
 
 ```{r}
 #| label: fig-volcano_sc
-#| fig-cap: "Volcano plot showing DEGs (in red) in individuals with the highest (>33%) compared to the lowest (<5%) degree of steatosis."
+#| fig-cap: "Plot showing DEGs (in red) in individuals with the highest (>33%) compared to the lowest (<5%) degree of steatosis."
 #| column: body-outset-right
 
 
@@ -444,14 +434,18 @@ EnhancedVolcano(res_sc,
     title = "Differentially expressed genes (DEGs) in scWAT",
     # Set the subtitle indicating the comparison groups
     subtitle = ">33%  vs. <5% steatosis",
+    ylab = bquote(~-Log[10] ~ italic(FDR)),
     # Customize the legend labels for different categories of DEGs
-    legendLabels = c("NS", expression(Log[2] ~ FC  > 1), "FDR < 0.05", expression( FDR < 0.05 ~ and ~ Log[2] ~ FC  > 1)),
+    legendLabels = c("NS", 
+                     expression(paste("|",Log[2], " FC","|", " >1")), 
+                     "FDR < 0.05", 
+                     expression(paste("FDR < 0.05 and ","|",Log[2], " FC","|", " >1"))),
     # Set the caption below the plot (empty in this case)
     caption = "",
-    # Set the size of the labels on the plot
-    labSize = 4,
+    # Set the size and face of the labels on the plot
+    labSize = 3, labFace = "italic",
     # Position the legend to the right of the plot
-    legendPosition = 'right',
+    legendPosition = 'no',
     # Draw lines connecting labels to their corresponding points
     drawConnectors = TRUE,
     # Connect labels to points in both directions (from left and right)
@@ -459,24 +453,26 @@ EnhancedVolcano(res_sc,
     # Allow for an infinite number of overlapping points to be labeled
     max.overlaps = Inf,
     # Set the fold change cutoff for highlighting DEGs
-    FCcutoff = 1,
+    FCcutoff = 0.001,
     # Specify the column to use for the p-value cutoff
     pCutoffCol = "padj",
     # Set the p-value cutoff for significance
     pCutoff = 0.05,
+    cutoffLineType = "blank",
     # Set the x-axis to represent log2 fold change
     x = 'log2FoldChange',
     # Set the y-axis to represent the p-value
-    y = 'pvalue')
+    y = 'padj',
+    ylim = c(0,3.5),
+    xlim= c(-3,2))
 
 
 ```
 
 Following their identification, we further analyzed the expression patterns of these `r nrow (degs_sc)` DEGs by representing their normalized counts in boxplots across the three steatosis groups (@fig-box_sc). This approach allows us to observe how the expression of these significant genes varies across different degrees of steatosis, offering deeper insights into the potential role these genes play in the progression of steatosis. The boxplots highlight the consistency of expression changes across groups, reinforcing the relevance of these DEGs in the context of steatosis severity.
 
-
 ```{r}
-#| fig-height: 10
+#| fig-height: 12
 #| label: fig-box_sc
 #| fig-cap: "Boxplots of the differentially expressed genes (DEGs) in scWAT according to the 3 groups of steatosis.<br>Each box represents the interquartile range (IQR) of the normalized counts, with the line inside the box denoting the median. The whiskers extend to show the range of the data, excluding outliers, which are plotted as individual points.<br>p: p-value for the Kruskal-Wallis test for the comparison between groups."
 #| column: body-outset-right
@@ -530,7 +526,8 @@ gg_degs <- function() {
           strip.text = element_text(size = 13),
           axis.title = element_text(size = 13),
           axis.text.y = element_text(size = 11),
-          axis.text.x = element_text(size = 12, angle = 20))
+          axis.text.x = element_text(size = 12, angle = 20),
+          strip.text.x = element_text(face = "italic"))
   )
 }
 
@@ -544,73 +541,14 @@ ggplot(sc, aes(x = steatosis_3cat, y = `Normalized Counts`, fill = steatosis_3ca
 
 ```
 
-#### Gene ontology enrichment
-
-Lastly, in our RNAseq analysis of subcutaneous adipose tissue (scWAT) from individuals with varying degrees of steatosis, we identified specific molecular functions associated with selected DEGs through gene ontology (GO) analysis. The @tbl-go_sc summarizes those molecular functions significantly enriched . Thus,  semaphorin receptor binding and chemorepellent activity were up-regulated in the steatotic conditions, while multiple functions related to fatty acid metabolism, lipid transport, microtubule binding, cyclic nucleotide signaling, and nucleic acid processing where appeared down-regulated. This enrichment analysis sheds light on the molecular functions most impacted by steatosis and provides a deeper understanding of the biological processes that are differentially regulated in scWAT as steatosis progresses.
-
-```{r}
-#| label: tbl-go_sc
-#| tbl-cap: "Gene ontology (GO) analysis to detect enriched molecular functions of up- and down-regulated genes in individuals with the highest (>33%) compared to the lowest (<5%) degree of steatosis.  "
-#| column: body-outset-right
-
-### Gene Ontology (Molecular Function) ###
-
-# Flag up- and down-regulated genes based on adjusted p-value and log2 fold change
-go_sc <- res_sc |> 
-  as.data.frame() |>
-  mutate(q_0.1 = case_when(
-    padj < 0.05 & log2FoldChange > 0 ~ 1,    # Flag genes as upregulated (1) if padj < 0.05 and log2FoldChange > 0
-    padj < 0.05 & log2FoldChange < 0 ~ -1,   # Flag genes as downregulated (-1) if padj < 0.05 and log2FoldChange < 0
-    .default = 0                             # All other genes are flagged as 0 (not significantly regulated)
-  ))
-
-# Extract upregulated genes
-go_sc_up_00  <- go_sc |> 
-  rownames_to_column("gene") |> 
-  filter(q_0.1 == 1) |>           # Filter for upregulated genes
-  pull(gene)                      # Pull the gene names into a vector
-
-# Perform GO enrichment analysis for upregulated genes
-go_sc_up_0 <- enrichGO(gene = go_sc_up_00, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "MF", 
-  qvalueCutoff = 0.05, pAdjustMethod = "fdr")    # Enrichment analysis for molecular function (MF)
-
-# Convert the result to a data frame and add a regulation label ("Up")
-go_sc_up <- as.data.frame(go_sc_up_0) |> 
-  mutate(regulation = "Up")
-
-# Extract downregulated genes
-go_sc_down_00  <- go_sc |> 
-  rownames_to_column("gene") |> 
-  filter(q_0.1 == -1) |>          # Filter for downregulated genes
-  pull(gene)                      # Pull the gene names into a vector
-
-# Perform GO enrichment analysis for downregulated genes
-go_sc_down_0 <- enrichGO(gene = go_sc_down_00, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "MF", 
-  pvalueCutoff = 0.1, qvalueCutoff = 0.05, pAdjustMethod = "fdr")    # Enrichment analysis for molecular function (MF)
-
-# Convert the result to a data frame and add a regulation label ("Down")
-go_sc_down <- as.data.frame(go_sc_down_0) |> 
-  mutate(regulation = "Down")
-
-# Create a table combining up- and down-regulated genes and their GO terms
-bind_rows(go_sc_up, go_sc_down) |> 
-  arrange(desc(regulation), geneID) |>  # Arrange by regulation status and geneID
-  select(regulation, geneID, `GO molecular function` = "Description", `GO ID` = "ID", qvalue ) |>  # Select relevant columns
-  kbl(digits=3) |>                     # Format the table with 3 decimal places
-  kable_styling("striped")             # Apply striped styling to the table
-
-```
-
-
-
 ### Differential expression in liver
-
 
 #### Modeling raw counts
 
 For this study we also investigated the differential gene expression across liver biopsies with varying degrees of steatosis. To this end the `DESeq2` object was also set using the Likelihood Ratio Test (LRT) method.
 
 ```{r}
+#| cache: true
 
 # Perform differential expression analysis for liver data
 # Run DESeq2 using the likelihood ratio test (LRT) controlling for the effect of gender (sexo)
@@ -618,23 +556,27 @@ dex_liver <- DESeq(dds_liver,test = "LRT",  reduced = ~ sexo)
 
 ```
 
-In the liver tissue analysis, the first step involved calculating the size factor of the libraries to equalize the median of ratios across all samples (@fig-fs_liver). 
-
+::: column-margin
 ```{r}
 #| label: fig-fs_liver
 #| fig-cap: "Calculated factor sizes for each sample using the median of ratios method."  
-#| fig-height: 10
+#| fig-height: 18
 
-# Extract and visualize size factors from the DESeq2 object
+## Extract and visualize size factors from the DESeq2 object
 sizeFactors(dex_liver) |> as.data.frame() |> 
   rownames_to_column("Sample") |> 
   dplyr::rename(`Size Factors`= "sizeFactors(dex_liver)") |> 
-  mutate(Sample = str_sub (Sample, 4,6)) |> 
+  mutate(Sample = str_sub (Sample, 3,6)) |> 
   ggplot(aes(x=Sample, y= `Size Factors`))+
   geom_col(col="darkgrey", fill = "grey")+
   coord_flip()+
-  theme_minimal()
+  theme_minimal()+
+  theme(axis.title = element_text(size = 20),
+        axis.text = element_text(size=18))
 ```
+:::
+
+In the liver tissue analysis, the first step involved calculating the size factor of the libraries to equalize the median of ratios across all samples (@fig-fs_liver).
 
 We next assessed the variation in gene expression in liver tissue by modeling gene-wise dispersions through a curve-fitting process. Consistent with our observations in the scWAT analysis, the liver data revealed that dispersion generally decreased as mean expression levels increased (@fig-disp_liver). The limited shrinkage of dispersion estimates, as seen in scWAT, can be attributed to the large number of biological replicates.
 
@@ -645,10 +587,7 @@ We next assessed the variation in gene expression in liver tissue by modeling ge
 # Generate a plot of dispersion estimates using the DESeq2 object
 d2 <- plotDispEsts(dex_liver)
 
-
-
 ```
-
 
 #### Testing for differential expression
 
@@ -674,8 +613,7 @@ down <- sum(res_liver_df$log2FoldChange < 0, na.rm = TRUE)
 
 ```
 
-
-In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the liver of individuals with the highest steatosis compared to those with no steatosis. However, when applying a stringent false discovery rate (FDR) cutoff of less than 0.05 to identify statistically significant differentially expressed genes (DEGs), the number of significant DEGs was markedly reduced to `r nrow(degs_liver)`. Among these, only `r sum(degs_liver$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_liver$log2FoldChange<0)` were downregulated (@tbl-degs_liver). The volcano plot (@fig-volcano_liver) illustrates the differential expression of genes in the liver according to steatosis. Among the thousands of genes analyzed, only IGFBP2 showed FDR < 0.05 and substantial changes in expression (Log2 FC > 1).
+In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the liver of individuals with the highest steatosis compared to those with no steatosis. However, when applying a stringent false discovery rate (FDR) cutoff of less than 0.05 to identify statistically significant differentially expressed genes (DEGs), the number of significant DEGs was markedly reduced to `r nrow(degs_liver)`. Among these, only `r sum(degs_liver$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_liver$log2FoldChange<0)` were downregulated (@tbl-degs_liver). The volcano plot (@fig-volcano_liver) illustrates the differential expression of genes in the liver according to steatosis. Among the thousands of genes analyzed, only IGFBP2 showed FDR \< 0.05 and substantial changes in expression (Log2 FC \> 1).
 
 ```{r}
 #| label: tbl-degs_liver
@@ -684,13 +622,17 @@ In our differential expression analysis using `DESeq2` with the LRT model, we in
 # Select relevant columns from the significant DEGs in liver data
 degs_liver |> 
   # Select the log2 fold change, p-value, and adjusted p-value (FDR)
-  select(log2FoldChange, pvalue, fdr = "padj") |> 
+  select(log2FoldChange, pvalue, FDR = "padj") |> 
   # Arrange the results by the FDR (adjusted p-value) in ascending order
-  arrange(fdr) |> 
+  arrange(FDR) |> 
+  # Change p-value formats
+  mutate(pvalue = format.pval(pvalue,eps = 0.00001, digits =1),
+         FDR = format.pval(FDR, eps = 0.001, digits = 1)) |>
   # Create a formatted table with specified number of digits for each column
   kbl(digits = c(2, 5, 3)) |> 
   # Apply striped styling to the table for better visual presentation
-  kable_styling("striped")
+  kable_styling("striped") |> 
+  column_spec(1, italic = T)
 
 ```
 
@@ -707,16 +649,18 @@ EnhancedVolcano(res_liver,
     title = "Differentially expressed genes (DEGs) in liver",
     # Set the subtitle indicating the comparison groups
     subtitle = ">33%  vs. <5% steatosis",
+     ylab = bquote(~-Log[10] ~ italic(FDR)),
     # Customize the legend labels for different categories of DEGs
-    legendLabels = c("NS", expression(Log[2] ~ FC  > 1), "FDR < 0.05", expression(FDR < 0.05 ~ and ~ Log[2] ~ FC  > 1)),
+    legendLabels = c("NS", 
+                     expression(paste("|",Log[2], " FC","|", " >1")), 
+                     "FDR < 0.05", 
+                     expression(paste("FDR < 0.05 and ","|",Log[2], " FC","|", " >1"))),
     # Set the caption below the plot (empty in this case)
     caption = "",
-    # Highlight only the selected DEGs in the plot
-    selectLab = rownames(degs_liver),
-    # Set the size of the labels on the plot
-    labSize = 4,
+    # Set the size and font of the labels on the plot
+    labSize = 4, labFace = "italic",
     # Position the legend to the right of the plot
-    legendPosition = 'right',
+    legendPosition = 'no',
     # Draw lines connecting labels to their corresponding points
     drawConnectors = TRUE,
     # Connect labels to points in both directions (from left and right)
@@ -724,23 +668,27 @@ EnhancedVolcano(res_liver,
     # Allow for an infinite number of overlapping points to be labeled
     max.overlaps = Inf,
     # Set the fold change cutoff for highlighting DEGs
-    FCcutoff = 1,
+    FCcutoff = 0.001,
     # Specify the column to use for the p-value cutoff
     pCutoffCol = "padj",
     # Set the p-value cutoff for significance
     pCutoff = 0.05,
+    cutoffLineType = "blank",
     # Set the x-axis to represent log2 fold change
     x = 'log2FoldChange',
     # Set the y-axis to represent the p-value
-    y = 'pvalue')
+    y = 'padj',
+    ylim = c(0,3.5),
+    xlim= c(-1.5,1.5))
+
+
 
 ```
 
-
-After identifying the DEGs in the liver, we analyzed their expression patterns using boxplots across the three steatosis groups (@fig-box_liver). Most of these boxplots revealed a clear, ordered, and stepwise pattern of gene expression, with expression levels consistently and progressively changing as steatosis severity increased from low (<5%) to medium, and then to high (>33%). This graded response suggests that these genes are closely linked to the progression of steatosis, highlighting their potential role as key markers or drivers in the development of the condition.
+After identifying the DEGs in the liver, we analyzed their expression patterns using boxplots across the three steatosis groups (@fig-box_liver). Most of these boxplots revealed a clear, ordered, and stepwise pattern of gene expression, with expression levels consistently and progressively changing as steatosis severity increased from low (\<5%) to medium, and then to high (\>33%). This graded response suggests that these genes are closely linked to the progression of steatosis, highlighting their potential role as key markers or drivers in the development of the condition.
 
 ```{r}
-#| fig-height: 10
+#| fig-height: 8
 #| label: fig-box_liver
 #| fig-cap: "Boxplots of the differentially expressed genes (DEGs) in liver according to the 3 groups of steatosis.<br>Each box represents the interquartile range (IQR) of the normalized counts, with the line inside the box denoting the median. The whiskers extend to show the range of the data, excluding outliers, which are plotted as individual points.<br>p: p-value for the Kruskal-Wallis test for the comparison between groups."
 #| column: body-outset-right            
@@ -775,64 +723,126 @@ ggplot(liver, aes(x = steatosis_3cat, y = `Normalized Counts`, fill = steatosis_
 
 ```
 
-#### Gene ontology enrichment
-
-Lastly, in our RNAseq analysis of liver tissue from individuals with varying degrees of steatosis, we identified specific molecular functions associated with selected DEGs through gene ontology (GO) enrichment analysis. The @tbl-go_liver summarizes the molecular functions that were significantly enriched. For instance, cytokine activity was upregulated, as indicated by the enrichment of *IL32*. In contrast, various functions related to oxidative stress, lipid metabolism, and enzyme activity, such as aldo-keto reductase activity, cholesterol binding, steroid binding, and oxidoreductase activity, were downregulated, involving genes like *AKR7A3*, *APOF*, and *CYP3A4*. Additionally, functions related to protease binding and growth factor binding, linked to genes such as *SERPINA1*, *SERPINA3*, and *IGFBP2*, were also downregulated. This GO enrichment analysis provides insights into the molecular functions most affected by steatosis in liver tissue, offering a deeper understanding of the biological processes that are differentially regulated as steatosis progresses.
+## Functional enrichment analysis with `gprofiler2`
 
 ```{r}
-#| label: tbl-go_liver
-#| tbl-cap: "Gene ontology (GO) analysis to detect enriched molecular functions of up- and down-regulated genes in individuals with the highest (>33%) compared to the lowest (<5%) degree of steatosis."
-#| column: body-outset-right
+# p-value cutoff to be flagged as up- or down- regulated
+p <-  0.001
 
-### Gene Ontology (Molecular Function) ###
 
-# Flag up- and down-regulated genes based on adjusted p-value and log2 fold change
-go_liver <- res_liver |> 
-  as.data.frame() |>
-  mutate(q_0.1 = case_when(
-    padj < 0.05 & log2FoldChange > 0 ~ 1,    # Flag genes as upregulated (1) if padj < 0.05 and log2FoldChange > 0
-    padj < 0.05 & log2FoldChange < 0 ~ -1,   # Flag genes as downregulated (-1) if padj < 0.05 and log2FoldChange < 0
+######################################################
+## scWAT #############################################
+######################################################
+
+# Flag up- and down-regulated genes based on p-value and log2 fold change
+go_sc <- res_sc_df |>
+  mutate(flag = case_when(
+    pvalue < p & log2FoldChange > 0 ~ 1,    # Flag genes as upregulated (1) if padj < 0.05 and log2FoldChange > 0
+    pvalue < p & log2FoldChange < 0 ~ -1,   # Flag genes as downregulated (-1) if padj < 0.05 and log2FoldChange < 0
     .default = 0                             # All other genes are flagged as 0 (not significantly regulated)
   ))
 
 # Extract upregulated genes
-go_liver_up_00  <- go_liver |> 
+up_sc  <- go_sc |> 
   rownames_to_column("gene") |> 
-  filter(q_0.1 == 1) |>           # Filter for upregulated genes
+  filter(flag == 1) |>           # Filter for upregulated genes
   pull(gene)                      # Pull the gene names into a vector
 
-# Perform GO enrichment analysis for upregulated genes
-go_liver_up_0 <- enrichGO(gene = go_liver_up_00, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "MF", 
-  qvalueCutoff = 0.05, pAdjustMethod = "fdr")    # Enrichment analysis for molecular function (MF)
-
-# Convert the result to a data frame and add a regulation label ("Up")
-go_liver_up <- as.data.frame(go_liver_up_0) |> 
-  mutate(regulation = "Up")
 
 # Extract downregulated genes
-go_liver_down_00  <- go_liver |> 
+down_sc  <- go_sc |> 
   rownames_to_column("gene") |> 
-  filter(q_0.1 == -1) |>          # Filter for downregulated genes
+  filter(flag == -1) |>          # Filter for downregulated genes
   pull(gene)                      # Pull the gene names into a vector
 
-# Perform GO enrichment analysis for downregulated genes
-go_liver_down_0 <- enrichGO(gene = go_liver_down_00, OrgDb = "org.Hs.eg.db", keyType = "SYMBOL", ont = "MF", 
-  pvalueCutoff = 0.1, qvalueCutoff = 0.05, pAdjustMethod = "fdr")    # Enrichment analysis for molecular function (MF)
 
-# Convert the result to a data frame and add a regulation label ("Down")
-go_liver_down <- as.data.frame(go_liver_down_0) |> 
-  mutate(regulation = "Down")
 
-# Create a table combining up- and down-regulated genes and their GO terms
-bind_rows(go_liver_up, go_liver_down) |> 
-  arrange(desc(regulation), geneID) |>  # Arrange by regulation status and geneID
-  select(regulation, geneID, `GO molecular function` = "Description", `GO ID` = "ID", qvalue ) |>  # Select relevant columns
-  kbl(digits=3) |>                     # Format the table with 3 decimal places
-  kable_styling("striped")             # Apply striped styling to the table
+# performs statistical enrichment analysis of up- and down regulated genes
+enrich_sc <- gost(query = list("Down" = down_sc, "Up" = up_sc), 
+              multi_query = TRUE, # allows to perform enrichment on multiple input gene lists
+              significant = T , # only significant results returned
+              sources = c("GO:BP", "GO:MF", "GO:CC", "KEGG", "WP"))
+
+
+######################################################
+## LIVER #############################################
+######################################################
+
+
+# Flag up- and down-regulated genes based on p-value and log2 fold change
+go_liver <- res_liver_df |>
+  mutate(flag = case_when(
+    pvalue < p & log2FoldChange > 0 ~ 1,    # Flag genes as upregulated (1) if padj < 0.05 and log2FoldChange > 0
+    pvalue < p & log2FoldChange < 0 ~ -1,   # Flag genes as downregulated (-1) if padj < 0.05 and log2FoldChange < 0
+    .default = 0                             # All other genes are flagged as 0 (not significantly regulated)
+  ))
+
+# Extract upregulated genes
+up_liver  <- go_liver |> 
+  rownames_to_column("gene") |> 
+  filter(flag == 1) |>           # Filter for upregulated genes
+  pull(gene)                      # Pull the gene names into a vector
+
+
+# Extract downregulated genes
+down_liver  <- go_liver |> 
+  rownames_to_column("gene") |> 
+  filter(flag == -1) |>          # Filter for downregulated genes
+  pull(gene)                      # Pull the gene names into a vector
+
+
+
+# performs statistical enrichment analysis of up- and down regulated genes
+enrich_liver <- gost(query = list("Down" = down_liver, "Up" = up_liver), 
+              multi_query = TRUE, # allows to perform enrichment on multiple input gene lists
+              significant = T, # only significant results returned
+              sources = c("GO:BP", "GO:MF", "GO:CC", "KEGG", "WP"),
+              domain_scope = "annotated") 
+
+
+
+
 
 ```
 
-## Bibliography {.unnumbered}
+To elucidate the molecular mechanisms underlying steatosis, we performed a functional enrichment analysis of differentially expressed genes in scWAT and liver from individuals exhibiting varying degrees of steatosis. Utilizing the `gprofiler2` ( version `r packageVersion("gprofiler2")`), we analyzed gene sets against databases including Gene Ontology (GO), Kyoto Encyclopedia of Genes and Genomes (KEGG), and WikiPathways (WP) to identify enriched biological functions, cellular components, and pathways (@fig-go).
 
-::: {#refs}
-:::
+The enrichment analysis was conducted with a less stringent p-value cut-off (p\<0.001 instead of FDR \< 0.05) to enhance the detection of functionally relevant gene sets. This yielded `r length(up_sc)` up-regulated and `r length(down_sc)` down-regulated genes in the scWAT and `r length(up_liver)` up-regulated and `r length(down_liver)` down-regulated genes in the liver according to individuals´steatosis degree.
+
+```{r}
+#| label: fig-go
+#| layout-ncol: 1
+#| fig-cap: "Functional enrichment analysis of statistically significant (p<0.001) up- and down-regulated genes of individuals with the highest (>33%) compared to the lowest (<5%) degree of steatosis.<br>The x-axis shows the terms and the y-axis shows the enrichment p-values on the −log10 scale (MF: Molecular function, CC: Cellular compartment, BP: biological process, KEGG: Kyoto Encyclopedia of Genes and Genomes, WP: WikiPathways). Each circle on the plot corresponds to a single term. Circles are colored according to the origin of annotation and size scaled according to the total number of genes annotated to the corresponding term. The locations on the x-axis are fixed. Terms from the same GO subtree are located closer to each other on the x-axis, which helps to highlight different enriched GO sub-branches making plots from different queries comparable. Selected terms from different sources are labeled with numbers on the plot and their p-values indicated in the attached tables . "
+#| fig-subcap: 
+#|    - "Subcutaneous adipose tissue (scWAT)"
+#|    - "Liver"
+#| cache: true
+#| fig-width: 8
+#| fig-height: 6
+
+
+# Visuaaize enrichment results
+
+## scWAT
+g <- gostplot(enrich_sc, capped = F, interactive = F) + ylim(-1,5)
+ 
+
+gg <-  publish_gostplot(g, highlight_terms = c("GO:0005875","GO:0031122","GO:0030308", "GO:0045926"),
+                  width = NA, height = NA, filename = NULL)
+
+## Liver
+
+l <- gostplot(enrich_liver, capped = F, interactive = F)+ ylim(-1,7)
+ 
+
+ll <-  publish_gostplot(l, highlight_terms = c("GO:0005324","GO:0034185","GO:0005811","GO:0006950","GO:0010876","KEGG:04976", "KEGG:03320","WP:WP699", "WP:WP3942", "WP:WP5061"),
+                  width = NA, height = NA, filename = NULL)
+```
+
+In the scWAT, the functional enrichment analysis revealed significant insights into the cellular and metabolic disruptions associated with varying degrees of steatosis (@fig-go-1). Key findings include the down-regulation of terms related to cellular structure and function, such as microtubule associated complex (GO:0005875) and cytoplasmic microtubule organization (GO:0031122), suggesting alterations that may impact cellular transport and structural stability, potentially influencing adipocyte functionality in lipid metabolism. Additionally, up-regulation in terms associated with negative regulation of cell growth (GO:0030308 and GO:0045926) suggests a possible failure to properly regulate adipocyte size and number, which could contribute to pathological adipose tissue expansion and dysfunction in steatosis.
+
+In the liver, the functional enrichment analysis highlighted key metabolic functions impacted by varying degrees of steatosis (@fig-go-2). Lipid accumulation-related terms were notably represented, with up-regulation of PPAR signaling pathway (KEGG:03320), lipid Droplets (GO:0005811), fatty Acid transporters (WP:WP5061), apolipoprotein binding (GO:0034185), and lipid localization (GO:0010876) indicating an enhanced capacity for fatty acid uptake and lipid storage, potentially as an adaptive response to excessive lipid accumulation. Concurrently, down-regulation of Bile Secretion (KEGG:04976) could impair lipid digestion and absorption, exacerbating lipid buildup in the liver. Furthermore, the response to stress biological process (GO:0006950) was up-regulated during steatosis while the aflatoxin B1 metabolism (WP:WP699) was down-regulated, possibly reflecting and exhaustion of the detoxification processes, thereby increasing susceptibility to liver damage. These findings collectively highlight a complex interplay of lipid metabolism, storage, and detoxification pathways in the liver, reflecting both adaptive and pathological responses to steatosis.
+
+## Conclusion
+
+This cross-tissue transcriptomics analysis, spanning both subcutaneous white adipose tissue (scWAT) and liver, has provided a comprehensive view of the differential gene expression associated with steatosis in obese individuals. By identifying a set of differentially expressed genes (DEGs) across these tissues, this omics technique offers potential targets that could be manipulated to ameliorate steatosis or utilized as biomarkers for early detection and progression monitoring of the condition. Furthermore, the functional enrichment analysis has shed light on the distinct metabolic landscapes of scWAT and liver during steatosis, highlighting the specific cellular pathways and functions disrupted in each tissue. These insights not only deepen our understanding of the molecular underpinnings of steatosis but also pave the way for targeted therapeutic strategies and precision medicine approaches in the treatment and management of obesity-related steatosis.

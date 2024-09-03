@@ -14,8 +14,8 @@ toc: false
 
 by **Jose Miguel Arbones Mainar**
 
-Supervisor: Laura Puente PhD, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\
-Co-supervisor: Alberto Cebollada MsSc, Bioinformatics Unit, Instituto Aragonés de Ciencias de la Salud\
+Supervisor: Laura Puente Santamaría, PhD. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
+Co-supervisor: Alberto Cebollada Solanas, MSc. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
 Academic tutor:
 
 Biosciences Department\

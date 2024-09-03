@@ -20,3 +20,9 @@ ggrepel
 qqman
 biomaRt
 conflicted
+BiocGenerics
+Biobase
+S4Vectors
+IRanges
+AnnotationDbi
+org.Hs.eg.db

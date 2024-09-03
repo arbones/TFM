@@ -16,8 +16,10 @@ book:
         - wat&msld.qmd
         - rnaseq.qmd
         - wes.qmd
+        - eqtl.qmd
+        - biblio.qmd
 bibliography: references.bib
-csl: diabetologia.csl
+csl: begell-house-apa.csl
 
 format:
   html:

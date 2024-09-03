@@ -6,10 +6,30 @@ author:
     url: www.adipofat.com
     affiliation: Unidad de Investigación Traslacional<br>Hospital Universitario Miguel Servet<br>Instituto Aragonés de Ciencias de la Salud
 date: today
+execute: 
+  echo: false
+  warning: false
 format: 
   html: 
     number-sections: true
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r}
+library(tidyverse)
+library(compareGroups)
+library(kableExtra)
+
+meta_data <- read_csv("data/20240813_metadata.csv") |> 
+  # set the 'prefix' column as row names
+  column_to_rownames("prefix") |> 
+  # recode steatosis categories into a new variable with only 3 levels
+  mutate(steatosis_3cat=fct_recode(Steatosis,`>33%`=">33-66%",`>33%`=">66%"),
+         steatosis_3cat=factor(steatosis_3cat,levels=c("<5%", "5-33%", ">33%"))) |> 
+  mutate(sexo = fct_recode(sexo, men = "hombre", women = "mujer")) |> 
+  distinct(sample, .keep_all = T)
+```
 
 # **Manuscript** {.unnumbered}
 
@@ -21,8 +41,70 @@ format:
 
 ## Material and methods
 
+### Human cohort description
+
+The cohort used for this study was the FATe cohort, a longitudinal cohort of obese patients undergoing bariatric surgery in Miguel Servet University Hospital (HUMS, Zaragoza, Spain), that donated blood samples, subcutaneous and visceral adipose tissue biopsies and eventually liver biopsies. The FATe cohort is a live cohort in which patients have been recruited at different time points since 2013 and undergone different procedures and techniques according to the research needs [@torres-perez2015].
+
+Patients were screened to exclude alcohol or drugs abuse, autoimmune disease, chronic inflammatory diseases or chronic infectious diseases (HIV, HBV, HCV). All subjects in the cohort provided written consent and the study was approved by the Regional Institutional Review Board of Ethics at Aragón, Spain (CEIC-A). Samples from patients included in this study were stored by the Biobank of the Aragon Health System (PT20/00112), integrated in the Spanish National Biobanks Network and they were processed following standard operating procedures.
+
+### Collection and characterization of adipose and liver biosies
+
+Biopsies (\~3 cm3) of AT from both the subcutaneous and the visceral fat depot were obtained during surgery with a bipolar/ultra-sonic device (Thunderbeat. Olympus, Spain) and extracted *via* a 12 mm trocar (Applied Medical Europe, Spain) inserted in the left hypochondrium during laparoscopic surgery. Liver biopsies were also obtained during the surgery and were deemed adequate when they were at least 16 mm in length and included at least 6 portal tracts.
+
+Paraffin sections of livers were stained with hematoxylin-eosin (H&E). Pathological features of steatosis, lobular inflammation, hepatocellular ballooning, and fibrosis were scored by an experienced pathologist, according to criteria established by the Nonalcoholic Steatohepatitis Clinical Research Network [@kleiner2005].
+
+### Genomic DNA isolation
+
+DNA from buffy coat was isolated
+
+The concentration and purity of the gDNA were determined by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).
+
+### Whole Exome Sequencing
+
+Genomic DNA was randomly sheared into fragments of 180-280 bp, which were end-repaired, A-tailed, and ligated with Illumina adapters. The adapter-ligated fragments were PCR amplified, size selected, and purified. Hybridization capture was performed using biotin-labeled probes, with magnetic beads used for exon capture, followed by washing and probe digestion. The enriched libraries were quantified, pooled, and sequenced by Novogene on Illumina platforms.
+
+The computational analysis was managed using Nextflow (v23.10.1) with the `nf-core/sarek`pipeline (version 3.4.1) [@garcia2020], optimized for variant calling. Sequencing data were aligned to the GATK GRCh38 human reference genome, and Freebayes was used to call variants [@garrison2012]. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant. The process adhered to GATK best practices for quality score recalibration and variant filtering, ensuring accuracy and reliability. Further postprocessing of the obtained VCF files involved normalization using `bcftools` [@li2011], merging VCF files, and removing duplicate variants. The final VCF file was transformed into a binary ped format using `PLINK`[@purcell2007], with filters applied for minor allele frequency, genotyping completeness, and Hardy-Weinberg equilibrium.
+
+### RNA isolation
+
+Total RNA was isolated from frozen biopsies of scWAT and cell cultures using TRIzol reagent following the manufacturer’s protocol. After homogenization with TRIzol, chloroform was added to the lysates, followed by vigorous shaking, incubation, and centrifugation to separate the phases. The aqueous phase containing RNA was isolated, precipitated with isopropanol, washed with ethanol, and then resuspended in DEPC water. RNA samples were treated with RNase-Free DNase to remove genomic DNA, and their concentration, purity, and quality were assessed using a Nanodrop and agarose gel electrophoresis.
+
+### RNA Sequencing
+
+RNA integrity was assessed using the RNA Integrity Number (RIN) on the Agilent 2200 TapeStation with the RNA ScreenTape assay. Stranded mRNA libraries were prepared using the Novogene NGS RNA Library Prep Set (PT042), involving poly-T oligo-attached magnetic bead mRNA isolation, cDNA synthesis, adapter ligation, and PCR amplification. Libraries passing quality controls were sequenced (2x150 bp) on the Illumina Novaseq X Plus platform. The `nf-core/rnaseq` pipeline [@ewels2020] in Nextflow (version 23.10.1) was employed for data processing, including trimming with `Cutadapt` [@martin2011], alignment with `STAR` [@dobin2012], and quantification with `Salmon` [@patro2017], using GRCh38.p13 and Gencode v40 as references. Quality control was conducted throughout the process, with mapping efficiencies averaging around 90% for both liver and scWAT samples.
+
+### Statistical analyses
+
+All statistical analyses were performed using `r R.Version()$version.string` (http://www.r-project.org)
+
+#### Phenotype comparison
+
+Results are expressed as number of cases (%) or median \[interquartile range\]. Comparisons between individuals grouped according their liver steatosis were calculated using chi squared tests for categorical data and Kruskal-Wallis tests for continous variables. The significance level was set at 0.05.
+
+#### Differential gene expression analysis
+
+#### Whole exome sequencing analysis
+
+#### eQTL
+
+#### Functional enrichment analysis
+
+Enrichment analysis for each condition, tissue and gene module was performed using the `gprofiler2` R package ( v. `r packageVersion("gprofiler2")`). The top pathways with an FDR-corrected p-value \< 0.05 were considered significantly relevant.
+
 ## Results
 
-## Discusion
+This multi-omics study included 80 individuals with obesity who underwent a liver histological characterization to determine the presence of fibrosis and lipid accumulation (steatosis). Fibrosis was scored from 0 to 3 and steatosis categorized according the observed lipid content in the hepatocyte (\<5%, 5-33%, and \>33%) . Individuals´ median BMI was 45.9 kg/m$^2$, the median age was 49 yrs (range 22–61), and 75% were women, with no observed steatosis-based differences in these parameters (as shown in @tbl-ta1).
 
-## Bibliography {.unnumbered}
+```{r}
+#| label: tbl-ta1
+#| tbl-cap: "Phenotipe data. Represented as number of cases (%) or median [interquartile range]. BMI: Body mass index. <br> p.overall: p-value for the comparisons between individuals grouped according their liver steatosis (chi squared or Kruskal-Wallis tests for discrete or continous variables, respectively) "
+
+table1 <- meta_data |> 
+  select( `Reported sex` = "sexo", `Age (years)` = edad, `BMI (kg/m2)` = imc, `Fibrosis` = fibrosis, steatosis_3cat )
+
+c1 <- compareGroups(steatosis_3cat ~., data = table1, method = 2)
+t1 <- createTable(c1, show.all = T)
+export2md(t1, caption = "")
+```
+
+## Discusion

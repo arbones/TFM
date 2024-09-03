@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -83,6 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./eqtl.html" rel="next">
 <link href="./rnaseq.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -222,13 +224,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rnaseq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNAseq</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNA sequencing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./wes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Whole exome sequencing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eqtl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Expression quantitative trait locus (eQTL) analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biblio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
   </div>
 </li>
       </ul>
@@ -248,24 +262,14 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#dna-isolation-and-extraction" id="toc-dna-isolation-and-extraction" class="nav-link" data-scroll-target="#dna-isolation-and-extraction"><span class="header-section-number">3.2.1</span> DNA isolation and extraction</a></li>
   <li><a href="#library-preparation-and-sequencing" id="toc-library-preparation-and-sequencing" class="nav-link" data-scroll-target="#library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</a></li>
+  <li><a href="#variant-calling-workflow" id="toc-variant-calling-workflow" class="nav-link" data-scroll-target="#variant-calling-workflow"><span class="header-section-number">3.2.3</span> Variant Calling workflow</a></li>
+  <li><a href="#quality-control-qc-and-reads-preprocessing" id="toc-quality-control-qc-and-reads-preprocessing" class="nav-link" data-scroll-target="#quality-control-qc-and-reads-preprocessing"><span class="header-section-number">3.2.4</span> Quality control (QC) and reads preprocessing</a></li>
+  <li><a href="#vcf-processing-anf-plink-transformation" id="toc-vcf-processing-anf-plink-transformation" class="nav-link" data-scroll-target="#vcf-processing-anf-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing anf PLINK transformation</a></li>
   </ul></li>
-  <li><a href="#sequencing-results" id="toc-sequencing-results" class="nav-link" data-scroll-target="#sequencing-results"><span class="header-section-number">3.3</span> Sequencing results</a></li>
-  <li><a href="#computational-analysis-variant-calling" id="toc-computational-analysis-variant-calling" class="nav-link" data-scroll-target="#computational-analysis-variant-calling"><span class="header-section-number">3.4</span> Computational Analysis: Variant Calling</a>
-  <ul class="collapse">
-  <li><a href="#nextflow-workflow-management" id="toc-nextflow-workflow-management" class="nav-link" data-scroll-target="#nextflow-workflow-management"><span class="header-section-number">3.4.1</span> Nextflow Workflow Management</a></li>
-  <li><a href="#variant-calling-with-sarek-pipeline" id="toc-variant-calling-with-sarek-pipeline" class="nav-link" data-scroll-target="#variant-calling-with-sarek-pipeline"><span class="header-section-number">3.4.2</span> Variant Calling with Sarek Pipeline</a></li>
-  <li><a href="#pipeline-configuration" id="toc-pipeline-configuration" class="nav-link" data-scroll-target="#pipeline-configuration"><span class="header-section-number">3.4.3</span> Pipeline Configuration:</a></li>
-  <li><a href="#pipeline-execution" id="toc-pipeline-execution" class="nav-link" data-scroll-target="#pipeline-execution"><span class="header-section-number">3.4.4</span> Pipeline Execution</a></li>
-  <li><a href="#data-input-and-processing" id="toc-data-input-and-processing" class="nav-link" data-scroll-target="#data-input-and-processing"><span class="header-section-number">3.4.5</span> Data input and processing</a></li>
-  <li><a href="#vcf-processing-anf-plink-transformation" id="toc-vcf-processing-anf-plink-transformation" class="nav-link" data-scroll-target="#vcf-processing-anf-plink-transformation"><span class="header-section-number">3.4.6</span> VCF processing anf PLINK transformation</a></li>
-  <li><a href="#experimental-design-1" id="toc-experimental-design-1" class="nav-link" data-scroll-target="#experimental-design-1"><span class="header-section-number">3.4.7</span> Experimental design</a></li>
-  </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">3.5</span> Results</a>
-  <ul class="collapse">
-  <li><a href="#descriptive-analysis-of-phenotype-and-covariates" id="toc-descriptive-analysis-of-phenotype-and-covariates" class="nav-link" data-scroll-target="#descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.5.1</span> Descriptive analysis of phenotype and covariates</a></li>
-  <li><a href="#population-structure" id="toc-population-structure" class="nav-link" data-scroll-target="#population-structure"><span class="header-section-number">3.5.2</span> Population structure</a></li>
-  </ul></li>
-  <li><a href="#genome-wide-association-analysis" id="toc-genome-wide-association-analysis" class="nav-link" data-scroll-target="#genome-wide-association-analysis"><span class="header-section-number">3.6</span> Genome-wide association analysis</a></li>
+  <li><a href="#descriptive-analysis-of-phenotype-and-covariates" id="toc-descriptive-analysis-of-phenotype-and-covariates" class="nav-link" data-scroll-target="#descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.3</span> Descriptive analysis of phenotype and covariates</a></li>
+  <li><a href="#population-structure" id="toc-population-structure" class="nav-link" data-scroll-target="#population-structure"><span class="header-section-number">3.4</span> Population structure</a></li>
+  <li><a href="#exome-wide-association-analysis" id="toc-exome-wide-association-analysis" class="nav-link" data-scroll-target="#exome-wide-association-analysis"><span class="header-section-number">3.5</span> Exome-wide association analysis</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.6</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -303,29 +307,30 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qqman)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(biomaRt)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Hs.eg.db)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>select)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>filter)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>setdiff)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>intersect)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(S4Vectors<span class="sc">::</span>unname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>select)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>filter)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>setdiff)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(base<span class="sc">::</span>intersect)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(S4Vectors<span class="sc">::</span>unname)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="introduction" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
-<p>Adipose tissue dysfunction and liver steatosis are closely linked metabolic disorders that significantly impact global health. Both conditions are highly heritable, underscoring the importance of genetic studies for understanding their etiology and progression. Exome sequencing, which focuses on the coding regions of the genome, presents a robust approach for uncovering the genetic underpinnings of these disorders and identifying potential biomarkers for early detection and therapeutic intervention.</p>
-<p>The advantages of exome sequencing are manifold. By targeting the exonic regions, which harbor the majority of disease-related variants, this method offers a cost-effective yet comprehensive strategy to capture the genetic diversity underlying complex traits like adipose tissue dysfunction and liver steatosis. Such precision is crucial for dissecting the biological mechanisms at play and for the eventual translation of genetic insights into clinical practice.</p>
-<p>Genetic association studies, including Genome-Wide Association Studies (GWAS) and Exome-Wide Association Studies (EWAS), are instrumental in this research. GWAS examines common genetic variants across the genome to identify those associated with a trait, whereas EWAS focuses specifically on variants within the exome. The latter can be particularly revealing for diseases believed to be influenced by coding variants, providing a more focused view of potential causal mutations.</p>
-<p>Significant genes identified in the context of adipose tissue dysfunction and liver steatosis include PNPLA3, TM6SF2, and GCKR, among others <span class="citation" data-cites="anstee2013">[<a href="wat&amp;msld.html#ref-anstee2013" role="doc-biblioref">1</a>]</span>. These genes have been implicated in metabolic processes and fat distribution within cells, highlighting their roles in the pathophysiology of these conditions.</p>
-<p>Expression Quantitative Trait Loci (eQTL) analysis further enriches our understanding by linking specific genetic variants with gene expression levels. This integration of genomics and transcriptomics in a multi-omic approach allows researchers to elucidate the functional consequences of genetic variants, particularly how they impact gene expression in different tissues under various physiological and pathological states.</p>
-<p>In the context of obesity, where both adipose tissue and liver function are often compromised, a multi-omic strategy is invaluable. It enables the identification of biomarkers that are not only indicative of disease presence but also of its progression and response to treatment. Such biomarkers are crucial for developing targeted therapies that address the specific molecular profiles of individual patients.</p>
+<p>Adipose tissue dysfunction and liver steatosis are interconnected metabolic disorders with significant global health implications, both of which are highly heritable <span class="citation" data-cites="anstee2013">(<a href="biblio.html#ref-anstee2013" role="doc-biblioref">Anstee et al., 2013</a>)</span>. Understanding their genetic basis is essential for unraveling their etiology and progression.</p>
+<p>Exome sequencing, which targets the coding regions of the genome, offers a powerful and cost-effective approach to identify the genetic variants underlying these conditions and to discover potential biomarkers for early detection and therapeutic intervention. Exome sequencing is particularly advantageous because it focuses on exonic regions, where most disease-related variants are found, enabling a comprehensive analysis of the genetic diversity that drives complex traits like adipose tissue dysfunction and liver steatosis. This precision is key to understanding the biological mechanisms involved and translating genetic findings into clinical practice.</p>
+<p>Genetic association studies, such as Genome-Wide Association Studies (GWAS) and Exome-Wide Association Studies (EWAS), play a critical role in this research. While GWAS explores common genetic variants across the entire genome, EWAS zeroes in on variants within the exome, making it especially useful for identifying causal mutations in coding regions <span class="citation" data-cites="battram2022">(<a href="biblio.html#ref-battram2022" role="doc-biblioref">Battram et al., 2022</a>)</span>. Key genes implicated in adipose tissue dysfunction and liver steatosis include <em>PNPLA3</em>, <em>TM6SF2</em>, and <em>GCKR</em>, which are involved in metabolic processes and fat distribution within cells, playing critical roles in the pathophysiology of these conditions <span class="citation" data-cites="anstee2013">(<a href="biblio.html#ref-anstee2013" role="doc-biblioref">Anstee et al., 2013</a>)</span>. However, since no single SNP can adequately predict complex diseases, polygenic risk scores (PRSs), which aggregate the risk from multiple variants, offer a more effective predictive tool <span class="citation" data-cites="chatterjee2016">(<a href="biblio.html#ref-chatterjee2016" role="doc-biblioref">Chatterjee et al., 2016</a>)</span>. PRSs are being developed in the field of fatty liver disease (FLD), where both common and rare variants have been strongly linked to the risk of progressive NAFLD, independent of clinical factors like liver fibrosis severity <span class="citation" data-cites="dongiovanni2017">(<a href="biblio.html#ref-dongiovanni2017" role="doc-biblioref">Dongiovanni et al., 2017</a>)</span>. However, their clinical utility remains to be fully established. Our study aimed to perform an EWAS to identify genes associated with liver fat accumulation in a cohort of obese patients. By focusing on the exonic regions of the genome, we sought to uncover genetic variants that contribute to the pathophysiology of liver steatosis in obesity, with the goal of identifying potential biomarkers for early detection and tailored therapeutic interventions.</p>
 </section>
 <section id="experimental-design" class="level2 page-columns page-full" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="experimental-design"><span class="header-section-number">3.2</span> Experimental design</h2>
 <section id="dna-isolation-and-extraction" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="dna-isolation-and-extraction"><span class="header-section-number">3.2.1</span> DNA isolation and extraction</h3>
+<p>Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen)</p>
 </section>
 <section id="library-preparation-and-sequencing" class="level3 page-columns page-full" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</h3>
@@ -344,258 +349,169 @@ Figure&nbsp;3.1: Library Preparation Workflow
 </div></div><p>The genomic DNA was randomly sheared into short fragments with the size of 180-280 bp. The obtained fragments were end repaired, A-tailed, and further ligated with Illumina adapters. The fragments with adapters were PCR amplified, size selected, and purified. Hybridization capture of libraries was proceeded according to the following procedures. Briefly, the prepped libraries were hybridized in the buffer with biotin-labeled probes, and magnetic beads with streptavidin were used to capture the exons of genes. Subsequently, non-hybridized fragments were washed out and probes were digested. The captured libraries were enriched by PCR amplification (<a href="#fig-libr" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>).</p>
 <p>The library was checked with Qubit and real-time PCR for quantification and bioanalyzer for size distribution detection. Quantified libraries were pooled and sequenced on Illumina platforms, according to effective library concentration and data amount required.</p>
 </section>
+<section id="variant-calling-workflow" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="variant-calling-workflow"><span class="header-section-number">3.2.3</span> Variant Calling workflow</h3>
+<p>The computational analysis was managed using Nextflow (v23.10.1), a scalable and reproducible workflow management system that allows for seamless execution of complex bioinformatics pipelines. The workflow was built on the nf-core framework, which provides community-curated pipelines, ensuring consistency and reproducibility across analyses <span class="citation" data-cites="ewels2020">(<a href="biblio.html#ref-ewels2020" role="doc-biblioref">Ewels et al., 2020</a>)</span>. The <code>nf-core/sarek</code> pipeline (version 3.4.1) <span class="citation" data-cites="garcia2020">(<a href="biblio.html#ref-garcia2020" role="doc-biblioref">Garcia et al., 2020</a>)</span> was utilized specifically for variant calling. This pipeline is optimized for whole-genome sequencing (WGS) and targeted sequencing data, commonly used in cancer genomics studies.</p>
+<p>The pipeline was executed by the <a href="https://www.iacs.es/servicios/biocomputacion/" target="_blank">Biocomputation Core</a> on the Core Cluster of the Instituto Aragonés de Ciencias de la Salud and configured to run in a Docker containerized environment. This setup enhances reproducibility and facilitates the seamless execution of the analysis across different computing platforms.</p>
+<p>Input data, comprising clean fastq.gz files, were organized in a CSV file (samplesheet.csv) that included essential metadata such as sample identifiers and sequencing data paths. The sequencing data were aligned to the human reference genome GATK GRCh38, providing a standardized basis for variant calling. Freebayes, a variant caller known for its efficacy in detecting small variants like SNPs and indels <span class="citation" data-cites="garrison2012">(<a href="biblio.html#ref-garrison2012" role="doc-biblioref">Garrison et al., 2012</a>)</span>, was employed to call variants. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant.</p>
+<p>By adhering to the Genome Analysis Toolkit (GATK) best practices, including recommendations for quality score recalibration and variant filtering, this workflow ensures that the variant calling process is both accurate and reliable. The stringent quality controls integrated into the GATK framework further enhance the robustness of the results.</p>
 </section>
-<section id="sequencing-results" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="sequencing-results"><span class="header-section-number">3.3</span> Sequencing results</h2>
+<section id="quality-control-qc-and-reads-preprocessing" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="quality-control-qc-and-reads-preprocessing"><span class="header-section-number">3.2.4</span> Quality control (QC) and reads preprocessing</h3>
+<p>All QC results from the differents steps in the <code>nf-core/sarek</code> pipeline were summarized in the (<a href="documents/multiqc_report_wes.html" target="_blank">Multiqc report</a>)</p>
 </section>
-<section id="computational-analysis-variant-calling" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="computational-analysis-variant-calling"><span class="header-section-number">3.4</span> Computational Analysis: Variant Calling</h2>
-<p>The analysis adhered to the Genome Analysis Toolkit (GATK) best practices for variant discovery, which includes recommendations for quality score recalibration and variant filtering. This approach enhances the accuracy and reliability of the variant calling process by applying stringent quality controls and leveraging the comprehensive analytical capabilities of GATK tools.</p>
-<section id="nextflow-workflow-management" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="nextflow-workflow-management"><span class="header-section-number">3.4.1</span> Nextflow Workflow Management</h3>
-<p>The computational analyses were conducted using Nextflow (v23.10.1), a workflow management system that enables scalable and reproducible scientific workflows using software containers. The analyses were orchestrated through the nf-core framework, which provides community-curated bioinformatics pipelines <span class="citation" data-cites="ewels2020">[<a href="wat&amp;msld.html#ref-ewels2020" role="doc-biblioref">2</a>]</span>.</p>
-</section>
-<section id="variant-calling-with-sarek-pipeline" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="variant-calling-with-sarek-pipeline"><span class="header-section-number">3.4.2</span> Variant Calling with Sarek Pipeline</h3>
-<p>The variant calling was performed using the <strong>nf-core/sarek</strong> pipeline (<a href="https://nf-co.re/sarek/3.4.1">version 3.4.1</a>) <span class="citation" data-cites="garcia2020">[<a href="wat&amp;msld.html#ref-garcia2020" role="doc-biblioref">3</a>]</span>. This pipeline is specifically designed for the analysis of whole-genome sequencing (WGS) and targeted sequencing data from cancer studies, facilitating comprehensive genomic analyses from raw sequencing data to annotated variants.</p>
-<p>The pipeline was executed with the following command:</p>
-<div class="{list-code1}">
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/sarek <span class="at">-r</span> 3.4.1<span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>-profile docker<span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>-bg<span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-resume<span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>--wes<span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>--input samplesheet.csv<span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>--outdir /Resultados<span class="dt">\</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>--genome GATK.GRCh38<span class="dt">\</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>--tools freebayes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="pipeline-configuration" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="pipeline-configuration"><span class="header-section-number">3.4.3</span> Pipeline Configuration:</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Option/Flag</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>nextflow run nf-core/sarek</code></td>
-<td>Initiates the execution of the nf-core/sarek pipeline using Nextflow.</td>
-</tr>
-<tr class="even">
-<td><code>-r 3.4.1</code></td>
-<td>Specifies that version 3.4.1 of the sarek pipeline should be used, ensuring reproducibility of the analysis.</td>
-</tr>
-<tr class="odd">
-<td><code>-profile docker</code></td>
-<td>Configures the pipeline to run using Docker containers, which encapsulate all necessary software dependencies.</td>
-</tr>
-<tr class="even">
-<td><code>-bg</code></td>
-<td>Runs the Nextflow process in the background, allowing other tasks to be performed simultaneously without interruption.</td>
-</tr>
-<tr class="odd">
-<td><code>-resume</code></td>
-<td>Enables the pipeline to resume from the last checkpoint if interrupted, saving time and computational resources.</td>
-</tr>
-<tr class="even">
-<td><code>--wes</code></td>
-<td>Indicates that the pipeline is configured to process Whole Exome Sequencing (WES) data.</td>
-</tr>
-<tr class="odd">
-<td><code>--input /mnt/jmarbones/samplesheet.csv</code></td>
-<td>Specifies the path to the CSV file containing metadata about the samples to be analyzed.</td>
-</tr>
-<tr class="even">
-<td><code>--outdir /mnt/jmarbones/Resultados</code></td>
-<td>Designates the directory where all output from the pipeline will be stored.</td>
-</tr>
-<tr class="odd">
-<td><code>--genome GATK.GRCh38</code></td>
-<td>Sets the reference genome to GATK GRCh38, a standard human genome assembly used in genomic analysis.</td>
-</tr>
-<tr class="even">
-<td><code>--tools freebayes</code></td>
-<td>Specifies Freebayes as the tool for calling genetic variants, effective for detecting SNPs and small indels.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="pipeline-execution" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="pipeline-execution"><span class="header-section-number">3.4.4</span> Pipeline Execution</h3>
-<p>The pipeline was configured to run in a Docker containerized environment, ensuring that all dependencies were consistently managed and the computational environment was isolated. This setup facilitates the reproducibility of results across different computing platforms. The analysis was executed in the background, allowing other processes to run simultaneously without interruption. In the event of an interruption, the pipeline was designed to resume from the last successful step, optimizing resource use and reducing redundancy.</p>
-</section>
-<section id="data-input-and-processing" class="level3" data-number="3.4.5">
-<h3 data-number="3.4.5" class="anchored" data-anchor-id="data-input-and-processing"><span class="header-section-number">3.4.5</span> Data input and processing</h3>
-<p>Input data (clean fastq.gz files) were organized in a CSV file (samplesheet.csv), which included essential metadata such as sample identifiers and sequencing data paths. The output was directed to a designated directory Resultados for organized storage and easy access to results.</p>
-<p>The human reference genome GATK GRCh38 was utilized to align sequencing data and call variants, providing a standardized basis for the analysis. Variant calling was performed using Freebayes, a tool known for its effectiveness in detecting small variants like SNPs and indels <span class="citation" data-cites="garrison2012">[<a href="wat&amp;msld.html#ref-garrison2012" role="doc-biblioref">4</a>]</span>.</p>
-<p>The called variants were stored in Variant Call Format (VCF) files, which include detailed metadata and structured data about each variant detected.</p>
-</section>
-<section id="vcf-processing-anf-plink-transformation" class="level3" data-number="3.4.6">
-<h3 data-number="3.4.6" class="anchored" data-anchor-id="vcf-processing-anf-plink-transformation"><span class="header-section-number">3.4.6</span> VCF processing anf PLINK transformation</h3>
-<p>The next computational steps were carried out with the programs <code>bcftools</code> and <code>PLINK</code> in the command line using . Normalization, performed using <code>bcftools norm</code>, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the <code>bcftools merge</code> command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using <code>bcftools norm</code> with the <code>--rm-dup</code> option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.</p>
-<p>The final preprocessing step involved transforming the VCF file for compatibility with the PLINK toolset, a widely used software package for genome association studies. The <code>plink</code> command was utilized to convert VCF data into binary ped files while applying several filters: only SNPs with a minor allele frequency (MAF) of at least 0.05 were retained, and variants with more than 30% missing genotyping information were excluded. Additionally, a stringent Hardy-Weinberg equilibrium threshold was set to minimize the inclusion of potentially erroneous genotypes. This transformation prepares the dataset for robust statistical analyses, allowing for the exploration of genetic associations and population structure with high reliability.</p>
+<section id="vcf-processing-anf-plink-transformation" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="vcf-processing-anf-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing anf PLINK transformation</h3>
+<p>The next computational steps were carried out with the programs <code>bcftools</code> <span class="citation" data-cites="li2011">(<a href="biblio.html#ref-li2011" role="doc-biblioref">Li, 2011</a>)</span> and <code>PLINK</code> <span class="citation" data-cites="purcell2007">(<a href="biblio.html#ref-purcell2007" role="doc-biblioref">Purcell et al., 2007</a>)</span> in the command line using . Normalization, performed using <code>bcftools norm</code>, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the <code>bcftools merge</code> command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using <code>bcftools norm</code> with the <code>--rm-dup</code> option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.</p>
+<p>The final preprocessing step involved transforming the VCF file for compatibility with the <code>PLINK</code> toolset, a widely used software package for genome association studies. The <code>plink</code> command was utilized to convert VCF data into binary ped files while applying several filters: only SNPs with a minor allele frequency (MAF) of at least 0.05 were retained, and variants with more than 30% missing genotyping information were excluded. Additionally, a stringent Hardy-Weinberg equilibrium threshold was set to minimize the inclusion of potentially erroneous genotypes. This transformation prepares the dataset for robust statistical analyses, allowing for the exploration of genetic associations and population structure with high reliability.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">### 1) Script to normalize and merge vcfs</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the directory to search for VCF files</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_DIR</span><span class="op">=</span><span class="va">$1</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if directory is provided</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> /path/to/vcf_directory"</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary directory for normalized files</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="va">TEMP_DIR</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span> <span class="at">-d</span><span class="va">)</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Temporary directory for normalized VCFs: </span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all .vcf.gz files recursively in the directory</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_FILES</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.vcf.gz"</span><span class="va">)</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize each VCF file and index it</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> INPUT_VCF <span class="kw">in</span> <span class="va">$VCF_FILES</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="va">OUTPUT_VCF</span><span class="op">=</span><span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">/</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> .vcf.gz<span class="va">)</span><span class="st">.norm.vcf.gz"</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Normalizing </span><span class="va">$INPUT_VCF</span><span class="st"> to </span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize using bcftools</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bcftools</span> norm <span class="at">-m</span> <span class="at">-both</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="at">-O</span> z <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> <span class="at">--threads</span> 8</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if normalization was successful</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Index the normalized VCF if it's not empty</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">tabix</span> <span class="at">-p</span> vcf <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Warning: Normalized VCF </span><span class="va">$OUTPUT_VCF</span><span class="st"> is empty."</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co"># List all normalized VCF files</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="va">NORMALIZED_VCFS</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.norm.vcf.gz"</span><span class="va">)</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if any normalized VCF files exist</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$NORMALIZED_VCFS</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: No normalized VCF files found. Exiting."</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all normalized VCF files into one using bcftools merge</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Merging normalized VCF files into merged_output.vcf"</span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> merge <span class="va">$NORMALIZED_VCFS</span> <span class="at">-o</span> merged_output.vcf <span class="at">-O</span> v <span class="at">--threads</span> 8</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge resulted in a non-empty file</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> merged_output.vcf <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Merged VCF saved as merged_output.vcf"</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: Merged VCF is empty. Something went wrong."</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up temporary directory</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">### 2) Remove duplicate variants (snps &amp; indels)</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> norm <span class="at">--rm-dup</span> both merged_output.vcf <span class="at">-o</span> merged_output_nodup.vcf</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="co">### 3) Transform into PLINK</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="ex">./plink</span> <span class="at">--vcf</span> merged_output_nodup.vcf <span class="dt">\</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>--make-bed <span class="dt">\</span></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>--maf 0.05  <span class="dt">\</span></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>--geno 0.3   <span class="dt">\</span></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>--hwe 0.0000001 <span class="dt">\</span></span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>--snps-only <span class="dt">\</span></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>--double-id <span class="dt">\</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>--set-missing-var-ids @:# <span class="dt">\</span></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>--out only_snps_cleaned </span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a> <span class="co"># only include SNPs with MAF &gt;= 0.05</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a> <span class="co"># include only SNPs with a 70% genotyping rate (30% missing) use</span></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a> <span class="co"># causes both family and within-family IDs to be set to the sample ID to avoid the error because the presence of "_" in the sample ID</span></span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">### 1) Script to normalize and merge vcfs</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#########################################</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the directory to search for VCF files</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_DIR</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if directory is provided</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> /path/to/vcf_directory"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary directory for normalized files</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="va">TEMP_DIR</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span> <span class="at">-d</span><span class="va">)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Temporary directory for normalized VCFs: </span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all .vcf.gz files recursively in the directory</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="va">VCF_FILES</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$VCF_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.vcf.gz"</span><span class="va">)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize each VCF file and index it</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> INPUT_VCF <span class="kw">in</span> <span class="va">$VCF_FILES</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="va">OUTPUT_VCF</span><span class="op">=</span><span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">/</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> .vcf.gz<span class="va">)</span><span class="st">.norm.vcf.gz"</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Normalizing </span><span class="va">$INPUT_VCF</span><span class="st"> to </span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize using bcftools</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bcftools</span> norm <span class="at">-m</span> <span class="at">-both</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="at">-O</span> z <span class="st">"</span><span class="va">$INPUT_VCF</span><span class="st">"</span> <span class="at">--threads</span> 8</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if normalization was successful</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Index the normalized VCF if it's not empty</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">tabix</span> <span class="at">-p</span> vcf <span class="st">"</span><span class="va">$OUTPUT_VCF</span><span class="st">"</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Warning: Normalized VCF </span><span class="va">$OUTPUT_VCF</span><span class="st"> is empty."</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># List all normalized VCF files</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="va">NORMALIZED_VCFS</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span> <span class="at">-name</span> <span class="st">"*.norm.vcf.gz"</span><span class="va">)</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if any normalized VCF files exist</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$NORMALIZED_VCFS</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: No normalized VCF files found. Exiting."</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all normalized VCF files into one using bcftools merge</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Merging normalized VCF files into merged_output.vcf"</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> merge <span class="va">$NORMALIZED_VCFS</span> <span class="at">-o</span> merged_output.vcf <span class="at">-O</span> v <span class="at">--threads</span> 8</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the merge resulted in a non-empty file</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-s</span> merged_output.vcf <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Merged VCF saved as merged_output.vcf"</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Error: Merged VCF is empty. Something went wrong."</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up temporary directory</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$TEMP_DIR</span><span class="st">"</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co">### 2) Remove duplicate variants (snps &amp; indels)</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> norm <span class="at">--rm-dup</span> both merged_output.vcf <span class="at">-o</span> merged_output_nodup.vcf</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co">##################################################</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co">### 3) Transform into PLINK</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="ex">./plink</span> <span class="at">--vcf</span> merged_output_nodup.vcf <span class="dt">\</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>--make-bed <span class="dt">\</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>--maf 0.05  <span class="dt">\</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>--geno 0.3   <span class="dt">\</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>--hwe 0.0000001 <span class="dt">\</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>--snps-only <span class="dt">\</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>--double-id <span class="dt">\</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>--set-missing-var-ids @:# <span class="dt">\</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>--out only_snps_cleaned </span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a> <span class="co"># only include SNPs with MAF &gt;= 0.05</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a> <span class="co"># include only SNPs with a 70% genotyping rate (30% missing) use</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a> <span class="co"># causes both family and within-family IDs to be set to the sample ID to avoid the error because the presence of "_" in the sample ID</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The conversion from VCF to PLINK format produced three key files: <code>.bed</code>, which contains genotype data; <code>.bim</code>, which lists all variants and their genomic positions; and <code>.fam</code>, which provides participant identifiers and traits. The <code>.bim</code> file contained 10,832,436 variants, of which 9,248,936 were successfully loaded, demonstrating a comprehensive coverage of the genetic data. During this process, missing variant identifiers were appropriately assigned.</p>
 <p>Despite this substantial data inclusion, the overall genotyping rate was notably low at 3.57% after removing 9,184,238 variants due to extensive missing genotype data. Furthermore, deviations observed in Hardy-Weinberg equilibrium resulted in the elimination of 4,504 variants through an exact test for Hardy-Weinberg equilibrium. An additional 11,342 variants were excluded based on minor allele frequency thresholds.</p>
 <p>After enforcing all quality control measures and variant filters, only 48,852 variants across 80 individuals remained, meeting the criteria for inclusion in further analyses.The significantly low genotyping rate observed could be attributed to the high number of SNPs unique to individual VCF files and not replicated across the cohort. This uniqueness might stem from intrinsic biological diversity or variations in sample processing techniques.</p>
 </section>
-<section id="experimental-design-1" class="level3" data-number="3.4.7">
-<h3 data-number="3.4.7" class="anchored" data-anchor-id="experimental-design-1"><span class="header-section-number">3.4.7</span> Experimental design</h3>
-<p>For this exercise, a standard <strong>case-control</strong> analysis was carried out comparing 29 obese individuals with no steatosis <em>vs</em>. 25 individuals with more than 33% of statosis.</p>
 </section>
-</section>
-<section id="results" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="results"><span class="header-section-number">3.5</span> Results</h2>
+<section id="descriptive-analysis-of-phenotype-and-covariates" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.3</span> Descriptive analysis of phenotype and covariates</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotype data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/20240813_metadata.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(sample, <span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,sample)) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode steatosis categories into a new variable with only 3 levels</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">steatosis_3cat=</span><span class="fu">fct_recode</span>(Steatosis,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;33-66%"</span>,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;66%"</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis_3cat=</span><span class="fu">factor</span>(steatosis_3cat,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">"&lt;5%"</span>, <span class="st">"5-33%"</span>, <span class="st">"&gt;33%"</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode sex as the .fam file </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_recode</span>(sexo, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"hombre"</span>,  <span class="st">"2"</span> <span class="ot">=</span><span class="st">"mujer"</span>))</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load genotype data that are in PLINK format (bed,bim, and fam files).</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># List containing the genotypes, the family structure and the SNP annotation.</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plink <span class="ot">&lt;-</span> <span class="fu">read.plink</span>(<span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed"</span>) </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># store genotype, annotation, and family data in different files for downstream analyses</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>geno0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>genotypes</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>annotation <span class="ot">&lt;-</span> plink<span class="sc">$</span>map</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>family0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>fam </span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames and patient IDs from the demographics data are different from the plink object.</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># change rownames to IDs</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(family0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(family0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(geno0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(geno0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># new genotype, annotation, and family files containing the same individuals in the same order</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(geno0))</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> geno0[ids,]</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> pheno[ids, ]</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>family <span class="ot">&lt;-</span> family0[ids,] <span class="sc">|&gt;</span> </span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> pheno<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotype data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/20240813_metadata.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(sample, <span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,sample)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode steatosis categories into a new variable with only 3 levels</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">steatosis_3cat=</span><span class="fu">fct_recode</span>(Steatosis,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;33-66%"</span>,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;66%"</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis_3cat=</span><span class="fu">factor</span>(steatosis_3cat,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">"&lt;5%"</span>, <span class="st">"5-33%"</span>, <span class="st">"&gt;33%"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode sex as the .fam file </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_recode</span>(sexo, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"hombre"</span>,  <span class="st">"2"</span> <span class="ot">=</span><span class="st">"mujer"</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load genotype data that are in PLINK format (bed,bim, and fam files).</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># List containing the genotypes, the family structure and the SNP annotation.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plink <span class="ot">&lt;-</span> <span class="fu">read.plink</span>(<span class="st">"data/only_snps_cleaned.bed"</span>) </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># store genotype, annotation, and family data in different files for downstream analyses</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>geno0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>genotypes</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>annotation <span class="ot">&lt;-</span> plink<span class="sc">$</span>map</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>family0 <span class="ot">&lt;-</span> plink<span class="sc">$</span>fam </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames and patient IDs from the demographics data are different from the plink object.</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># change rownames to IDs</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(family0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(family0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(geno0) <span class="ot">&lt;-</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(geno0),<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># new genotype, annotation, and family files containing the same individuals in the same order</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(geno0))</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> geno0[ids,]</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> pheno[ids, ]</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>family <span class="ot">&lt;-</span> family0[ids,] <span class="sc">|&gt;</span> </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> pheno<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="descriptive-analysis-of-phenotype-and-covariates" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.5.1</span> Descriptive analysis of phenotype and covariates</h3>
 <p>A total of 80 individuals with genotype and phenotype data available were segmented into three groups based on liver fat content (&lt;5%, 5-33%, &gt;33%). There were no statistically significant differences across any of the variables assessed, including age, gender, body mass index (BMI), and liver fibrosis stages (<a href="#tbl-pheno" class="quarto-xref">Table&nbsp;<span>3.1</span></a>). Median age distributions across the groups were 47, 51, and 51 years, respectively, with a p-value of 0.505, indicating uniform age distribution across the groups. Gender ratios were similarly consistent, comprising approximately 75% females and 25% males in each group, with a p-value of 0.913. BMI values, with medians of 49.2, 43.9, and 45.9 for the respective groups, also showed no significant variation (p=0.563). Even the categorization of liver fibrosis stages from F0 to F4 did not demonstrate significant differences across the groups (p=0.172), underscoring a lack of correlation between the variables studied and the percentage of liver fat. This uniformity highlights the absence of significant demographic or clinical variations among the different levels of liver steatosis within the cohort.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tables with the descriptive analysis of phenotype</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cdesc <span class="ot">&lt;-</span> <span class="fu">compareGroups</span> (steatosis_3cat <span class="sc">~</span> edad <span class="sc">+</span> sexo <span class="sc">+</span> imc <span class="sc">+</span> Fibrosis.cat ,pheno, <span class="at">method=</span><span class="dv">2</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tdesc <span class="ot">&lt;-</span> <span class="fu">createTable</span>(cdesc, <span class="at">show.p.mul =</span> T, <span class="at">show.all =</span> T)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">export2md</span>(tdesc, <span class="at">caption =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">11</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_column</span>(<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">9</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tables with the descriptive analysis of phenotype</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cdesc <span class="ot">&lt;-</span> <span class="fu">compareGroups</span> (steatosis_3cat <span class="sc">~</span> edad <span class="sc">+</span> sexo <span class="sc">+</span> imc <span class="sc">+</span> Fibrosis.cat ,pheno, <span class="at">method=</span><span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tdesc <span class="ot">&lt;-</span> <span class="fu">createTable</span>(cdesc, <span class="at">show.p.mul =</span> T, <span class="at">show.all =</span> T)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">export2md</span>(tdesc, <span class="at">caption =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">11</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_column</span>(<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">9</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-pheno" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -728,77 +644,78 @@ Table&nbsp;3.1: Main phenotypic characterists in the genotyped cohort according 
 <p>Data represent median[IQR] or number of cases (%).<br>
 p.overall: Kruskal-Wallis´ associated p-value.<br>
 p.5-33% vs &gt;33%: p- value for the comparison between &lt;5% vs &gt;33% steatosis (Mann-Whithney)</p>
+<p>In genome/exome-wide association studies of qualitative traits, the analysis is typically conducted between two groups to maximize the detection of genetic variants associated with the trait of interest. In this study, the cohort was divided into three groups based on liver fat content (&lt;5%, 5-33%, &gt;33%), but for the GWAS, only the two extreme groups—29 obese individuals with no steatosis (&lt;5%) and 25 individuals with severe steatosis (&gt;33%)—were compared. This approach enhances the contrast between cases and controls, reduces noise and heterogeneity, and increases the likelihood of identifying significant genetic associations by focusing on individuals with the most distinct phenotypic differences.</p>
 </section>
-<section id="population-structure" class="level3" data-number="3.5.2">
-<h3 data-number="3.5.2" class="anchored" data-anchor-id="population-structure"><span class="header-section-number">3.5.2</span> Population structure</h3>
+<section id="population-structure" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="population-structure"><span class="header-section-number">3.4</span> Population structure</h2>
 <p>First, we aimed to investigate population structure and ancestry, utilizing Principal Component Analysis (PCA) to explore genetic variation. We first transformed genetic data from PLINK to GDS format for efficiency and applied linkage disequilibrium (LD) pruning to focus on significant SNPs, essential for PCA’s computational efficiency. The pruned SNPs were analyzed using PCA to visualize the population structure, revealing no distinct clustering by sex but some dispersion related to liver steatosis levels (<a href="#fig-ancestry" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>).</p>
 <p>The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in genome-wide association studies (GWAS). Given this variability, we recommend incorporating principal components as covariates in GWAS to adjust for underlying population structure, thereby enhancing the robustness of GWAS findings. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors, demonstrating the strategic integration of data transformation, pruning, and analysis in genetic studies.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform PLINK data into GDS format for more efficient data manipulation</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsBED2GDS</span>(<span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bed"</span>, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.fam"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"/Users/arbones/Dropbox/SyncBriefcase/LAB/IACS/multiomicas_FIS/results_WES/variant_calling/freebayes/only_snps_cleaned.bim"</span>, </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">out.gdsfn =</span><span class="st">"GDS"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the GDS file for further analysis</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="st">"GDS"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a random seed for reproducibility in stochastic processes</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve column names from genofile, which include SNP identifiers</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>snps.qc <span class="ot">&lt;-</span> <span class="fu">colnames</span>(geno)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linkage disequilibrium (LD) pruning to reduce SNP redundancy</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>snp.prune <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                             <span class="at">snp.id =</span> snps.qc)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SNP IDs after LD pruning for use in population ancestry analysis</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>snps.ibd <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snp.prune, <span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate identity by descent (IBD) matrix using pruned SNPs</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>ibd <span class="ot">&lt;-</span> <span class="fu">snpgdsIBDMoM</span>(genofile, <span class="at">kinship=</span><span class="cn">TRUE</span>,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">snp.id =</span> snps.ibd,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.thread =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform PLINK data into GDS format for more efficient data manipulation</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsBED2GDS</span>(<span class="st">"data/only_snps_cleaned.bed"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"data/only_snps_cleaned.fam"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"data/only_snps_cleaned.bim"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">out.gdsfn =</span><span class="st">"GDS"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the GDS file for further analysis</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="st">"GDS"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a random seed for reproducibility in stochastic processes</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve column names from genofile, which include SNP identifiers</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>snps.qc <span class="ot">&lt;-</span> <span class="fu">colnames</span>(geno)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform linkage disequilibrium (LD) pruning to reduce SNP redundancy</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>snp.prune <span class="ot">&lt;-</span> <span class="fu">snpgdsLDpruning</span>(genofile, <span class="at">ld.threshold =</span> <span class="fl">0.2</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                             <span class="at">snp.id =</span> snps.qc)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SNP IDs after LD pruning for use in population ancestry analysis</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>snps.ibd <span class="ot">&lt;-</span> <span class="fu">unlist</span>(snp.prune, <span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate identity by descent (IBD) matrix using pruned SNPs</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>ibd <span class="ot">&lt;-</span> <span class="fu">snpgdsIBDMoM</span>(genofile, <span class="at">kinship=</span><span class="cn">TRUE</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">snp.id =</span> snps.ibd,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.thread =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA on the genomic data to investigate population structure</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">sample.id=</span>family<span class="sc">$</span>member,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">snp.id =</span> snps.ibd, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">num.thread=</span><span class="dv">8</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">verbose =</span> F)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file after analysis to free resources</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">closefn.gds</span>(genofile)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind the PCA components t othe phenotype data</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>pca.comp <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">ID=</span>pca<span class="sc">$</span>sample.id,pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"PC1"</span>,<span class="st">"PC2"</span>))</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pca.comp) <span class="ot">&lt;-</span> <span class="fu">substr</span>(pca.comp<span class="sc">$</span>ID,<span class="dv">1</span>,<span class="dv">7</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>pca.comp<span class="sc">$</span>ID <span class="ot">&lt;-</span>  <span class="cn">NULL</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>pheno.qc.pca <span class="ot">&lt;-</span> pca.comp[<span class="fu">match</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(pca.comp)),] <span class="sc">|&gt;</span> </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_cols</span>(pheno) <span class="sc">|&gt;</span> </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(steatosis_3cat <span class="sc">!=</span> <span class="st">"5-33%"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sexo =</span> <span class="fu">as.factor</span> (sexo)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">steatosis_3cat =</span><span class="fu">droplevels</span>(steatosis_3cat )) <span class="sc">|&gt;</span> </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(PC1,PC2), \(x) <span class="fu">as.numeric</span>(x)))</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>geno.qc <span class="ot">&lt;-</span> geno[<span class="fu">rownames</span>(pheno.qc.pca ),]</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first two principal components to visualize population structure</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> (pheno.qc.pca,<span class="fu">aes</span>(<span class="at">x=</span>PC1, <span class="at">y=</span>PC2, <span class="at">colour =</span> steatosis_3cat, <span class="at">shape =</span> sex))<span class="sc">+</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">alpha=</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA on the genomic data to investigate population structure</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">snpgdsPCA</span>(genofile, <span class="at">sample.id=</span>family<span class="sc">$</span>member,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">snp.id =</span> snps.ibd, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">num.thread=</span><span class="dv">8</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">verbose =</span> F)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file after analysis to free resources</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">closefn.gds</span>(genofile)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind the PCA components t othe phenotype data</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>pca.comp <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">ID=</span>pca<span class="sc">$</span>sample.id,pca<span class="sc">$</span>eigenvect[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"PC1"</span>,<span class="st">"PC2"</span>))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pca.comp) <span class="ot">&lt;-</span> <span class="fu">substr</span>(pca.comp<span class="sc">$</span>ID,<span class="dv">1</span>,<span class="dv">7</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>pca.comp<span class="sc">$</span>ID <span class="ot">&lt;-</span>  <span class="cn">NULL</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>pheno.qc.pca <span class="ot">&lt;-</span> pca.comp[<span class="fu">match</span>(<span class="fu">rownames</span>(pheno),<span class="fu">rownames</span>(pca.comp)),] <span class="sc">|&gt;</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_cols</span>(pheno) <span class="sc">|&gt;</span> </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(steatosis_3cat <span class="sc">!=</span> <span class="st">"5-33%"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sexo =</span> <span class="fu">as.factor</span> (sexo)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">steatosis_3cat =</span><span class="fu">droplevels</span>(steatosis_3cat )) <span class="sc">|&gt;</span> </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(PC1,PC2), \(x) <span class="fu">as.numeric</span>(x)))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>geno.qc <span class="ot">&lt;-</span> geno[<span class="fu">rownames</span>(pheno.qc.pca ),]</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first two principal components to visualize population structure</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span> (pheno.qc.pca,<span class="fu">aes</span>(<span class="at">x=</span>PC1, <span class="at">y=</span>PC2, <span class="at">colour =</span> steatosis_3cat, <span class="at">shape =</span> sex))<span class="sc">+</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">alpha=</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-ancestry" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -814,21 +731,20 @@ Figure&nbsp;3.2: Population structure obtained by plotting the first two axes of
 </div>
 </div>
 </section>
-</section>
-<section id="genome-wide-association-analysis" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="genome-wide-association-analysis"><span class="header-section-number">3.6</span> Genome-wide association analysis</h2>
+<section id="exome-wide-association-analysis" class="level2 page-columns page-full" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="exome-wide-association-analysis"><span class="header-section-number">3.5</span> Exome-wide association analysis</h2>
 <p>In our study, we assessed the risk of potential inflation in genetic associations due to undetected latent variables using a quantile-quantile (Q-Q) plot. This plot is crucial for evaluating whether the observed chi-squared (χ2) statistics from our genetic associations deviate from the expected distribution under the null hypothesis of no association. A Q-Q plot helps identify potential inflation caused by population stratification, cryptic relatedness, or other confounding factors. In our results, as shown in <a href="#fig-qq" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>, the Q-Q plot demonstrated that the observed χ2 values closely aligned with the expected values, indicated by a lambda (λ) close to 1. This suggests that our estimates are not significantly inflated, providing confidence in the validity of our genetic association findings.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform single SNP tests for the 'steatosis_3cat' trait using phenotype and genotype data</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">single.snp.tests</span>(steatosis_3cat, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared statistics from the test results</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>chi2 <span class="ot">&lt;-</span> <span class="fu">chi.squared</span>(res, <span class="at">df=</span><span class="dv">1</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a Q-Q plot of the chi-squared statistics to assess inflation</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qq.chisq</span>(chi2, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform single SNP tests for the 'steatosis_3cat' trait using phenotype and genotype data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">single.snp.tests</span>(steatosis_3cat, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared statistics from the test results</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>chi2 <span class="ot">&lt;-</span> <span class="fu">chi.squared</span>(res, <span class="at">df=</span><span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a Q-Q plot of the chi-squared statistics to assess inflation</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qq.chisq</span>(chi2, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>           N      omitted       lambda 
@@ -848,42 +764,39 @@ Figure&nbsp;3.3: QQ plot of observed vs expected p values
 </div>
 </div>
 <p>In our genetic association study, we utilized the <code>snp.rhs.tests</code> function from the <code>snpStats</code> package to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.</p>
-<div class="cell">
+<div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform SNP-based tests adjusting for principal components PC1 and PC2</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res.adj <span class="ot">&lt;-</span> <span class="fu">snp.rhs.tests</span>(steatosis_3cat <span class="sc">~</span> sex <span class="sc">+</span> PC1 <span class="sc">+</span> PC2, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">robust =</span> T)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract p-values and genomic annotations for SNPs</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SNP=</span>annotation<span class="sc">$</span>snp.name, </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">CHR=</span>annotation<span class="sc">$</span>chromosome,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">BP=</span>annotation<span class="sc">$</span>position,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P=</span><span class="fu">p.value</span>(res.adj))</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Bonferroni correction threshold for significance</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>bonferroni <span class="ot">&lt;-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="fu">ncol</span>(geno.qc)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>bonferroni.log <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(bonferroni)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Manhattan plot of p-values across the genome</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">manhattan</span>(pvals, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"blue"</span>),</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">annotatePval =</span> <span class="cn">FALSE</span>,<span class="at">annotateTop =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">genomewideline =</span> <span class="cn">FALSE</span>,<span class="at">suggestiveline =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">7.2</span>), <span class="at">cex=</span><span class="dv">2</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add significance threshold lines to the plot</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> bonferroni.log, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.0001</span>), <span class="at">col=</span><span class="st">"darkblue"</span>, <span class="at">lwd=</span><span class="dv">1</span>)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Significant SNPs</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>topSNPs <span class="ot">&lt;-</span> pvals <span class="sc">|&gt;</span> </span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(P<span class="sc">&lt;</span><span class="fl">0.0001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">78</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform SNP-based tests adjusting for principal components PC1 and PC2</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res.adj <span class="ot">&lt;-</span> <span class="fu">snp.rhs.tests</span>(steatosis_3cat <span class="sc">~</span> sex <span class="sc">+</span> PC1 <span class="sc">+</span> PC2, <span class="at">data=</span>pheno.qc.pca, <span class="at">snp.data=</span>geno.qc,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">robust =</span> T)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract p-values and genomic annotations for SNPs</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SNP=</span>annotation<span class="sc">$</span>snp.name, </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">CHR=</span>annotation<span class="sc">$</span>chromosome,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">BP=</span>annotation<span class="sc">$</span>position,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P=</span><span class="fu">p.value</span>(res.adj))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Bonferroni correction threshold for significance</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>bonferroni <span class="ot">&lt;-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="fu">ncol</span>(geno.qc)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>bonferroni.log <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log10</span>(bonferroni)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Manhattan plot of p-values across the genome</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">manhattan</span>(pvals, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"blue"</span>),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">annotatePval =</span> <span class="cn">FALSE</span>,<span class="at">annotateTop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">genomewideline =</span> <span class="cn">FALSE</span>,<span class="at">suggestiveline =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">7.2</span>), <span class="at">cex=</span><span class="dv">2</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Add significance threshold lines to the plot</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> bonferroni.log, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.0001</span>), <span class="at">col=</span><span class="st">"darkblue"</span>, <span class="at">lwd=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<div id="fig-manhattan" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="wes_files/figure-html/fig-manhattan-1.png" class="img-fluid figure-img" width="672">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-manhattan" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="wes_files/figure-html/fig-manhattan-1.png" class="img-fluid figure-img column-body-outset-right" width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.4: Plot of the p-values for each SNP in the GWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10<span class="math inline">\(^{-6}\)</span>, 0.0001 in blue)
@@ -892,34 +805,157 @@ Figure&nbsp;3.4: Plot of the p-values for each SNP in the GWAS by their position
 </div>
 </div>
 </div>
+<p>The results of these analyses were visualized using a Manhattan plot (<a href="#fig-manhattan" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>), created by the <code>manhattan</code> function from the <code>qqman</code> package, which effectively illustrates the distribution of p-values across all chromosomes. Significance at Bonferroni level was set at p = 10<span class="math inline">\(^{-6}\)</span>as we tested 48852 SNPs. The level corresponds to -log10(P) = 5.99.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to Ensembl database using biomaRt</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">"snps"</span>, <span class="at">dataset =</span> <span class="st">"hsapiens_snp"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>snp_mart <span class="ot">&lt;-</span> <span class="fu">getBM</span>(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">'refsnp_id'</span>, <span class="st">'chr_name'</span>, <span class="st">'clinical_significance'</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">filters =</span> <span class="fu">c</span>(<span class="st">'chr_name'</span>, <span class="st">'start'</span>, <span class="st">'end'</span>),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">list</span>(topSNPs<span class="sc">$</span>CHR,topSNPs<span class="sc">$</span>BP, topSNPs<span class="sc">$</span>BP),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mart =</span> ensembl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Significant SNPs</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top <span class="ot">&lt;-</span> pvals <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(P<span class="sc">&lt;</span><span class="fl">0.0001</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">position =</span> <span class="fu">str_c</span>(CHR,BP,BP,<span class="at">sep =</span> <span class="st">":"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to Ensembl database using biomaRt</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> <span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">"snps"</span>, <span class="at">dataset =</span> <span class="st">"hsapiens_snp"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>snp_mart <span class="ot">&lt;-</span> <span class="fu">getBM</span>(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">'chrom_start'</span>,<span class="st">'refsnp_id'</span>,<span class="st">"ensembl_gene_stable_id"</span>, <span class="st">'chr_name'</span>, <span class="st">'allele'</span>, <span class="st">"allele_1"</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">filters =</span> <span class="st">'chromosomal_region'</span>, </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> top<span class="sc">$</span>position ,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">mart =</span> ensembl) </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>top <span class="sc">|&gt;</span> </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span> (snp_mart, <span class="at">by =</span><span class="fu">c</span>(<span class="st">"BP"</span><span class="ot">=</span><span class="st">"chrom_start"</span>))<span class="sc">|&gt;</span> </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene_symbol =</span> <span class="fu">mapIds</span>(org.Hs.eg.db, <span class="at">keys =</span> ensembl_gene_stable_id,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">column =</span> <span class="fu">c</span>(<span class="st">"SYMBOL"</span>), <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Reference SNP</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"refsnp_id"</span>, <span class="at">location =</span> <span class="st">"SNP"</span>, <span class="at">Gene =</span> <span class="st">"gene_symbol"</span>, P) <span class="sc">|&gt;</span> </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">"striped"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">3</span>, <span class="at">italic =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-snps" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-snps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Single nucleotide polymorphism (SNP) and gene
+</figcaption>
+<div aria-describedby="tbl-snps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Reference SNP</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rs3006428</td>
+<td style="text-align: left;">chr1:153439916</td>
+<td style="text-align: left; font-style: italic;"></td>
+<td style="text-align: right;">0.00007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs3014836</td>
+<td style="text-align: left;">chr1:153458724</td>
+<td style="text-align: left; font-style: italic;">S100A7</td>
+<td style="text-align: right;">0.00007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs1574534</td>
+<td style="text-align: left;">chr11:126446715</td>
+<td style="text-align: left; font-style: italic;">KIRREL3</td>
+<td style="text-align: right;">0.00009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs7967182</td>
+<td style="text-align: left;">chr12:109073339</td>
+<td style="text-align: left; font-style: italic;">USP30</td>
+<td style="text-align: right;">0.00008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs28567464</td>
+<td style="text-align: left;">chr16:55767290</td>
+<td style="text-align: left; font-style: italic;"></td>
+<td style="text-align: right;">0.00010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs2047233</td>
+<td style="text-align: left;">chr17:4446887</td>
+<td style="text-align: left; font-style: italic;">SPNS3</td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs2047232</td>
+<td style="text-align: left;">chr17:4447072</td>
+<td style="text-align: left; font-style: italic;">SPNS3</td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs1485206327</td>
+<td style="text-align: left;">chr17:4447072</td>
+<td style="text-align: left; font-style: italic;">SPNS3</td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs884250</td>
+<td style="text-align: left;">chr17:4448345</td>
+<td style="text-align: left; font-style: italic;">SPNS3</td>
+<td style="text-align: right;">0.00006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs884251</td>
+<td style="text-align: left;">chr17:4448492</td>
+<td style="text-align: left; font-style: italic;">SPNS3</td>
+<td style="text-align: right;">0.00009</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
-<p>The results of these analyses were visualized using a Manhattan plot (<a href="#fig-manhattan" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>), created by the <code>manhattan</code> function from the <code>qqman</code> package, which effectively illustrates the distribution of p-values across all chromosomes. Significance at Bonferroni level was set at p = 10<span class="math inline">\(^{-6}\)</span>as we tested 48852 SNPs. The level corresponds to -log10(P) = 5.99. Notably, while no SNP surpassed the stringent Bonferroni threshold, 9 SNPs did exhibit p-values below 0.0001. These results suggest subtle genetic influences that could potentially impact steatosis.</p>
+</div>
+</figure>
+</div>
+</div>
+<p>Notably, while no SNP surpassed the stringent Bonferroni threshold, 9 SNPs did exhibit p-values below 0.0001 (<a href="#tbl-snps" class="quarto-xref">Table&nbsp;<span>3.2</span></a>). The identified genes—<em>S100A7</em>, <em>KIRREL3</em>, <em>USP30</em>, and <em>SPNS3</em>—are implicated in key biological processes relevant to obesity and steatosis, including inflammation, cell adhesion, mitochondrial function, and lipid metabolism. <em>S100A7</em> may contribute to the chronic inflammation associated with obesity, while <em>KIRREL3</em> could influence tissue integrity, impacting liver function. <em>USP30</em> plays a role in maintaining mitochondrial quality, crucial for preventing fat accumulation in the liver, and <em>SPNS3</em> is involved in sphingolipid transport, a process linked to metabolic disturbances in obesity. These genes, along with unannotated SNPs, highlight potential pathways contributing to liver steatosis in obese individuals.</p>
+</section>
+<section id="conclusion" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.6</span> Conclusion</h2>
+<p>This study leveraged whole-exome sequencing (WES) to explore genetic variants associated with liver steatosis in a cohort of individuals segmented by liver fat content. WES offers significant advantages over array genotyping, including the ability to detect rare variants and novel mutations across the exome, providing a more comprehensive assessment of genetic variation. However, the study’s reduced sample size limits its statistical power, potentially overlooking associations that would be detectable in a larger cohort. While we did not identify significant associations with well-known genetic contributors to liver steatosis such as <em>PNPLA3</em>, <em>TM6SF2</em>, and <em>GCKR</em>, the novel SNPs identified in this study, particularly those related to <em>SPNS3</em>, could enhance polygenic risk scores and contribute to a more nuanced understanding of the genetic architecture of steatosis. Further studies with larger sample sizes are needed to validate these findings and explore their potential clinical relevance.</p>
 
 
-<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-anstee2013" class="csl-entry" role="listitem">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Anstee QM, Day CP (2013) The genetics of NAFLD. Nature Reviews Gastroenterology &amp; Hepatology 10(11):645–655. <a href="https://doi.org/10.1038/nrgastro.2013.182">https://doi.org/10.1038/nrgastro.2013.182</a></div>
+Anstee, Q. M., &amp; Day, C. P. (2013). The genetics of NAFLD. <em>Nature Reviews Gastroenterology &amp; Hepatology</em>, <em>10</em>(11), 645–655. doi: <a href="https://doi.org/10.1038/nrgastro.2013.182">10.1038/nrgastro.2013.182</a>
+</div>
+<div id="ref-battram2022" class="csl-entry" role="listitem">
+Battram, T., Gaunt, T. R., Relton, C. L., Timpson, N. J., &amp; Hemani, G. (2022). A comparison of the genes and genesets identified by GWAS and EWAS of fifteen complex traits. <em>Nature Communications</em>, <em>13</em>(1). doi: <a href="https://doi.org/10.1038/s41467-022-35037-3">10.1038/s41467-022-35037-3</a>
+</div>
+<div id="ref-chatterjee2016" class="csl-entry" role="listitem">
+Chatterjee, N., Shi, J., &amp; García-Closas, M. (2016). Developing and evaluating polygenic risk prediction models for stratified disease prevention. <em>Nature Reviews Genetics</em>, <em>17</em>(7), 392–406. doi: <a href="https://doi.org/10.1038/nrg.2016.27">10.1038/nrg.2016.27</a>
+</div>
+<div id="ref-dongiovanni2017" class="csl-entry" role="listitem">
+Dongiovanni, P., Stender, S., Pietrelli, A., Mancina, R. M., Cespiati, A., Petta, S., Pelusi, S., Pingitore, P., Badiali, S., Maggioni, M., Mannisto, V., Grimaudo, S., Pipitone, R. M., Pihlajamaki, J., Craxi, A., Taube, M., Carlsson, L. M. S., Fargion, S., Romeo, S., … Valenti, L. (2017). Causal relationship of hepatic fat with liver damage and insulin resistance in nonalcoholic fatty liver. <em>Journal of Internal Medicine</em>, <em>283</em>(4), 356–370. doi: <a href="https://doi.org/10.1111/joim.12719">10.1111/joim.12719</a>
 </div>
 <div id="ref-ewels2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Ewels PA, Peltzer A, Fillinger S, et al (2020) The nf-core framework for community-curated bioinformatics pipelines. Nature Biotechnology 38(3):276–278. <a href="https://doi.org/10.1038/s41587-020-0439-x">https://doi.org/10.1038/s41587-020-0439-x</a></div>
+Ewels, P. A., Peltzer, A., Fillinger, S., Patel, H., Alneberg, J., Wilm, A., Garcia, M. U., Di Tommaso, P., &amp; Nahnsen, S. (2020). The nf-core framework for community-curated bioinformatics pipelines. <em>Nature Biotechnology</em>, <em>38</em>(3), 276–278. doi: <a href="https://doi.org/10.1038/s41587-020-0439-x">10.1038/s41587-020-0439-x</a>
 </div>
 <div id="ref-garcia2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Garcia M, Juhos S, Larsson M, et al (2020) Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants. F1000Research 9:63. <a href="https://doi.org/10.12688/f1000research.16665.2">https://doi.org/10.12688/f1000research.16665.2</a></div>
+Garcia, M., Juhos, S., Larsson, M., Olason, P. I., Martin, M., Eisfeldt, J., DiLorenzo, S., Sandgren, J., Díaz De Ståhl, T., Ewels, P., Wirta, V., Nistér, M., Käller, M., &amp; Nystedt, B. (2020). Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants. <em>F1000Research</em>, <em>9</em>, 63. doi: <a href="https://doi.org/10.12688/f1000research.16665.2">10.12688/f1000research.16665.2</a>
 </div>
 <div id="ref-garrison2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Garrison E, Marth G (2012) Haplotype-based variant detection from short-read sequencing. <a href="https://doi.org/10.48550/ARXIV.1207.3907">https://doi.org/10.48550/ARXIV.1207.3907</a></div>
+Garrison, E., &amp; Marth, G. (2012). <em>Haplotype-based variant detection from short-read sequencing</em>. doi: <a href="https://doi.org/10.48550/ARXIV.1207.3907">10.48550/ARXIV.1207.3907</a>
+</div>
+<div id="ref-li2011" class="csl-entry" role="listitem">
+Li, H. (2011). A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. <em>Bioinformatics</em>, <em>27</em>(21), 2987–2993. doi: <a href="https://doi.org/10.1093/bioinformatics/btr509">10.1093/bioinformatics/btr509</a>
+</div>
+<div id="ref-purcell2007" class="csl-entry" role="listitem">
+Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A. R., Bender, D., Maller, J., Sklar, P., Bakker, P. I. W. de, Daly, M. J., &amp; Sham, P. C. (2007). PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses. <em>The American Journal of Human Genetics</em>, <em>81</em>(3), 559–575. doi: <a href="https://doi.org/10.1086/519795">10.1086/519795</a>
 </div>
 </div>
 </section>
@@ -1347,11 +1383,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rnaseq.html" class="pagination-link" aria-label="Bulk RNAseq">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNAseq</span></span>
+      <a href="./rnaseq.html" class="pagination-link" aria-label="Bulk RNA sequencing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bulk RNA sequencing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./eqtl.html" class="pagination-link" aria-label="Expression quantitative trait locus (eQTL) analysis">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Expression quantitative trait locus (eQTL) analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
