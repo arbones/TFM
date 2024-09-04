@@ -10,4 +10,6 @@
 *_cache/
 *_files/
 
-*gds
+*GDS
+
+genotype.gds
