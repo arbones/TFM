@@ -16,7 +16,7 @@ by **Jose Miguel Arbones Mainar**
 
 Supervisor: Laura Puente Santamaría, PhD. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
 Co-supervisor: Alberto Cebollada Solanas, MSc. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
-Academic tutor: Josep M. Serrat, PhD . Departament de Biociències. Universitat de Vic.
+Academic tutor: Josep M. Serrat, PhD. Departament de Biociències. Universitat de Vic.
 
 Biociències Department\
 University of Vic – Central University of Catalonia\
