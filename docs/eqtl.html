@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.4">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -122,6 +122,9 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
@@ -232,12 +235,11 @@ div.csl-indent {
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">4.2</span> Methods</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4.3</span> Results</a>
   <ul class="collapse">
-  <li><a href="#analysis-of-eqtl" id="toc-analysis-of-eqtl" class="nav-link" data-scroll-target="#analysis-of-eqtl"><span class="header-section-number">4.3.1</span> Analysis of eQTL</a></li>
-  <li><a href="#steatosis-eqtl" id="toc-steatosis-eqtl" class="nav-link" data-scroll-target="#steatosis-eqtl"><span class="header-section-number">4.3.2</span> Steatosis-eQTL</a></li>
-  <li><a href="#non-steatosis-eqtl" id="toc-non-steatosis-eqtl" class="nav-link" data-scroll-target="#non-steatosis-eqtl"><span class="header-section-number">4.3.3</span> Non steatosis-eQTL</a></li>
-  <li><a href="#identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" id="toc-identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" class="nav-link" data-scroll-target="#identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes"><span class="header-section-number">4.3.4</span> Identification of Steatosis-Specific eQTLs and Their Association with Steatosis Phenotypes</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.3.5</span> Conclusion</a></li>
+  <li><a href="#eqtls-in-the-individuals-with-steatosis" id="toc-eqtls-in-the-individuals-with-steatosis" class="nav-link" data-scroll-target="#eqtls-in-the-individuals-with-steatosis"><span class="header-section-number">4.3.1</span> eQTLs in the individuals with steatosis</a></li>
+  <li><a href="#eqtls-in-individuals-without-steatosis" id="toc-eqtls-in-individuals-without-steatosis" class="nav-link" data-scroll-target="#eqtls-in-individuals-without-steatosis"><span class="header-section-number">4.3.2</span> eQTLs in individuals without steatosis</a></li>
+  <li><a href="#identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" id="toc-identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" class="nav-link" data-scroll-target="#identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes"><span class="header-section-number">4.3.3</span> Identification of Steatosis-Specific eQTLs and Their Association with Steatosis Phenotypes</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.4</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -273,117 +275,96 @@ div.csl-indent {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Hs.eg.db)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SNPassoc)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Hs.eg.db)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>conflicted<span class="sc">::</span><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(), </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                             dplyr<span class="sc">::</span><span class="fu">filter</span>(),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                             base<span class="sc">::</span><span class="fu">setdiff</span>(),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                             base<span class="sc">::</span><span class="fu">rownames</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>conflicted<span class="sc">::</span><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(), </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                             dplyr<span class="sc">::</span><span class="fu">filter</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                             base<span class="sc">::</span><span class="fu">setdiff</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                             base<span class="sc">::</span><span class="fu">rownames</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="introduction" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
 <p>Genome-wide association studies (GWAS) have identified loci associated with NAFLD, but these findings often have modest effect sizes and explain only a small portion of the heritability of NAFLD, which is estimated to be between 22–50% <span class="citation" data-cites="anstee2013">(<a href="biblio.html#ref-anstee2013" role="doc-biblioref">Anstee et al., 2013</a>)</span>. While polygenic risk scores (PRS) have shown promise in predicting risk for complex traits <span class="citation" data-cites="trépo2020">(<a href="biblio.html#ref-trépo2020" role="doc-biblioref">Trépo et al., 2020</a>)</span>, their application to NAFLD has yet to yield robust results <span class="citation" data-cites="kawaguchi2018">(<a href="biblio.html#ref-kawaguchi2018" role="doc-biblioref">Kawaguchi et al., 2018</a>)</span>.</p>
 <p>To enhance our understanding of the genetic basis of NAFLD, mapping expression quantitative trait loci (eQTLs) provides a powerful approach. eQTL analysis links specific genetic variants with changes in gene expression, offering interpretable molecular connections between genetic variants and traits of interest <span class="citation" data-cites="albert2015 yoo2021">(<a href="biblio.html#ref-albert2015" role="doc-biblioref">Albert et al., 2015</a>; <a href="biblio.html#ref-yoo2021" role="doc-biblioref">Yoo et al., 2021</a>)</span>. This method significantly increases statistical power, allowing the detection of thousands of eQTLs even in relatively small sample sizes <span class="citation" data-cites="montgomery2010 yoo2021">(<a href="biblio.html#ref-montgomery2010" role="doc-biblioref">Montgomery et al., 2010</a>; <a href="biblio.html#ref-yoo2021" role="doc-biblioref">Yoo et al., 2021</a>)</span>.</p>
-<p>In the context of obesity, where both adipose tissue and liver function are often compromised, integrating eQTL analysis within a multi-omic framework is essential. The goal of this study is to identify and characterize disease-specific eQTLs in patients with steatosis using gene expression in the liver and whole exome sequencing data. We aim to uncover novel genetic mechanisms underlying NAFLD and to improve the accuracy of genetic risk prediction for this complex disease.</p>
+<p>In the context of obesity, where both adipose tissue and liver function are often compromised, integrating eQTL analysis within a multi-omic framework is essential. The goal of this study was to identify and characterize disease-specific eQTLs in patients with steatosis using gene expression in the liver and whole exome sequencing data. We aim to uncover novel genetic mechanisms underlying NAFLD and to improve the accuracy of genetic risk prediction for this complex disease.</p>
 </section>
 <section id="methods" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="methods"><span class="header-section-number">4.2</span> Methods</h2>
 <p>Transcriptome and genome data were obtained as detailed in Appendices 2 and 3, respectively. No genotype imputation was performed. These datasets were integrated for expression quantitative trait loci (eQTL) mapping using R and <code>MatrixEQTL</code> (version 2.3) <span class="citation" data-cites="MatrixEQTL">(<a href="biblio.html#ref-MatrixEQTL" role="doc-biblioref">Shabalin, 2012</a>)</span>, with sex included as a covariate.</p>
 <p>To identify steatosis-related eQTLs, the cohort was divided into two groups: no-steatosis (liver fat content &lt; 5%, n = 29) and steatosis (liver fat content &gt; 33%, n = 25). eQTL mapping was conducted separately within each group. eQTLs identified in both groups were excluded from further analysis to focus on steatosis-specific eQTLs.</p>
 <p>To refine the list of steatosis-specific eQTLs, we selected the most significant SNP per gene, retaining only those eQTLs with an absolute β coefficient greater than 10. These eQTLs were further filtered by removing any SNPs that did not meet Hardy-Weinberg equilibrium (HWE) criteria (HWE p-value &lt; 0.0001).</p>
-<p>A genome-wide association analysis was then performed between the identified SNPs and the dependent variable (steatosis) in the whole cohort using five different genetic models (inheritance patterns): codominant, dominant, recessive, overdominant, and log-additive, utilizing the R package <code>SNPassoc</code> (version 2.1.0) <span class="citation" data-cites="SNPassoc">(<a href="biblio.html#ref-SNPassoc" role="doc-biblioref">Moreno et al., 2022</a>)</span>. For each eQTL, the model with the lowest p-value was selected for further analysis. Finally, the results were visualized by plotting the association data across three histologically defined steatosis groups (&lt;5%, 5-33%, and &gt;33%). Genotypes were coded as 0, 1, or 2, corresponding to the number of minor alleles present at each SNP.</p>
+<p>A genome-wide association analysis was then performed between the identified SNPs and the dependent variable (steatosis) in the whole cohort using five different genetic models (inheritance patterns): codominant, dominant, recessive, overdominant, and log-additive, utilizing the R package <code>SNPassoc</code> (version 2.1.0) <span class="citation" data-cites="SNPassoc">(<a href="biblio.html#ref-SNPassoc" role="doc-biblioref">Moreno et al., 2022</a>)</span>. For each eQTL, the model with the lowest p-value was selected for further analysis. Finally, the results were visualized by plotting the association data across three histologically defined steatosis groups (&lt;5%, 5-33%, and &gt;33%). Genotypes were coded as 0, 1, or 2, corresponding to the number of minor alleles present at each SNP (<em>See flowchart below</em>).</p>
+<div class="cell" data-layout-align="default">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    C[Transcriptome and Genome Data Integration] --&gt; D[eQTL Mapping using R and MatrixEQTL]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    D --&gt; E{Steatosis Grouping}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    E --&gt; H[Separate eQTL Mapping for No Steatosis Group]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    E --&gt; I[Separate eQTL Mapping for Steatosis Group]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    H --&gt; N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    I --&gt; N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    N --&gt; X[Selection of the most significant SNP per gene]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    X --&gt; P[SNPs unique to the steatosis group]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    P --&gt; Q[GWAS for steatosis]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    Q --&gt; R[ Filterd out HWE&lt;0.0001]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    R --&gt; W[FDR less 0.001]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    C[Transcriptome and Genome Data Integration] --&gt; D[eQTL Mapping using R and MatrixEQTL]
+    D --&gt; E{Steatosis Grouping}
+    E --&gt; H[Separate eQTL Mapping for No Steatosis Group]
+    E --&gt; I[Separate eQTL Mapping for Steatosis Group]
+    H --&gt; N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]
+    I --&gt; N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]
+    N --&gt; X[Selection of the most significant SNP per gene]
+    X --&gt; P[SNPs unique to the steatosis group]
+    P --&gt; Q[GWAS for steatosis]
+    Q --&gt; R[ Filterd out HWE&lt;0.0001]
+    R --&gt; W[FDR less 0.001]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="results" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="results"><span class="header-section-number">4.3</span> Results</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Genotype data </span><span class="al">###</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">###################</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert PLINK to GDS format</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">snpgdsBED2GDS</span>(<span class="st">"data/only_snps_cleaned.bed"</span>, </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">"data/only_snps_cleaned.fam"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">"data/only_snps_cleaned.bim"</span>, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">out.gdsfn =</span><span class="st">"genotype.gds"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the GDS file</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>genofile <span class="ot">&lt;-</span> <span class="fu">snpgdsOpen</span>(<span class="st">"genotype.gds"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="do">###################</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># phenotype data ##</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="do">###################</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/20240813_metadata.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(sample, <span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span> </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,sample,<span class="st">"_"</span>,<span class="st">"DNA_"</span>,sample))<span class="sc">|&gt;</span> </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode steatosis categories into a new variable with only 3 levels</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">steatosis_3cat=</span><span class="fu">fct_recode</span>(Steatosis,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;33-66%"</span>,<span class="st">`</span><span class="at">&gt;33%</span><span class="st">`</span><span class="ot">=</span><span class="st">"&gt;66%"</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis_3cat=</span><span class="fu">factor</span>(steatosis_3cat,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">"&lt;5%"</span>, <span class="st">"5-33%"</span>, <span class="st">"&gt;33%"</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode sex as the .fam file </span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">fct_recode</span>(sexo, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"hombre"</span>,  <span class="st">"2"</span> <span class="ot">=</span><span class="st">"mujer"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_to_rownames</span>(<span class="st">"sample"</span>) </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>steato <span class="ot">&lt;-</span> pheno <span class="sc">|&gt;</span> <span class="fu">filter</span>(steatosis_3cat <span class="sc">==</span> <span class="st">"&gt;33%"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(prefix)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>healthy <span class="ot">&lt;-</span> pheno <span class="sc">|&gt;</span> <span class="fu">filter</span>(steatosis_3cat <span class="sc">==</span> <span class="st">"&lt;5%"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(prefix)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># RNAseq count data #######################</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="do">###########################################</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>counts0 <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"data/salmon.merged.gene_counts.tsv"</span>)</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>filter <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(counts0 <span class="sc">&gt;=</span> <span class="dv">30</span>) <span class="sc">&gt;=</span> <span class="dv">30</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>counts_filtered <span class="ot">&lt;-</span> counts0[filter,] <span class="sc">|&gt;</span> </span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">0</span>)</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="do">#########################################################</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Map ENSEMBL gene IDs to HGNC symbols for compatibility with gene annotations</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>symb <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(org.Hs.eg.db, <span class="at">keys =</span> <span class="fu">str_sub</span>(<span class="fu">rownames</span>(counts_filtered),<span class="dv">1</span>,<span class="dv">15</span>),</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>               <span class="at">column =</span> <span class="fu">c</span>(<span class="st">"SYMBOL"</span>), <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out untranslated genes</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>counts_na <span class="ot">&lt;-</span> counts_filtered <span class="sc">|&gt;</span> </span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">symbol =</span> symb, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(symbol)) </span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co"># sum the counts of duplicated genes (normaly pseudogenes)</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> counts_na <span class="sc">|&gt;</span> </span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">|&gt;</span> </span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">sum</span>(x))) <span class="sc">|&gt;</span> </span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(symbol,<span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span> </span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="st">"symbol"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<section id="analysis-of-eqtl" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="analysis-of-eqtl"><span class="header-section-number">4.3.1</span> Analysis of eQTL</h3>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>expression_liver <span class="ot">&lt;-</span> counts <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"L_"</span>)) </span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Analysis of eQTL in the whole cohort </span><span class="al">###</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">############################################</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sample_id_liver <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,<span class="fu">str_sub</span>(<span class="fu">names</span>(expression_liver),<span class="dv">3</span>,<span class="dv">5</span>),<span class="st">"_"</span>,<span class="st">"DNA_"</span>,<span class="fu">str_sub</span>(<span class="fu">names</span>(expression_liver),<span class="dv">3</span>,<span class="dv">5</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract genotype data from GDS file</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>geno_data <span class="ot">&lt;-</span> <span class="fu">snpgdsGetGeno</span>(genofile, <span class="at">sample.id=</span>sample_id_liver, <span class="at">snp.id=</span><span class="cn">NULL</span>, <span class="at">with.id=</span><span class="cn">TRUE</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the genotype matrix</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>geno_matrix <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>genotype</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>expression_liver <span class="ot">&lt;-</span> counts <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"L_"</span>)) </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>sample_id_liver <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"DNA_"</span>,<span class="fu">str_sub</span>(<span class="fu">names</span>(expression_liver),<span class="dv">3</span>,<span class="dv">5</span>),<span class="st">"_"</span>,<span class="st">"DNA_"</span>,<span class="fu">str_sub</span>(<span class="fu">names</span>(expression_liver),<span class="dv">3</span>,<span class="dv">5</span>))</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign row and column names correctly</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(geno_matrix) <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>sample.id  <span class="co"># Row names: sample IDs</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(geno_matrix) <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>snp.id     <span class="co"># Column names: SNP IDs</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder geno_matrix pheno with the same order than the expression matrix</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>geno_matrix_liver <span class="ot">&lt;-</span> geno_matrix[sample_id_liver,]</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>pheno_liver <span class="ot">&lt;-</span> pheno[sample_id_liver,]</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(expression_liver) <span class="ot">&lt;-</span> sample_id_liver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract genotype data from GDS file</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>geno_data <span class="ot">&lt;-</span> <span class="fu">snpgdsGetGeno</span>(genofile, <span class="at">sample.id=</span>sample_id_liver, <span class="at">snp.id=</span><span class="cn">NULL</span>, <span class="at">with.id=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the genotype matrix</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>geno_matrix <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>genotype</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign row and column names correctly</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(geno_matrix) <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>sample.id  <span class="co"># Row names: sample IDs</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(geno_matrix) <span class="ot">&lt;-</span> geno_data<span class="sc">$</span>snp.id     <span class="co"># Column names: SNP IDs</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder geno_matrix pheno with the same order than the expression matrix</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>geno_matrix_liver <span class="ot">&lt;-</span> geno_matrix[sample_id_liver,]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>pheno_liver <span class="ot">&lt;-</span> pheno[sample_id_liver,]</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(expression_liver) <span class="ot">&lt;-</span> sample_id_liver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -442,11 +423,8 @@ div.csl-indent {
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>multiple <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sum</span>(t<span class="sc">$</span>n <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="fu">nrow</span>(t) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>After quality assessment of the genotype and liver transcriptome data from 79 individuals with obesity , 14564 transcripts and 48852 SNPs were subject eQTL mapping using an additive linear model. We identified 1244 genes with eQTLs (cis and trans) at FDR = 0.001, and 4031 significant SNPs. Among the eQTL-SNPs, 57.7% had an effect on multiple genes, , highlighting the potential pleiotropy of these genetic variants in the regulation of gene expression.</p>
-<p>This approach allowed us to uncover a significant number of eQTLs with robust statistical support, offering insights into the genetic regulation of liver gene expression in individuals with obesity. The high percentage of SNPs affecting multiple genes suggests complex regulatory mechanisms at play, which may contribute to the pathogenesis of related diseases.</p>
-</section>
-<section id="steatosis-eqtl" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="steatosis-eqtl"><span class="header-section-number">4.3.2</span> Steatosis-eQTL</h3>
+<section id="eqtls-in-the-individuals-with-steatosis" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="eqtls-in-the-individuals-with-steatosis"><span class="header-section-number">4.3.1</span> eQTLs in the individuals with steatosis</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -533,10 +511,10 @@ div.csl-indent {
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(gene, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>In this subgroup of 25 individuals with obesity and statosis , 14564 transcripts and 48852 SNPs were subject eQTL mapping. We identified 1191 genes with eQTLs (cis and trans) at FDR = 0.001, and 18220 significant SNPs. Among the eQTL-SNPs, 70.2% had an effect on multiple genes. This subset of eQTLs provides valuable insights into the specific genetic variants that may contribute to the development and progression of liver steatosis in obese individuals. The high proportion of SNPs affecting multiple genes underscores the complexity of the genetic regulation of liver gene expression in the context of steatosis.</p>
+<p>In this subgroup of 25 individuals with obesity and steatosis (&gt;35%) , 14668 transcripts and 48852 SNPs were subject eQTL mapping. We identified 1191 genes with eQTLs (cis and trans) at FDR = 0.001, and 18220 significant SNPs. Among the eQTL-SNPs, 70.2% had an effect on multiple genes. This subset of eQTLs provides valuable insights into the specific genetic variants that may contribute to the development and progression of liver steatosis in obese individuals. The high proportion of SNPs affecting multiple genes underscores the complexity of the genetic regulation of liver gene expression in the context of steatosis.</p>
 </section>
-<section id="non-steatosis-eqtl" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="non-steatosis-eqtl"><span class="header-section-number">4.3.3</span> Non steatosis-eQTL</h3>
+<section id="eqtls-in-individuals-without-steatosis" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="eqtls-in-individuals-without-steatosis"><span class="header-section-number">4.3.2</span> eQTLs in individuals without steatosis</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -623,109 +601,115 @@ div.csl-indent {
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(gene, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>In the non-steatosis subgroup, encompassed with 29 individuals with obesity , 14564 transcripts and 48852 SNPs were subject eQTL mapping. We identified 764 genes with eQTLs (cis and trans) at FDR = 0.001, and 14510 significant SNPs. Among the eQTL-SNPs, 56.2% had an effect on multiple genes.</p>
+<p>In the non-steatosis subgroup, encompassed with 29 individuals with obesity , 14668 transcripts and 48852 SNPs were subject eQTL mapping. We identified 764 genes with eQTLs (cis and trans) at FDR = 0.001, and 14510 significant SNPs. Among the eQTL-SNPs, 56.2% had an effect on multiple genes.</p>
 <p>This analysis allowed us to identify a significant number of eQTLs specific to individuals without steatosis, providing insights into the genetic regulation of liver gene expression in a healthier metabolic context. The lower proportion of SNPs affecting multiple genes compared to the steatosis group suggests potential differences in the genetic architecture underlying gene expression in individuals with and without liver steatosis.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the GDS file after analysis to free resources</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">closefn.gds</span>(genotype.gds) <span class="do">### como se llama ???</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
 </section>
-<section id="identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes"><span class="header-section-number">4.3.4</span> Identification of Steatosis-Specific eQTLs and Their Association with Steatosis Phenotypes</h3>
+<section id="identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="identification-of-steatosis-specific-eqtls-and-their-association-with-steatosis-phenotypes"><span class="header-section-number">4.3.3</span> Identification of Steatosis-Specific eQTLs and Their Association with Steatosis Phenotypes</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify SNPs that are unique to the steatosis group by finding the difference between the steatosis and healthy SNP sets</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dif <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(eqtl_single_gene_steato<span class="sc">$</span>SNP, eqtl_single_gene_healthy<span class="sc">$</span>SNP)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a genotype-phenotype matrix for the liver samples, selecting only the SNPs unique to the steatosis group</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>assoc_liver0 <span class="ot">&lt;-</span> geno_matrix_liver <span class="sc">|&gt;</span> </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(dif)) <span class="sc">|&gt;</span> </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">steatosis_3cat =</span> pheno_liver<span class="sc">$</span>steatosis_3cat, <span class="co"># Add the steatosis phenotype in three categories</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis =</span> <span class="fu">ifelse</span>(steatosis_3cat <span class="sc">==</span> <span class="st">"&gt;33%"</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="co"># Create a binary steatosis variable (&gt;33% = 1, otherwise = 0)</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">sex =</span> pheno_liver<span class="sc">$</span>sexo, <span class="at">.before =</span> <span class="dv">1</span>) <span class="co"># Include sex as a covariate</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the SNP data for association analysis, labeling genotypes as 0, 1, 2</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>assoc_liver <span class="ot">&lt;-</span> <span class="fu">setupSNP</span>(assoc_liver0, <span class="at">colSNPs =</span> <span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(assoc_liver0), <span class="at">name.genotypes =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter SNPs that meet the Hardy-Weinberg equilibrium criteria (HWE &gt;= 0.0001)</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>ok_liver <span class="ot">&lt;-</span> <span class="fu">summary</span>(assoc_liver, <span class="at">print =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(HWE <span class="sc">&gt;=</span> <span class="fl">0.0001</span>) </span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the final dataset for association analysis, selecting relevant variables and SNPs</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>assoc_liver <span class="ot">&lt;-</span> assoc_liver <span class="sc">|&gt;</span> </span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(steatosis_3cat, steatosis, sex, <span class="fu">rownames</span>(ok_liver))</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform genome-wide association analysis using multiple genetic models and select the best model for each SNP</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">89</span>)</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>final0 <span class="ot">&lt;-</span> <span class="fu">WGassociation</span>(steatosis <span class="sc">~</span> sex, assoc_liver[, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(assoc_liver)], <span class="at">mc.cores =</span> <span class="dv">8</span>)  </span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the association results to identify significant SNPs</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> final0 <span class="sc">|&gt;</span> </span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"snp"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(codominant<span class="sc">:</span><span class="st">`</span><span class="at">log-additive</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"model"</span>, <span class="at">values_to =</span> <span class="st">"pvalue"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(snp) <span class="sc">|&gt;</span> </span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pvalue, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(snp, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pvalue)) <span class="sc">|&gt;</span> </span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fdr =</span> <span class="fu">p.adjust</span>(pvalue, <span class="at">method =</span> <span class="st">"fdr"</span>)) <span class="sc">|&gt;</span> <span class="co"># Adjust p-values for multiple testing using FDR</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fdr <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(snp, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"chr"</span>, <span class="st">"BP"</span>), <span class="at">delim =</span> <span class="st">"."</span>, <span class="at">cols_remove =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BP =</span> <span class="fu">as.integer</span> (BP),</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">position =</span> <span class="fu">str_c</span>(<span class="fu">str_replace</span>(chr, <span class="st">"chr"</span>, <span class="st">""</span>), BP, BP, <span class="at">sep =</span> <span class="st">":"</span>), <span class="co"># Format the SNP positions</span></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">snp =</span> <span class="fu">str_replace</span>(snp, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">:"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify SNPs that are unique to the steatosis group by finding the difference between the steatosis and healthy SNP sets</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dif <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(eqtl_single_gene_steato<span class="sc">$</span>SNP, eqtl_single_gene_healthy<span class="sc">$</span>SNP)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a genotype-phenotype matrix for the liver samples, selecting only the SNPs unique to the steatosis group</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>assoc_liver0 <span class="ot">&lt;-</span> geno_matrix_liver <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(dif)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">steatosis_3cat =</span> pheno_liver<span class="sc">$</span>steatosis_3cat, <span class="co"># Add the steatosis phenotype in three categories</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">steatosis =</span> <span class="fu">ifelse</span>(steatosis_3cat <span class="sc">==</span> <span class="st">"&gt;33%"</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="co"># Create a binary steatosis variable (&gt;33% = 1, otherwise = 0)</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">sex =</span> pheno_liver<span class="sc">$</span>sexo, <span class="at">.before =</span> <span class="dv">1</span>) <span class="co"># Include sex as a covariate</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the SNP data for association analysis, labeling genotypes as 0, 1, 2</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>assoc_liver <span class="ot">&lt;-</span> <span class="fu">setupSNP</span>(assoc_liver0, <span class="at">colSNPs =</span> <span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(assoc_liver0), <span class="at">name.genotypes =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter SNPs that meet the Hardy-Weinberg equilibrium criteria (HWE &gt;= 0.0001)</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ok_liver <span class="ot">&lt;-</span> <span class="fu">summary</span>(assoc_liver, <span class="at">print =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(HWE <span class="sc">&gt;=</span> <span class="fl">0.0001</span>) </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the final dataset for association analysis, selecting relevant variables and SNPs</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>assoc_liver <span class="ot">&lt;-</span> assoc_liver <span class="sc">|&gt;</span> </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(steatosis_3cat, steatosis, sex, <span class="fu">rownames</span>(ok_liver))</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform genome-wide association analysis using multiple genetic models and select the best model for each SNP</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">89</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>final0 <span class="ot">&lt;-</span> <span class="fu">WGassociation</span>(steatosis <span class="sc">~</span> sex, assoc_liver[, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(assoc_liver)], <span class="at">mc.cores =</span> <span class="dv">8</span>)  </span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the association results to identify significant SNPs</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> final0 <span class="sc">|&gt;</span> </span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"snp"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(codominant<span class="sc">:</span><span class="st">`</span><span class="at">log-additive</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"model"</span>, <span class="at">values_to =</span> <span class="st">"pvalue"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(snp) <span class="sc">|&gt;</span> </span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pvalue, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(snp, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pvalue)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fdr =</span> <span class="fu">p.adjust</span>(pvalue, <span class="at">method =</span> <span class="st">"fdr"</span>)) <span class="sc">|&gt;</span> <span class="co"># Adjust p-values for multiple testing using FDR</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fdr <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(snp, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"chr"</span>, <span class="st">"BP"</span>), <span class="at">delim =</span> <span class="st">"."</span>, <span class="at">cols_remove =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">BP =</span> <span class="fu">as.integer</span> (BP),</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">position =</span> <span class="fu">str_c</span>(<span class="fu">str_replace</span>(chr, <span class="st">"chr"</span>, <span class="st">""</span>), BP, BP, <span class="at">sep =</span> <span class="st">":"</span>), <span class="co"># Format the SNP positions</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">snp =</span> <span class="fu">str_replace</span>(snp, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">:"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>To identify steatosis-specific eQTLs, we first determined the SNPs that were unique to the steatosis group by comparing eQTLs identified in individuals with and without steatosis. This analysis revealed a set of 760 SNPs specific to the steatosis group.</p>
 <p>Next, we performed a genome-wide association analysis on these steatosis-specific SNPs using genotype data from the liver samples. The analysis included a binary steatosis phenotype, where individuals with liver fat content greater than 33% were classified as having steatosis. The association analysis was conducted using multiple genetic models (codominant, dominant, recessive, overdominant, and log-additive), and for each SNP, the model with the lowest p-value was selected.</p>
 <p>To ensure robustness, only SNPs that passed the Hardy-Weinberg equilibrium filter (HWE ≥ 0.0001) were included in the final analysis. After adjusting for multiple testing using the false discovery rate (FDR) method, we identified 5 significant SNPs associated with the steatosis phenotype at an FDR threshold of 0.01. These results highlight specific genetic variants that may play a critical role in the development and progression of steatosis, offering potential targets for further investigation in the context of non-alcoholic fatty liver disease (NAFLD).</p>
-<p>These SNPs were further annotated using biomaRt to map them to corresponding genes and reference SNP IDs. The final list of steatosis-specific eQTLs provided insights into the genetic mechanisms underlying steatosis in the liver, revealing potential candidate genes for further study.</p>
+<p>These SNPs were further annotated using <code>biomaRt</code> <span class="citation" data-cites="biomaRt">(<a href="biblio.html#ref-biomaRt" role="doc-biblioref">Durinck et al., 2009</a>)</span> to map them to corresponding genes and reference SNP IDs. The final list of steatosis-specific eQTLs provided insights into the genetic mechanisms underlying steatosis in the liver, revealing potential candidate genes for further study.</p>
 <p>In the analysis of eQTLs associated with liver steatosis, we observed significant differences in allele distribution across the three steatosis categories (&lt;5%, 5-33%, and &gt;33%) (<a href="#tbl-qtl" class="quarto-xref">Table&nbsp;<span>4.1</span></a>). The alleles are coded as 0 for the major allele and 1 for the minor allele; no homozygous (2) minor allele carriers were found in our cohort, likely due to the small sample size.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use biomaRt to retrieve additional SNP information, including gene associations</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> biomaRt<span class="sc">::</span><span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">"snps"</span>, <span class="at">dataset =</span> <span class="st">"hsapiens_snp"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>snp_mart <span class="ot">&lt;-</span> biomaRt<span class="sc">::</span><span class="fu">getBM</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">'chrom_start'</span>,<span class="st">'refsnp_id'</span>,<span class="st">"ensembl_gene_stable_id"</span>, <span class="st">'chr_name'</span>, <span class="st">'allele'</span>, <span class="st">"allele_1"</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">filters =</span> <span class="st">'chromosomal_region'</span>, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> final<span class="sc">$</span>position ,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mart =</span> ensembl) <span class="sc">|&gt;</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(chrom_start, <span class="at">.keep_all =</span> T)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Map Ensembl gene IDs to gene symbols</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>gene_symbol <span class="ot">=</span> <span class="fu">mapIds</span>(org.Hs.eg.db, <span class="at">keys =</span> snp_mart<span class="sc">$</span>ensembl_gene_stable_id,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">column =</span> <span class="fu">c</span>(<span class="st">"SYMBOL"</span>), <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Integrate SNP annotation with association results, including reference SNP IDs</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> final <span class="sc">|&gt;</span> </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(snp_mart, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"BP"</span> <span class="ot">=</span> <span class="st">"chrom_start"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rfsnp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(refsnp_id), snp, refsnp_id))</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the eQTL data for visualization and comparison across steatosis groups</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>eqtl <span class="ot">&lt;-</span> assoc_liver0 <span class="sc">|&gt;</span> </span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(steatosis, steatosis_3cat, sex, final<span class="sc">$</span>snp) <span class="sc">|&gt;</span> </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">as.character</span>(x))) <span class="sc">|&gt;</span> </span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"steatosis"</span>, <span class="st">"steatosis_3cat"</span>, <span class="st">"sex"</span>, final<span class="sc">$</span>rfsnp))</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>eqtl_long <span class="ot">&lt;-</span>  eqtl <span class="sc">|&gt;</span>  </span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(eqtl), <span class="at">values_to =</span> <span class="st">"Allele"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Allele))</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Descriptive analysis and table generation</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>cq <span class="ot">&lt;-</span> <span class="fu">compareGroups</span>(steatosis_3cat <span class="sc">~</span> . <span class="sc">-</span>steatosis <span class="sc">-</span> sex, <span class="at">data =</span> eqtl)</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>tq <span class="ot">&lt;-</span> <span class="fu">createTable</span>(cq, <span class="at">show.all =</span> T)</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="fu">export2md</span>(tq, <span class="at">caption =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># eQTL´s target genes</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>target0 <span class="ot">&lt;-</span> eqtl_single_gene_steato <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SNP<span class="sc">%in%</span>final<span class="sc">$</span>snp) </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> target0 <span class="sc">|&gt;</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(SNP) <span class="sc">|&gt;</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">target_genes =</span> <span class="fu">str_c</span>(gene, <span class="at">collapse =</span> <span class="st">", "</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">beta =</span> <span class="fu">str_c</span>(beta <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">0</span>), <span class="at">collapse =</span> <span class="st">"/"</span>))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> final <span class="sc">|&gt;</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(target, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"snp"</span> <span class="ot">=</span><span class="st">"SNP"</span>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Use biomaRt to retrieve additional SNP information, including gene associations</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ensembl <span class="ot">&lt;-</span> biomaRt<span class="sc">::</span><span class="fu">useEnsembl</span>(<span class="at">biomart =</span> <span class="st">"snps"</span>, <span class="at">dataset =</span> <span class="st">"hsapiens_snp"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>snp_mart <span class="ot">&lt;-</span> biomaRt<span class="sc">::</span><span class="fu">getBM</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">'chrom_start'</span>,<span class="st">'refsnp_id'</span>,<span class="st">"ensembl_gene_stable_id"</span>, <span class="st">'chr_name'</span>, <span class="st">'allele'</span>, <span class="st">"allele_1"</span>),</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">filters =</span> <span class="st">'chromosomal_region'</span>, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> final<span class="sc">$</span>position ,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">mart =</span> ensembl) <span class="sc">|&gt;</span> </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(chrom_start, <span class="at">.keep_all =</span> T)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Map Ensembl gene IDs to gene symbols</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>gene_symbol <span class="ot">=</span> <span class="fu">mapIds</span>(org.Hs.eg.db, <span class="at">keys =</span> snp_mart<span class="sc">$</span>ensembl_gene_stable_id,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">column =</span> <span class="fu">c</span>(<span class="st">"SYMBOL"</span>), <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Integrate SNP annotation with association results, including reference SNP IDs</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> final <span class="sc">|&gt;</span> </span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(snp_mart, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"BP"</span> <span class="ot">=</span> <span class="st">"chrom_start"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rfsnp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(refsnp_id), snp, refsnp_id))</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the eQTL data for visualization and comparison across steatosis groups</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>eqtl <span class="ot">&lt;-</span> assoc_liver0 <span class="sc">|&gt;</span> </span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(steatosis, steatosis_3cat, sex, final<span class="sc">$</span>snp) <span class="sc">|&gt;</span> </span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">as.character</span>(x))) <span class="sc">|&gt;</span> </span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"steatosis"</span>, <span class="st">"steatosis_3cat"</span>, <span class="st">"sex"</span>, final<span class="sc">$</span>rfsnp))</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>eqtl_long <span class="ot">&lt;-</span>  eqtl <span class="sc">|&gt;</span>  </span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(eqtl), <span class="at">values_to =</span> <span class="st">"Allele"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Allele))</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Descriptive analysis and table generation</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>cq <span class="ot">&lt;-</span> <span class="fu">compareGroups</span>(steatosis_3cat <span class="sc">~</span> . <span class="sc">-</span>steatosis <span class="sc">-</span> sex, <span class="at">data =</span> eqtl)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>tq <span class="ot">&lt;-</span> <span class="fu">createTable</span>(cq, <span class="at">show.all =</span> T)</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="fu">export2md</span>(tq, <span class="at">caption =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-qtl" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-qtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: Distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis categories.<br>p.overall: Chi square associated-p value for the comparison between steatosis categories.
+Table&nbsp;4.1: Distribution (%) of the major (0) and minor (1) alleles associated with steatosis across different steatosis categories.<br>p.overall: Chi square associated-p value for the comparison between steatosis categories.
 </figcaption>
 <div aria-describedby="tbl-qtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -878,38 +862,14 @@ Table&nbsp;4.1: Distribution (%) of the major (0) and minor (1) associated with 
 </figure>
 </div>
 </div>
-<p>For SNP rs3127806 in the <em>PLCL2</em> gene, the frequency of the minor allele (1) increased with higher steatosis, indicating a potential role in cellular signaling related to steatosis (p = 0.020). SNP rs326214 in the <em>GCKR</em> gene, known for its involvement in glucose metabolism, showed a significant association with higher steatosis severity (p = 0.009). Similarly, rs937583 in the <em>SLC16A1</em> gene, linked to monocarboxylate transport, demonstrated an increasing frequency of the minor allele with greater steatosis (p = 0.029). SNP chr3:9473234 in the <em>RHOA</em> gene, which regulates cellular structure and migration, also showed significant allele distribution differences (p = 0.024). Lastly, rs3739310 in the <em>TM6SF2</em> gene, associated with liver fat metabolism, displayed a significant association with steatosis severity (p = 0.008). These findings highlight the influence of metabolic pathways in the genetic predisposition to liver steatosis (<a href="#fig-bar" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>).</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization: Bar plot showing the distribution of alleles across steatosis categories</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(eqtl_long, <span class="fu">aes</span>(<span class="at">x =</span> steatosis_3cat, <span class="at">fill =</span> Allele)) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">""</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>()) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Steatosis"</span>)<span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>)) <span class="sc">+</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div id="fig-bar" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="eqtl_files/figure-html/fig-bar-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Barplot with the distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis caetgories.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
+<p>In obese individuals with steatosis, eQTLs regulate gene expression by linking specific genetic variants (SNPs) to changes in expression levels. For instance, the minor allele (1) of the <a href="https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;v=rs3127806;vdb=variation" target="_blank">rs3127806</a> was found to be negatively associated with the expression of the PDZ and LIM domain 7 (<em>PDLIM7</em>) gene, which acts as a ubiquitin E3 ligase and inhibitor of NF-κB-mediated inflammatory responses <span class="citation" data-cites="jodo2020">(<a href="biblio.html#ref-jodo2020" role="doc-biblioref">Jodo et al., 2020</a>)</span>. <em>PDLIM7</em> has also been implicated as a promoter of adipogenesis, linking it to obesity and fat storage processes<span class="citation" data-cites="fang2024">(<a href="biblio.html#ref-fang2024" role="doc-biblioref">Fang et al., 2024</a>)</span>.</p>
+<p>Similarly, the minor allele of <a href="https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;r=15:20357066-20358066;v=rs937583;vdb=variation;vf=887136385" target="&quot;_blank">rs937583</a> was inversely associated with the expression of <em>FNL2</em>, a gene stimulated by hypoxia and linked to the development of hepatocellular carcinoma<span class="citation" data-cites="li2023">(<a href="biblio.html#ref-li2023" role="doc-biblioref">Li et al., 2023</a>)</span>. Another notable eQTL involved the variant <a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/2663779/?oq=3%5BChromosome%5D+AND+9473234%5BCHRPOS%5D&amp;m=NM_001080517.3(SETD5):c.3196-2A%3EG" target="&quot;_blank">chr3:9473234</a> , which was negatively associated with the expression of <em>ETS2</em>, a central regulator of inflammatory macrophages in the liver, further emphasizing its role in the inflammatory processes underlying NAFLD <span class="citation" data-cites="stankey2024">(<a href="biblio.html#ref-stankey2024" role="doc-biblioref">Stankey et al., 2024</a>)</span>.</p>
+<p>Lastly, the minor allele of <a href="https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;r=8:13020798-13021798;v=rs3739310;vdb=variation;vf=543586301" target="&quot;_blank">rs3739310</a> was positively associated with the expression of <em>MSR1</em> (macrophage scavenger receptor 1), a gene linked to the occurrence of lipid-laden foamy macrophages in the liver. <em>MSR1</em> expression correlates with the severity of steatosis and steatohepatitis in NAFLD patients<span class="citation" data-cites="govaere2022">(<a href="biblio.html#ref-govaere2022" role="doc-biblioref">Govaere et al., 2022</a>)</span>. These findings highlight the role of eQTLs in regulating gene expression relevant to liver fat accumulation and inflammation, suggesting potential molecular mechanisms that contribute to the progression of NAFLD.</p>
 </section>
-<section id="conclusion" class="level3" data-number="4.3.5">
-<h3 data-number="4.3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.3.5</span> Conclusion</h3>
-<p>In conclusion, our study identified significant expression quantitative trait loci (eQTLs) associated with liver steatosis by leveraging whole exome sequencing and transcriptomic data from individuals with obesity. We observed that a substantial proportion of eQTL-SNPs have pleiotropic effects, influencing multiple genes, which underscores the complex genetic architecture underlying this condition. By distinguishing steatosis-specific eQTLs from those present in non-steatosis individuals, we have highlighted key genetic variants that may contribute to the pathogenesis of liver steatosis. These findings offer valuable insights into the molecular mechanisms of steatosis and provide a foundation for future research aimed at developing targeted therapeutic interventions for non-alcoholic fatty liver disease (NAFLD).</p>
+</section>
+<section id="conclusion" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.4</span> Conclusion</h2>
+<p>In conclusion, our study identified significant expression quantitative trait loci (eQTLs) associated with liver steatosis by leveraging whole exome sequencing and transcriptomic data from individuals with obesity. We observed that a substantial proportion of eQTL-SNPs have pleiotropic effects, influencing multiple genes, which underscores the complex genetic architecture underlying this condition. By distinguishing steatosis-specific eQTLs from those present in non-steatosis individuals, we have highlighted key genetic variants that may contribute to the pathogenesis of liver steatosis. These findings offer valuable insights into the molecular mechanisms of steatosis and provide a foundation for future research aimed at developing targeted therapeutic interventions for steatosis non-alcoholic fatty liver disease (NAFLD).</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -919,8 +879,23 @@ Albert, F. W., &amp; Kruglyak, L. (2015). The role of regulatory variation in co
 <div id="ref-anstee2013" class="csl-entry" role="listitem">
 Anstee, Q. M., &amp; Day, C. P. (2013). The genetics of NAFLD. <em>Nature Reviews Gastroenterology &amp; Hepatology</em>, <em>10</em>(11), 645–655. doi: <a href="https://doi.org/10.1038/nrgastro.2013.182">10.1038/nrgastro.2013.182</a>
 </div>
+<div id="ref-biomaRt" class="csl-entry" role="listitem">
+Durinck, S., Spellman, P. T., Birney, E., &amp; Huber, W. (2009). <em>Mapping identifiers for the integration of genomic datasets with the r/bioconductor package biomaRt</em>. <em>4</em>.
+</div>
+<div id="ref-fang2024" class="csl-entry" role="listitem">
+Fang, L., Liu, C., Jiang, Z., Wang, M., Geng, K., Xu, Y., Zhu, Y., Fu, Y., Xue, J., Shan, W., Zhang, Q., Chen, J., Chen, J., Zhao, M., Guo, Y., Siu, K. W. M., Chen, Y. E., Xu, Y., Liu, D., &amp; Zheng, L. (2024). Annexin A1 binds PDZ and LIM domain 7 to inhibit adipogenesis and prevent obesity. <em>Signal Transduction and Targeted Therapy</em>, <em>9</em>(1). doi: <a href="https://doi.org/10.1038/s41392-024-01930-0">10.1038/s41392-024-01930-0</a>
+</div>
+<div id="ref-govaere2022" class="csl-entry" role="listitem">
+Govaere, O., Petersen, S. K., Martinez-Lopez, N., Wouters, J., Van Haele, M., Mancina, R. M., Jamialahmadi, O., Bilkei-Gorzo, O., Lassen, P. B., Darlay, R., Peltier, J., Palmer, J. M., Younes, R., Tiniakos, D., Aithal, G. P., Allison, M., Vacca, M., Göransson, M., Berlinguer-Palmini, R., … Härtlova, A. (2022). Macrophage scavenger receptor 1 mediates lipid-induced inflammation in non-alcoholic fatty liver disease. <em>Journal of Hepatology</em>, <em>76</em>(5), 1001–1012. doi: <a href="https://doi.org/10.1016/j.jhep.2021.12.012">10.1016/j.jhep.2021.12.012</a>
+</div>
+<div id="ref-jodo2020" class="csl-entry" role="listitem">
+Jodo, A., Shibazaki, A., Onuma, A., Kaisho, T., &amp; Tanaka, T. (2020). PDLIM7 synergizes with PDLIM2 and p62/Sqstm1 to inhibit inflammatory signaling by promoting degradation of the p65 subunit of NF-κB. <em>Frontiers in Immunology</em>, <em>11</em>. doi: <a href="https://doi.org/10.3389/fimmu.2020.01559">10.3389/fimmu.2020.01559</a>
+</div>
 <div id="ref-kawaguchi2018" class="csl-entry" role="listitem">
 Kawaguchi, T., Shima, T., Mizuno, M., Mitsumoto, Y., Umemura, A., Kanbara, Y., Tanaka, S., Sumida, Y., Yasui, K., Takahashi, M., Matsuo, K., Itoh, Y., Tokushige, K., Hashimoto, E., Kiyosawa, K., Kawaguchi, M., Itoh, H., Uto, H., Komorizono, Y., … Okanoue, T. (2018). Risk estimation model for nonalcoholic fatty liver disease in the Japanese using multiple genetic markers. <em>PLOS ONE</em>, <em>13</em>(1), e0185490. doi: <a href="https://doi.org/10.1371/journal.pone.0185490">10.1371/journal.pone.0185490</a>
+</div>
+<div id="ref-li2023" class="csl-entry" role="listitem">
+Li, K., Yang, Y., Ma, M., Lu, S., &amp; Li, J. (2023). Hypoxia-based classification and prognostic signature for clinical management of hepatocellular carcinoma. <em>World Journal of Surgical Oncology</em>, <em>21</em>(1). doi: <a href="https://doi.org/10.1186/s12957-023-03090-x">10.1186/s12957-023-03090-x</a>
 </div>
 <div id="ref-montgomery2010" class="csl-entry" role="listitem">
 Montgomery, S. B., Sammeth, M., Gutierrez-Arcelus, M., Lach, R. P., Ingle, C., Nisbett, J., Guigo, R., &amp; Dermitzakis, E. T. (2010). Transcriptome genetics using second generation sequencing in a Caucasian population. <em>Nature</em>, <em>464</em>(7289), 773–777. doi: <a href="https://doi.org/10.1038/nature08903">10.1038/nature08903</a>
@@ -931,6 +906,9 @@ Moreno, V., Gonzalez, J. R., &amp; Pelegri, D. (2022). <em>SNPassoc: SNPs-based 
 <div id="ref-MatrixEQTL" class="csl-entry" role="listitem">
 Shabalin, A. A. (2012). <em>Matrix <span></span>eQTL<span></span>: Ultra fast <span></span>eQTL<span></span> analysis via large matrix operations</em>. <em>28</em>. Retrieved from <a href="http://www.bios.unc.edu/research/genomic_software/Matrix_eQTL/">http://www.bios.unc.edu/research/genomic_software/Matrix_eQTL/</a>
 </div>
+<div id="ref-stankey2024" class="csl-entry" role="listitem">
+Stankey, C. T., Bourges, C., Haag, L. M., Turner-Stokes, T., Piedade, A. P., Palmer-Jones, C., Papa, I., Silva dos Santos, M., Zhang, Q., Cameron, A. J., Legrini, A., Zhang, T., Wood, C. S., New, F. N., Randzavola, L. O., Speidel, L., Brown, A. C., Hall, A., Saffioti, F., … Lee, J. C. (2024). A disease-associated gene desert directs macrophage inflammation through ETS2. <em>Nature</em>, <em>630</em>(8016), 447–456. doi: <a href="https://doi.org/10.1038/s41586-024-07501-1">10.1038/s41586-024-07501-1</a>
+</div>
 <div id="ref-trépo2020" class="csl-entry" role="listitem">
 Trépo, E., &amp; Valenti, L. (2020). Update on NAFLD genetics: From new variants to the clinic. <em>Journal of Hepatology</em>, <em>72</em>(6), 1196–1209. doi: <a href="https://doi.org/10.1016/j.jhep.2020.02.020">10.1016/j.jhep.2020.02.020</a>
 </div>
@@ -938,7 +916,6 @@ Trépo, E., &amp; Valenti, L. (2020). Update on NAFLD genetics: From new variant
 Yoo, T., Joo, S. K., Kim, H. J., Kim, H. Y., Sim, H., Lee, J., Kim, H.-H., Jung, S., Lee, Y., Jamialahmadi, O., Romeo, S., Jeong, W.-I., Hwang, G.-S., Kang, K. W., Kim, J. W., Kim, W., &amp; Choi, M. (2021). Disease-specific eQTL screening reveals an anti-fibrotic effect of AGXT2 in non-alcoholic fatty liver disease. <em>Journal of Hepatology</em>, <em>75</em>(3), 514–523. doi: <a href="https://doi.org/10.1016/j.jhep.2021.04.011">10.1016/j.jhep.2021.04.011</a>
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

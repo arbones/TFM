@@ -35,9 +35,9 @@ options(scipen = 999)
 
 ## Introduction
 
-Adipose tissue dysfunction and liver steatosis are interconnected metabolic disorders with significant global health implications, both of which are highly heritable [@anstee2013]. Understanding their genetic basis is essential for unraveling their etiology and progression. 
+Adipose tissue dysfunction and liver steatosis are interconnected metabolic disorders with significant global health implications, both of which are highly heritable [@anstee2013]. Understanding their genetic basis is essential for unraveling their etiology and progression.
 
-Exome sequencing, which targets the coding regions of the genome, offers a powerful and cost-effective approach to identify the genetic variants underlying these conditions and to discover potential biomarkers for early detection and therapeutic intervention. Exome sequencing is particularly advantageous because it focuses on exonic regions, where most disease-related variants are found, enabling a comprehensive analysis of the genetic diversity that drives complex traits like adipose tissue dysfunction and liver steatosis. This precision is key to understanding the biological mechanisms involved and translating genetic findings into clinical practice. 
+Exome sequencing, which targets the coding regions of the genome, offers a powerful and cost-effective approach to identify the genetic variants underlying these conditions and to discover potential biomarkers for early detection and therapeutic intervention. Exome sequencing is particularly advantageous because it focuses on exonic regions, where most disease-related variants are found, enabling a comprehensive analysis of the genetic diversity that drives complex traits like adipose tissue dysfunction and liver steatosis. This precision is key to understanding the biological mechanisms involved and translating genetic findings into clinical practice.
 
 Genetic association studies, such as Genome-Wide Association Studies (GWAS) and Exome-Wide Association Studies (EWAS), play a critical role in this research. While GWAS explores common genetic variants across the entire genome, EWAS zeroes in on variants within the exome, making it especially useful for identifying causal mutations in coding regions [@battram2022]. Key genes implicated in adipose tissue dysfunction and liver steatosis include *PNPLA3*, *TM6SF2*, and *GCKR*, which are involved in metabolic processes and fat distribution within cells, playing critical roles in the pathophysiology of these conditions [@anstee2013]. However, since no single SNP can adequately predict complex diseases, polygenic risk scores (PRSs), which aggregate the risk from multiple variants, offer a more effective predictive tool [@chatterjee2016]. PRSs are being developed in the field of fatty liver disease (FLD), where both common and rare variants have been strongly linked to the risk of progressive NAFLD, independent of clinical factors like liver fibrosis severity [@dongiovanni2017]. However, their clinical utility remains to be fully established. Our study aimed to perform an EWAS to identify genes associated with liver fat accumulation in a cohort of obese patients. By focusing on the exonic regions of the genome, we sought to uncover genetic variants that contribute to the pathophysiology of liver steatosis in obesity, with the goal of identifying potential biomarkers for early detection and tailored therapeutic interventions.
 
@@ -45,7 +45,7 @@ Genetic association studies, such as Genome-Wide Association Studies (GWAS) and 
 
 ### DNA isolation and extraction
 
-Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen)
+Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen).
 
 ### Library Preparation and Sequencing
 
@@ -57,7 +57,7 @@ The genomic DNA was randomly sheared into short fragments with the size of 180-2
 
 The library was checked with Qubit and real-time PCR for quantification and bioanalyzer for size distribution detection. Quantified libraries were pooled and sequenced on Illumina platforms, according to effective library concentration and data amount required.
 
-### Variant Calling workflow 
+### Variant Calling workflow
 
 The computational analysis was managed using Nextflow (v23.10.1), a scalable and reproducible workflow management system that allows for seamless execution of complex bioinformatics pipelines. The workflow was built on the nf-core framework, which provides community-curated pipelines, ensuring consistency and reproducibility across analyses [@ewels2020]. The `nf-core/sarek` pipeline (version 3.4.1) [@garcia2020] was utilized specifically for variant calling. This pipeline is optimized for whole-genome sequencing (WGS) and targeted sequencing data, commonly used in cancer genomics studies.
 
@@ -69,9 +69,9 @@ By adhering to the Genome Analysis Toolkit (GATK) best practices, including reco
 
 ### Quality control (QC) and reads preprocessing
 
-All QC results from the differents steps in the `nf-core/sarek`  pipeline were summarized in the ([Multiqc report](documents/multiqc_report_wes.html){target="_blank"})
+All QC results from the differents steps in the `nf-core/sarek` pipeline were summarized in the ([Multiqc report](documents/multiqc_report_wes.html){target="_blank"})
 
-### VCF processing anf PLINK transformation
+### VCF processing and PLINK transformation
 
 The next computational steps were carried out with the programs `bcftools` [@li2011] and `PLINK` [@purcell2007] in the command line using . Normalization, performed using `bcftools norm`, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the `bcftools merge` command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using `bcftools norm` with the `--rm-dup` option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.
 
@@ -178,8 +178,6 @@ Despite this substantial data inclusion, the overall genotyping rate was notably
 
 After enforcing all quality control measures and variant filters, only 48,852 variants across 80 individuals remained, meeting the criteria for inclusion in further analyses.The significantly low genotyping rate observed could be attributed to the high number of SNPs unique to individual VCF files and not replicated across the cohort. This uniqueness might stem from intrinsic biological diversity or variations in sample processing techniques.
 
-
-
 ## Descriptive analysis of phenotype and covariates
 
 ```{r}
@@ -217,11 +215,6 @@ family <- family0[ids,] |>
     mutate(sex = pheno$sex)
 ```
 
-
-
-
-
-
 A total of `r nrow(pheno)` individuals with genotype and phenotype data available were segmented into three groups based on liver fat content (\<5%, 5-33%, \>33%). There were no statistically significant differences across any of the variables assessed, including age, gender, body mass index (BMI), and liver fibrosis stages (@tbl-pheno). Median age distributions across the groups were 47, 51, and 51 years, respectively, with a p-value of 0.505, indicating uniform age distribution across the groups. Gender ratios were similarly consistent, comprising approximately 75% females and 25% males in each group, with a p-value of 0.913. BMI values, with medians of 49.2, 43.9, and 45.9 for the respective groups, also showed no significant variation (p=0.563). Even the categorization of liver fibrosis stages from F0 to F4 did not demonstrate significant differences across the groups (p=0.172), underscoring a lack of correlation between the variables studied and the percentage of liver fat. This uniformity highlights the absence of significant demographic or clinical variations among the different levels of liver steatosis within the cohort.
 
 ```{r}
@@ -241,14 +234,13 @@ Data represent median\[IQR\] or number of cases (%).\
 p.overall: Kruskal-Wallis´ associated p-value.\
 p.5-33% vs \>33%: p- value for the comparison between \<5% vs \>33% steatosis (Mann-Whithney)
 
-
-In genome/exome-wide association studies of qualitative traits, the analysis is typically conducted between two groups to maximize the detection of genetic variants associated with the trait of interest. In this study, the cohort was divided into three groups based on liver fat content (<5%, 5-33%, >33%), but for the GWAS, only the two extreme groups—29 obese individuals with no steatosis (<5%) and 25 individuals with severe steatosis (>33%)—were compared. This approach enhances the contrast between cases and controls, reduces noise and heterogeneity, and increases the likelihood of identifying significant genetic associations by focusing on individuals with the most distinct phenotypic differences.
+In genome/exome-wide association studies of qualitative traits, the analysis is typically conducted between two groups to maximize the detection of genetic variants associated with the trait of interest. In this study, the cohort was divided into three groups based on liver fat content (\<5%, 5-33%, \>33%), but for the EWAS, only the two extreme groups—29 obese individuals with no steatosis (\<5%) and 25 individuals with severe steatosis (\>33%)—were compared. This approach enhances the contrast between cases and controls, reduces noise and heterogeneity, and increases the likelihood of identifying significant genetic associations by focusing on individuals with the most distinct phenotypic differences.
 
 ## Population structure
 
-First, we aimed to investigate population structure and ancestry, utilizing Principal Component Analysis (PCA) to explore genetic variation. We first transformed genetic data from PLINK to GDS format for efficiency and applied linkage disequilibrium (LD) pruning to focus on significant SNPs, essential for PCA's computational efficiency. The pruned SNPs were analyzed using PCA to visualize the population structure, revealing no distinct clustering by sex but some dispersion related to liver steatosis levels (@fig-ancestry).
+First, we transformed genetic data from PLINK to Genomic Data Structure ([GDS](https://bioconductor.org/packages/release/bioc/vignettes/gdsfmt/inst/doc/gdsfmt.html%7Btarget=%22_blank%22%7D)) format for efficiency. GDS format is required for the `SNPRelate` package [@zheng2012] to 1) apply linkage disequilibrium (LD) pruning to focus on significant SNPs and 2) use PCA to visualize the population structure. These processes revealed no distinct clustering by sex but some dispersion related to liver steatosis levels (@fig-ancestry).
 
-The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in genome-wide association studies (GWAS). Given this variability, we recommend incorporating principal components as covariates in GWAS to adjust for underlying population structure, thereby enhancing the robustness of GWAS findings. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors, demonstrating the strategic integration of data transformation, pruning, and analysis in genetic studies.
+The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in the subsequent EWAS. Given this variability, we incorporated the principal components as covariates in EWAS to adjust for underlying population structure, thereby enhancing its robustness. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors.
 
 ```{r}
 #| output: false
@@ -340,12 +332,12 @@ qq.chisq(chi2, main = "")
 
 ```
 
-In our genetic association study, we utilized the `snp.rhs.tests` function from the `snpStats` package to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.
+In our genetic association study, we utilized the `snp.rhs.tests` function from the `snpStats` package [@snpStats] to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.
 
 ```{r}
 #| cache: true
 #| label: fig-manhattan
-#| fig-cap: "Plot of the p-values for each SNP in the GWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10$^{-6}$, 0.0001 in blue)"
+#| fig-cap: "Plot of the p-values for each SNP in the EWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10$^{-6}$, 10$^{-4}$ in blue)"
 #| fig-width: 10
 #| column: body-outset-right
 
@@ -416,6 +408,5 @@ top |>
 Notably, while no SNP surpassed the stringent Bonferroni threshold, `r nrow(top)` SNPs did exhibit p-values below 0.0001 (@tbl-snps). The identified genes—*S100A7*, *KIRREL3*, *USP30*, and *SPNS3*—are implicated in key biological processes relevant to obesity and steatosis, including inflammation, cell adhesion, mitochondrial function, and lipid metabolism. *S100A7* may contribute to the chronic inflammation associated with obesity, while *KIRREL3* could influence tissue integrity, impacting liver function. *USP30* plays a role in maintaining mitochondrial quality, crucial for preventing fat accumulation in the liver, and *SPNS3* is involved in sphingolipid transport, a process linked to metabolic disturbances in obesity. These genes, along with unannotated SNPs, highlight potential pathways contributing to liver steatosis in obese individuals.
 
 ## Conclusion
-
 
 This study leveraged whole-exome sequencing (WES) to explore genetic variants associated with liver steatosis in a cohort of individuals segmented by liver fat content. WES offers significant advantages over array genotyping, including the ability to detect rare variants and novel mutations across the exome, providing a more comprehensive assessment of genetic variation. However, the study's reduced sample size limits its statistical power, potentially overlooking associations that would be detectable in a larger cohort. While we did not identify significant associations with well-known genetic contributors to liver steatosis such as *PNPLA3*, *TM6SF2*, and *GCKR*, the novel SNPs identified in this study, particularly those related to *SPNS3*, could enhance polygenic risk scores and contribute to a more nuanced understanding of the genetic architecture of steatosis. Further studies with larger sample sizes are needed to validate these findings and explore their potential clinical relevance.

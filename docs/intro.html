@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.4">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jose Miguel Arbones Mainar">
-<meta name="dcterms.date" content="2024-09-03">
+<meta name="dcterms.date" content="2024-09-05">
 
 <title>Manuscript – Master of Science in Omics Data Analysis</title>
 <style>
@@ -225,7 +225,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#titulo" id="toc-titulo" class="nav-link active" data-scroll-target="#titulo">TITULO</a>
+  <li><a href="#omic-insights-to-decipher-the-role-of-subcutaneous-white-adipose-tissue-heterogeneity-in-metabolic-dysfunction-associated-steatotic-liver-disease-masld-progression" id="toc-omic-insights-to-decipher-the-role-of-subcutaneous-white-adipose-tissue-heterogeneity-in-metabolic-dysfunction-associated-steatotic-liver-disease-masld-progression" class="nav-link active" data-scroll-target="#omic-insights-to-decipher-the-role-of-subcutaneous-white-adipose-tissue-heterogeneity-in-metabolic-dysfunction-associated-steatotic-liver-disease-masld-progression">Omic Insights to decipher the role of Subcutaneous White Adipose Tissue Heterogeneity in metabolic-dysfunction associated steatotic liver disease (MASLD) Progression</a>
   <ul class="collapse">
   <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
@@ -237,9 +237,15 @@ window.Quarto = {
   <li><a href="#whole-exome-sequencing" id="toc-whole-exome-sequencing" class="nav-link" data-scroll-target="#whole-exome-sequencing">Whole Exome Sequencing</a></li>
   <li><a href="#rna-isolation" id="toc-rna-isolation" class="nav-link" data-scroll-target="#rna-isolation">RNA isolation</a></li>
   <li><a href="#rna-sequencing" id="toc-rna-sequencing" class="nav-link" data-scroll-target="#rna-sequencing">RNA Sequencing</a></li>
-  <li><a href="#statistical-analyses" id="toc-statistical-analyses" class="nav-link" data-scroll-target="#statistical-analyses">Statistical analyses</a></li>
+  <li><a href="#statistical-and-bioinformatics-analyses" id="toc-statistical-and-bioinformatics-analyses" class="nav-link" data-scroll-target="#statistical-and-bioinformatics-analyses">Statistical and bioinformatics analyses</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#phenotypic-characterization-of-the-cohort" id="toc-phenotypic-characterization-of-the-cohort" class="nav-link" data-scroll-target="#phenotypic-characterization-of-the-cohort">Phenotypic characterization of the cohort</a></li>
+  <li><a href="#transcriptomic-analysis-of-scwat-and-liver" id="toc-transcriptomic-analysis-of-scwat-and-liver" class="nav-link" data-scroll-target="#transcriptomic-analysis-of-scwat-and-liver">Transcriptomic Analysis of scWAT and Liver</a></li>
+  <li><a href="#exome-wide-association-analysis" id="toc-exome-wide-association-analysis" class="nav-link" data-scroll-target="#exome-wide-association-analysis">Exome-wide association analysis</a></li>
+  <li><a href="#analysis-of-steatosis-associated-expression-quantitative-trait-locus-eqtl" id="toc-analysis-of-steatosis-associated-expression-quantitative-trait-locus-eqtl" class="nav-link" data-scroll-target="#analysis-of-steatosis-associated-expression-quantitative-trait-locus-eqtl">Analysis of steatosis-associated expression quantitative trait locus (eQTL)</a></li>
+  </ul></li>
   <li><a href="#discusion" id="toc-discusion" class="nav-link" data-scroll-target="#discusion">Discusion</a></li>
   </ul></li>
   </ul>
@@ -274,7 +280,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 3, 2024</p>
+      <p class="date">September 5, 2024</p>
     </div>
   </div>
   
@@ -286,35 +292,40 @@ window.Quarto = {
 </header>
 
 
-<section id="titulo" class="level1 unnumbered">
-<h1 class="unnumbered">TITULO</h1>
+<section id="omic-insights-to-decipher-the-role-of-subcutaneous-white-adipose-tissue-heterogeneity-in-metabolic-dysfunction-associated-steatotic-liver-disease-masld-progression" class="level1 unnumbered">
+<h1 class="unnumbered">Omic Insights to decipher the role of Subcutaneous White Adipose Tissue Heterogeneity in metabolic-dysfunction associated steatotic liver disease (MASLD) Progression</h1>
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Over recent decades, lifestyle changes have driven a global surge in obesity, metabolic disorders, and chronic liver conditions, resulting in the widespread prevalence of Steatotic Liver Disease (SLD). Metabolic-dysfunction associated steatotic liver disease (MASLD), formerly known as NAFLD <span class="citation" data-cites="rinella2023">(<a href="biblio.html#ref-rinella2023" role="doc-biblioref">Rinella et al., 2023</a>)</span>, is now the most common chronic liver disorder , affecting approximately 30% of adults <span class="citation" data-cites="younossi2023">(<a href="biblio.html#ref-younossi2023" role="doc-biblioref">Younossi et al., 2023</a>)</span>. As the prevalence of MASLD continues to rise, it is projected to become a leading cause of end-stage liver disease <span class="citation" data-cites="miao2024">(<a href="biblio.html#ref-miao2024" role="doc-biblioref">Miao et al., 2024</a>)</span>.</p>
+<p>SLD encompasses a spectrum of liver injury, beginning with hepatic fat accumulation (steatosis), which can progress to metabolic-dysfunction associated steatohepatitis (MASH) <span class="citation" data-cites="buzzetti2016">(<a href="biblio.html#ref-buzzetti2016" role="doc-biblioref">Buzzetti et al., 2016</a>)</span>. MASH is characterized by liver inflammation and hepatocyte ballooning, with 15% of patients progressing to more severe conditions, such as fibrosis, cirrhosis, and hepatocellular carcinoma <span class="citation" data-cites="motta2023">(<a href="biblio.html#ref-motta2023" role="doc-biblioref">Motta et al., 2023</a>)</span>. SLD is often seen as the hepatic manifestation of metabolic syndrome, significantly increasing the risk of type 2 diabetes, dyslipidemia, and cardiovascular disease <span class="citation" data-cites="barrera2024">(<a href="biblio.html#ref-barrera2024" role="doc-biblioref">Barrera et al., 2024</a>)</span>. Addressing the root cause—steatosis—is crucial for developing targeted therapies and improving patient outcomes. Early detection and intervention remain vital to halting disease progression, with non-invasive biomarkers offering a promising alternative to liver biopsy <span class="citation" data-cites="tacke2024">(<a href="biblio.html#ref-tacke2024" role="doc-biblioref">Tacke et al., 2024</a>)</span>.</p>
+<p>The pathophysiology of SLD involves complex interactions between genetic, metabolic, and environmental factors <span class="citation" data-cites="juanola2021 devincentis2021">(<a href="biblio.html#ref-devincentis2021" role="doc-biblioref">De Vincentis et al., 2021</a>; <a href="biblio.html#ref-juanola2021" role="doc-biblioref">Juanola et al., 2021</a>)</span>. A key feature is the accumulation of triglycerides in hepatocytes, leading to hepatic steatosis <span class="citation" data-cites="wang2013">(<a href="biblio.html#ref-wang2013" role="doc-biblioref">D. Q.-H. Wang et al., 2013</a>)</span>. Adipose tissue (AT) plays a central role in this process, functioning as more than just a fat storage organ. It regulates metabolism, energy balance, insulin sensitivity, and immune responses <span class="citation" data-cites="lopez-yus2024">(<a href="biblio.html#ref-lopez-yus2024" role="doc-biblioref">Lopez-Yus et al., 2024</a>)</span>. The adipose tissue expandability hypothesis suggests that subcutaneous white adipose tissue (scWAT) has a limited capacity for storing excess calories. Once scWAT reaches its limit, lipids are redirected to other organs, such as the liver and visceral adipose tissue (visWAT), triggering insulin resistance and related metabolic complications <span class="citation" data-cites="virtue2010">(<a href="biblio.html#ref-virtue2010" role="doc-biblioref">Virtue et al., 2010</a>)</span>.</p>
+<p>Understanding WAT’s complexity and functionality is crucial for unraveling the mechanisms underlying obesity-related comorbidities, including MASLD. This knowledge will aid in developing effective biomarkers and therapeutic strategies targeting WAT dysfunction.</p>
+<p>This study aimed to elucidate the molecular mechanisms of steatosis in obese individuals through a cross-tissue transcriptomic analysis of scWAT and liver. We also performed an epigenome-wide association study (EWAS) to identify genes associated with liver fat accumulation and investigate genetic variants through whole exome sequencing (WES). Lastly, we characterized disease-specific expression quantitative trait loci (eQTLs) in patients with steatosis, leveraging transcriptome and genome data to uncover novel genetic mechanisms underlying MASLD and improve the accuracy of genetic risk prediction.</p>
 </section>
 <section id="material-and-methods" class="level2">
 <h2 class="anchored" data-anchor-id="material-and-methods">Material and methods</h2>
+<p>Methods are extensively described in the <em>Appendices 2-4</em>.</p>
 <section id="human-cohort-description" class="level3">
 <h3 class="anchored" data-anchor-id="human-cohort-description">Human cohort description</h3>
-<p>The cohort used for this study was the FATe cohort, a longitudinal cohort of obese patients undergoing bariatric surgery in Miguel Servet University Hospital (HUMS, Zaragoza, Spain), that donated blood samples, subcutaneous and visceral adipose tissue biopsies and eventually liver biopsies. The FATe cohort is a live cohort in which patients have been recruited at different time points since 2013 and undergone different procedures and techniques according to the research needs <span class="citation" data-cites="torres-perez2015">(<a href="biblio.html#ref-torres-perez2015" role="doc-biblioref">Torres-Perez et al., 2015</a>)</span>.</p>
-<p>Patients were screened to exclude alcohol or drugs abuse, autoimmune disease, chronic inflammatory diseases or chronic infectious diseases (HIV, HBV, HCV). All subjects in the cohort provided written consent and the study was approved by the Regional Institutional Review Board of Ethics at Aragón, Spain (CEIC-A). Samples from patients included in this study were stored by the Biobank of the Aragon Health System (PT20/00112), integrated in the Spanish National Biobanks Network and they were processed following standard operating procedures.</p>
+<p>The study cohort consisted of participants from the FATe cohort <span class="citation" data-cites="torres-perez2015">(<a href="biblio.html#ref-torres-perez2015" role="doc-biblioref">Torres-Perez et al., 2015</a>)</span>, a longitudinal group of patients suffering obesity undergoing bariatric surgery at Miguel Servet University Hospital (HUMS, Zaragoza, Spain). This study is encompassed for those patients who simultaneusly donated blood samples, as well as subcutaneous adipose tissue biopsies and liver biopsies. The FATe cohort, established in 2013, is ongoing, with patients recruited at various time points and subjected to different procedures based on research needs.</p>
+<p>Patients were screened to exclude those with alcohol or drug abuse, autoimmune, chronic inflammatory, or infectious diseases (HIV, HBV, HCV). All participants provided written informed consent, and the study received approval from the Aragón Regional Ethics Committee (CEIC-A). The samples used were stored and processed by the Biobank of the Aragon Health System, adhering to standard operating procedures and integrated into the Spanish National Biobanks Network.</p>
 </section>
 <section id="collection-and-characterization-of-adipose-and-liver-biosies" class="level3">
 <h3 class="anchored" data-anchor-id="collection-and-characterization-of-adipose-and-liver-biosies">Collection and characterization of adipose and liver biosies</h3>
-<p>Biopsies (~3 cm3) of AT from both the subcutaneous and the visceral fat depot were obtained during surgery with a bipolar/ultra-sonic device (Thunderbeat. Olympus, Spain) and extracted <em>via</em> a 12 mm trocar (Applied Medical Europe, Spain) inserted in the left hypochondrium during laparoscopic surgery. Liver biopsies were also obtained during the surgery and were deemed adequate when they were at least 16 mm in length and included at least 6 portal tracts.</p>
+<p>Biopsies (~3 cm3) of AT from both the subcutaneous depot were obtained during surgery with a bipolar/ultra-sonic device (Thunderbeat) and extracted <em>via</em> a 12 mm trocar (Applied Medical) inserted in the left hypochondrium during laparoscopic surgery. Liver biopsies were also obtained during the surgery and were deemed adequate when they were at least 16 mm in length and included at least 6 portal tracts.</p>
 <p>Paraffin sections of livers were stained with hematoxylin-eosin (H&amp;E). Pathological features of steatosis, lobular inflammation, hepatocellular ballooning, and fibrosis were scored by an experienced pathologist, according to criteria established by the Nonalcoholic Steatohepatitis Clinical Research Network <span class="citation" data-cites="kleiner2005">(<a href="biblio.html#ref-kleiner2005" role="doc-biblioref">Kleiner et al., 2005</a>)</span>.</p>
 </section>
 <section id="genomic-dna-isolation" class="level3">
 <h3 class="anchored" data-anchor-id="genomic-dna-isolation">Genomic DNA isolation</h3>
-<p>DNA from buffy coat was isolated</p>
-<p>The concentration and purity of the gDNA were determined by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).</p>
+<p>Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen). The concentration and purity of the gDNA were determined by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).</p>
 </section>
 <section id="whole-exome-sequencing" class="level3">
 <h3 class="anchored" data-anchor-id="whole-exome-sequencing">Whole Exome Sequencing</h3>
 <p>Genomic DNA was randomly sheared into fragments of 180-280 bp, which were end-repaired, A-tailed, and ligated with Illumina adapters. The adapter-ligated fragments were PCR amplified, size selected, and purified. Hybridization capture was performed using biotin-labeled probes, with magnetic beads used for exon capture, followed by washing and probe digestion. The enriched libraries were quantified, pooled, and sequenced by Novogene on Illumina platforms.</p>
-<p>The computational analysis was managed using Nextflow (v23.10.1) with the <code>nf-core/sarek</code>pipeline (version 3.4.1) <span class="citation" data-cites="garcia2020">(<a href="biblio.html#ref-garcia2020" role="doc-biblioref">Garcia et al., 2020</a>)</span>, optimized for variant calling. Sequencing data were aligned to the GATK GRCh38 human reference genome, and Freebayes was used to call variants <span class="citation" data-cites="garrison2012">(<a href="biblio.html#ref-garrison2012" role="doc-biblioref">Garrison et al., 2012</a>)</span>. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant. The process adhered to GATK best practices for quality score recalibration and variant filtering, ensuring accuracy and reliability. Further postprocessing of the obtained VCF files involved normalization using <code>bcftools</code> <span class="citation" data-cites="li2011">(<a href="biblio.html#ref-li2011" role="doc-biblioref">Li, 2011</a>)</span>, merging VCF files, and removing duplicate variants. The final VCF file was transformed into a binary ped format using <code>PLINK</code><span class="citation" data-cites="purcell2007">(<a href="biblio.html#ref-purcell2007" role="doc-biblioref">Purcell et al., 2007</a>)</span>, with filters applied for minor allele frequency, genotyping completeness, and Hardy-Weinberg equilibrium.</p>
+<p>For the computational analysis we used Nextflow (v23.10.1) with the <code>nf-core/sarek</code>pipeline (version 3.4.1) <span class="citation" data-cites="garcia2020">(<a href="biblio.html#ref-garcia2020" role="doc-biblioref">Garcia et al., 2020</a>)</span>, optimized for variant calling. Sequencing data were aligned to the GATK GRCh38 human reference genome, and Freebayes was used to call variants <span class="citation" data-cites="garrison2012">(<a href="biblio.html#ref-garrison2012" role="doc-biblioref">Garrison et al., 2012</a>)</span>. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant. The <code>nf-core</code> pipeline was run in the Biocomputation Unit in the Instituto Aragonés de Ciencias de la Salud. The process adhered to GATK best practices for quality score recalibration and variant filtering, ensuring accuracy and reliability. Further postprocessing of the obtained VCF files involved normalization using <code>bcftools</code> <span class="citation" data-cites="li2011">(<a href="biblio.html#ref-li2011" role="doc-biblioref">H. Li, 2011</a>)</span>, merging VCF files, and removing duplicate variants. The final VCF file was transformed into a binary ped format using <code>PLINK</code><span class="citation" data-cites="purcell2007">(<a href="biblio.html#ref-purcell2007" role="doc-biblioref">Purcell et al., 2007</a>)</span>, with filters applied for minor allele frequency, genotyping completeness, and Hardy-Weinberg equilibrium.</p>
 </section>
 <section id="rna-isolation" class="level3">
 <h3 class="anchored" data-anchor-id="rna-isolation">RNA isolation</h3>
@@ -322,33 +333,40 @@ window.Quarto = {
 </section>
 <section id="rna-sequencing" class="level3">
 <h3 class="anchored" data-anchor-id="rna-sequencing">RNA Sequencing</h3>
-<p>RNA integrity was assessed using the RNA Integrity Number (RIN) on the Agilent 2200 TapeStation with the RNA ScreenTape assay. Stranded mRNA libraries were prepared using the Novogene NGS RNA Library Prep Set (PT042), involving poly-T oligo-attached magnetic bead mRNA isolation, cDNA synthesis, adapter ligation, and PCR amplification. Libraries passing quality controls were sequenced (2x150 bp) on the Illumina Novaseq X Plus platform. The <code>nf-core/rnaseq</code> pipeline <span class="citation" data-cites="ewels2020">(<a href="biblio.html#ref-ewels2020" role="doc-biblioref">Ewels et al., 2020</a>)</span> in Nextflow (version 23.10.1) was employed for data processing, including trimming with <code>Cutadapt</code> <span class="citation" data-cites="martin2011">(<a href="biblio.html#ref-martin2011" role="doc-biblioref">Martin, 2011</a>)</span>, alignment with <code>STAR</code> <span class="citation" data-cites="dobin2012">(<a href="biblio.html#ref-dobin2012" role="doc-biblioref">Dobin et al., 2012</a>)</span>, and quantification with <code>Salmon</code> <span class="citation" data-cites="patro2017">(<a href="biblio.html#ref-patro2017" role="doc-biblioref">Patro et al., 2017</a>)</span>, using GRCh38.p13 and Gencode v40 as references. Quality control was conducted throughout the process, with mapping efficiencies averaging around 90% for both liver and scWAT samples.</p>
+<p>RNA integrity was assessed using the RNA Integrity Number (RIN) on the Agilent 2200 TapeStation with the RNA ScreenTape assay. Stranded mRNA libraries were prepared using the Novogene NGS RNA Library Prep Set (PT042), involving poly-T oligo-attached magnetic bead mRNA isolation, cDNA synthesis, adapter ligation, and PCR amplification. Libraries passing quality controls were sequenced (2x150 bp) on the Illumina Novaseq X Plus platform. The <code>nf-core/rnaseq</code> pipeline <span class="citation" data-cites="ewels2020">(<a href="biblio.html#ref-ewels2020" role="doc-biblioref">Ewels et al., 2020</a>)</span> in Nextflow (version 23.10.1) was employed for data processing, including trimming with <code>Cutadapt</code> <span class="citation" data-cites="martin2011">(<a href="biblio.html#ref-martin2011" role="doc-biblioref">Martin, 2011</a>)</span>, alignment with <code>STAR</code> <span class="citation" data-cites="dobin2012">(<a href="biblio.html#ref-dobin2012" role="doc-biblioref">Dobin et al., 2012</a>)</span>, and quantification with <code>Salmon</code> <span class="citation" data-cites="patro2017">(<a href="biblio.html#ref-patro2017" role="doc-biblioref">Patro et al., 2017</a>)</span>, using GRCh38.p13 and Gencode v40 as references. Quality control was conducted throughout the process, with mapping efficiencies averaging around 90% for both liver and scWAT samples.The <code>nf-core</code> pipeline was run in the Biocomputation Unit in the Instituto Aragonés de Ciencias de la Salud.</p>
 </section>
-<section id="statistical-analyses" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-analyses">Statistical analyses</h3>
-<p>All statistical analyses were performed using R version 4.3.2 (2023-10-31) (http://www.r-project.org)</p>
+<section id="statistical-and-bioinformatics-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-and-bioinformatics-analyses">Statistical and bioinformatics analyses</h3>
+<p>All statistical analyses were performed using R version 4.2.1 (2022-06-23) (http://www.r-project.org) and the appropiate packages.</p>
 <section id="phenotype-comparison" class="level4">
 <h4 class="anchored" data-anchor-id="phenotype-comparison">Phenotype comparison</h4>
 <p>Results are expressed as number of cases (%) or median [interquartile range]. Comparisons between individuals grouped according their liver steatosis were calculated using chi squared tests for categorical data and Kruskal-Wallis tests for continous variables. The significance level was set at 0.05.</p>
 </section>
 <section id="differential-gene-expression-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="differential-gene-expression-analysis">Differential gene expression analysis</h4>
+<p>We used gene count data and the Likelihood Ratio Test (LRT) within <code>DESeq2</code> <span class="citation" data-cites="love2014">(<a href="biblio.html#ref-love2014" role="doc-biblioref">Love et al., 2014</a>)</span> for differential expression analysis across different steatosis categories, normalizing count data with the median-of-ratios method to account for differences in library size. Gene-wise dispersion was estimated and modeled to reflect variance across samples, with a curve-fitting process applied to improve dispersion accuracy.</p>
 </section>
 <section id="whole-exome-sequencing-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="whole-exome-sequencing-analysis">Whole exome sequencing analysis</h4>
+<p>First, we transformed the data from PLINK to GDS format for computational efficiency with the <code>SNPRelate</code> package <span class="citation" data-cites="zheng2012">(<a href="biblio.html#ref-zheng2012" role="doc-biblioref">Zheng et al., 2012</a>)</span> and applied linkage disequilibrium (LD) pruning to focus on significant SNPs. The pruned SNPs were then analyzed via PCA to visualize population structure. We incorporated principal components as covariates in our exome-wide association study (EWAS) to control for population structure, ensuring that associations detected were driven by true genetic influences rather than confounding factors. To further assess potential inflation in genetic associations, we generated quantile-quantile (Q-Q) plots.</p>
+<p>We then employed the <code>snpStats</code> <span class="citation" data-cites="snpStats">(<a href="biblio.html#ref-snpStats" role="doc-biblioref">Clayton, 2023</a>)</span> package to perform a genetic association study between steatosis and SNPs, accounting for confounders such as sex and the first two principal components (PC1 and PC2). This generalized linear model (GLM) approach allowed for accurate interpretation of genotype-phenotype associations. Finally, the results were visualized using a Manhattan plot, which displayed the distribution of p-values across all chromosomes, highlighting key genetic loci potentially linked to liver steatosis.</p>
 </section>
-<section id="eqtl" class="level4">
-<h4 class="anchored" data-anchor-id="eqtl">eQTL</h4>
+<section id="eqtl-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="eqtl-analysis">eQTL analysis</h4>
+<p>Transcriptome and genome data were integrated for expression quantitative trait loci (eQTL) mapping using R and the <code>MatrixEQTL</code>` package <span class="citation" data-cites="MatrixEQTL">(<a href="biblio.html#ref-MatrixEQTL" role="doc-biblioref">Shabalin, 2012</a>)</span>. No genotype imputation was performed, and sex was included as a covariate in the analysis. The cohort was divided into two groups: no steatosis (liver fat content &lt; 5%, n = 29) and steatosis (liver fat content &gt; 33%, n = 25). eQTL mapping was conducted separately for each group, and eQTLs common to both groups were excluded to focus on steatosis-specific eQTLs.</p>
+<p>To refine the list of steatosis-specific eQTLs, the most significant SNP per gene was selected, retaining only those with an absolute β coefficient greater than 10. SNPs that failed Hardy-Weinberg equilibrium (HWE p-value &lt; 0.0001) were also excluded from further analysis. A genome-wide association analysis was then performed for the remaining SNPs using five genetic models (codominant, dominant, recessive, overdominant, and log-additive) with the R package SNPassoc. For each eQTL, the model with the lowest p-value was selected.</p>
 </section>
 <section id="functional-enrichment-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="functional-enrichment-analysis">Functional enrichment analysis</h4>
-<p>Enrichment analysis for each condition, tissue and gene module was performed using the <code>gprofiler2</code> R package ( v. 0.2.3). The top pathways with an FDR-corrected p-value &lt; 0.05 were considered significantly relevant.</p>
+<p>Enrichment analysis for each condition, tissue and gene module was performed using the <code>gprofiler2</code> R package <span class="citation" data-cites="gprofiler2">(<a href="biblio.html#ref-gprofiler2" role="doc-biblioref">Kolberg et al., 2020</a>)</span>. The top pathways with an FDR-corrected p-value &lt; 0.05 were considered significantly relevant.</p>
 </section>
 </section>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>This multi-omics study included 80 individuals with obesity who underwent a liver histological characterization to determine the presence of fibrosis and lipid accumulation (steatosis). Fibrosis was scored from 0 to 3 and steatosis categorized according the observed lipid content in the hepatocyte (&lt;5%, 5-33%, and &gt;33%) . Individuals´ median BMI was 45.9 kg/m<span class="math inline">\(^2\)</span>, the median age was 49 yrs (range 22–61), and 75% were women, with no observed steatosis-based differences in these parameters (as shown in <a href="#tbl-ta1" class="quarto-xref">Table&nbsp;<span>1</span></a>).</p>
+<section id="phenotypic-characterization-of-the-cohort" class="level3">
+<h3 class="anchored" data-anchor-id="phenotypic-characterization-of-the-cohort">Phenotypic characterization of the cohort</h3>
+<p>This multi-omics study included 80 individuals with obesity who underwent a liver histological characterization to determine the presence of fibrosis and lipid accumulation (steatosis). Fibrosis was scored from 0 to 3 and steatosis categorized according the observed lipid content in the hepatocyte (&lt;5%, 5-33%, and &gt;33%) . Individuals´ median BMI was 45.9 kg/m<span class="math inline">\(^2\)</span>, the median age was 49 yrs (range 22–61) and 75% were women, with no observed steatosis-based differences in these parameters (<a href="#tbl-ta1" class="quarto-xref">Table&nbsp;<span>1</span></a>).</p>
 <div class="cell">
 <div id="tbl-ta1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -435,16 +453,204 @@ Table&nbsp;1: Phenotipe data. Represented as number of cases (%) or median [inte
 </div>
 </div>
 </section>
+<section id="transcriptomic-analysis-of-scwat-and-liver" class="level3">
+<h3 class="anchored" data-anchor-id="transcriptomic-analysis-of-scwat-and-liver">Transcriptomic Analysis of scWAT and Liver</h3>
+<p>In this study, we performed differential gene expression analysis on both subcutaneous white adipose tissue (scWAT) and liver samples from individuals with obesity and varying degrees of liver steatosis. We utilized the Likelihood Ratio Test (LRT) model to account for the complexity of comparing multiple levels of steatosis. While the model considered all three categories, the reported log-fold changes represent the gene expression ratios between individuals with the highest steatosis (&gt;33%) and those with the lowest steatosis (&lt;5%). Initial analysis identified 9,849 upregulated and 4,682 downregulated genes in scWAT of the highest steatosis group. Focusing on individuals with severe steatosis (&gt;33%) compared to those without steatosis (&lt;5%), and applying a false discovery rate (FDR) cutoff of &lt;0.05, the list of differentially expressed genes (DEGs) was reduced to 20, with 2 upregulated and 18 downregulated (<a href="#fig-volcano" class="quarto-xref">Figure&nbsp;<span>1</span></a>). These DEGs were further examined through boxplots, showing consistent expression changes across steatosis groups, suggesting their relevance in the progression of steatosis (<em>Appendix 2</em>).</p>
+<div id="fig-volcano" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-volcano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><img src="images/fig-volcano_sc-1.png" class="img-fluid figure-img"></p>
+<p><img src="images/fig-volcano_liver-1.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Volcano plots</strong> showing differentially expressed genes (DEGs, in red) in individuals with the highest (&gt;33%) compared to the lowest (&lt;5%) degree of steatosis.
+</figcaption>
+</figure>
+</div>
+<p>Similarly, in the liver, the initial analysis identified 7,748 upregulated and 6,810 downregulated genes in individuals with severe steatosis compared to those with no steatosis. However, when applying the stringent FDR cutoff of &lt;0.05, the significant DEGs were reduced to 12, with 1 upregulated and 11 downregulated. Among these, IGFBP2 showed the most substantial changes in expression, highlighted in the volcano plot (<a href="#fig-volcano" class="quarto-xref">Figure&nbsp;<span>1</span></a>). Expression patterns of these DEGs were visualized using boxplots across steatosis groups, showing a clear stepwise progression in gene expression levels as steatosis severity increased, reinforcing their potential role in liver fat accumulation (<em>Appendix 2</em>).</p>
+<p>To explore the biological processes and pathways associated with steatosis, we performed functional enrichment analysis of the DEGs. In scWAT, the analysis revealed downregulation of terms related to cellular structure and function, such as microtubule-associated complexes and cytoplasmic microtubule organization, indicating potential disruptions in adipocyte functionality (<a href="#fig-profile" class="quarto-xref">Figure&nbsp;<span>2</span></a>). Upregulation of pathways related to negative regulation of cell growth suggests possible dysregulation of adipocyte expansion during steatosis progression.</p>
+<div id="fig-profile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-profile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fig-go_sc.png" class="img-fluid figure-img"></p>
+<figcaption>(a) Subcutaneous adipose tissue (scWAT)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fig-go_liver.png" class="img-fluid figure-img"></p>
+<figcaption>(b) Liver</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-profile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: <strong>Functional enrichment analysis</strong> of statistically significant (p&lt;0.001) up- and down-regulated genes of individuals with the highest (&gt;33%) compared to the lowest (&lt;5%) degree of steatosis. The x-axis shows the terms and the y-axis shows the enrichment p-values on the −log10 scale (MF: Molecular function, CC: Cellular compartment, BP: biological process, KEGG: Kyoto Encyclopedia of Genes and Genomes, WP: WikiPathways). Each circle on the plot corresponds to a single term. Circles are colored according to the origin of annotation and size scaled according to the total number of genes annotated to the corresponding term. The locations on the x-axis are fixed. Terms from the same GO subtree are located closer to each other on the x-axis, which helps to highlight different enriched GO sub-branches making plots from different queries comparable. Selected terms from different sources are labeled with numbers on the plot and their p-values indicated in the attached tables.
+</figcaption>
+</figure>
+</div>
+<p>In the liver, functional enrichment highlighted lipid-related processes, including upregulation of the PPAR signaling pathway, fatty acid transporters, and lipid localization, indicating an enhanced capacity for lipid uptake and storage in response to steatosis (<a href="#fig-profile" class="quarto-xref">Figure&nbsp;<span>2</span></a>). Concurrently, downregulation of bile secretion and detoxification pathways, such as aflatoxin B1 metabolism, points to impaired lipid metabolism and increased susceptibility to liver damage during advanced stages of steatosis.</p>
+<p>These findings collectively highlight the complex interplay between lipid metabolism, storage, and detoxification in both scWAT and liver during steatosis, providing insights into the molecular mechanisms underlying steatosis progression.</p>
+</section>
+<section id="exome-wide-association-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exome-wide-association-analysis">Exome-wide association analysis</h3>
+<p>For the exome-wide association study (EWAS), only individuals from the two extreme steatosis groups, those with no steatosis (&lt;5%, n = 29) and those with severe steatosis (&gt;33%, n = 25), were compared. This approach enhanced the contrast between cases and controls, improving the power to detect significant genetic associations. No statistically significant differences were found in key variables such as age, gender, body mass index, or liver fibrosis between these groups, confirming a uniform distribution as shown in <a href="#tbl-ta1" class="quarto-xref">Table&nbsp;<span>1</span></a>. Yet, principal component cnalysis (PCA) of the genotype data, following linkage disequilibrium (LD) pruning, although showed no distinct clustering by sex it revealed subtle genetic variability related to liver steatosis. As this genetic variation may influence GWAS outcomes, principal components (PC1 and PC2) were included as covariates to adjust for population structure. A quantile-quantile (Q-Q) plot indicated no significant inflation in genetic associations (lambda ≈ 1) (<em>Appendix 3</em>).</p>
+<p>The EWAS was adjusted for confounders such as sex and principal components (PC1 and PC2). A Manhattan plot visualized the genome-wide p-values, and while no SNPs surpassed the stringent Bonferroni threshold (p = 10<span class="math inline">\(^-5.99\)</span>), 9 SNPs exhibited p-values below 10<span class="math inline">\(^{-4}\)</span> (<a href="#fig-mh" class="quarto-xref">Figure&nbsp;<span>3</span></a>).</p>
+<div id="fig-mh" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig-manhattan.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Plot of the p-values for each SNP in the EWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10<span class="math inline">\(^{-6}\)</span>, 10<span class="math inline">\(^{-4}\)</span> in blue)
+</figcaption>
+</figure>
+</div>
+<p>Notably, genes associated with these SNPs, <em>S100A7</em>, <em>KIRREL3</em>, <em>USP30</em>, and <em>SPNS3</em>, are involved in biological processes relevant to obesity and liver steatosis, such as inflammation, cell adhesion, mitochondrial function, and lipid metabolism (<a href="#tbl-gwas" class="quarto-xref">Table&nbsp;<span>2</span></a>). <em>S100A7</em> is linked to chronic inflammation in obesity, <em>KIRREL3</em> may affect tissue integrity and liver function, <em>USP30</em> plays a role in mitochondrial quality control, and <em>SPNS3</em> is implicated in sphingolipid transport, a process associated with metabolic disturbances in obesity. These findings highlight potential pathways contributing to liver fat accumulation in obese individuals.</p>
+<div id="tbl-gwas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gwas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Single nucleotide polymorphism (SNP) and gene
+</figcaption>
+<div aria-describedby="tbl-gwas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Reference SNP</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: left;">Gene</th>
+<th style="text-align: right;">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">rs3006428</td>
+<td style="text-align: left;">chr1:153439916</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.00007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs3014836</td>
+<td style="text-align: left;">chr1:153458724</td>
+<td style="text-align: left;"><em>S100A7</em></td>
+<td style="text-align: right;">0.00007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs1574534</td>
+<td style="text-align: left;">chr11:126446715</td>
+<td style="text-align: left;"><em>KIRREL3</em></td>
+<td style="text-align: right;">0.00009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs7967182</td>
+<td style="text-align: left;">chr12:109073339</td>
+<td style="text-align: left;"><em>USP30</em></td>
+<td style="text-align: right;">0.00008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs28567464</td>
+<td style="text-align: left;">chr16:55767290</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.00010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs2047233</td>
+<td style="text-align: left;">chr17:4446887</td>
+<td style="text-align: left;"><em>SPNS3</em></td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs2047232</td>
+<td style="text-align: left;">chr17:4447072</td>
+<td style="text-align: left;"><em>SPNS3</em></td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs1485206327</td>
+<td style="text-align: left;">chr17:4447072</td>
+<td style="text-align: left;"><em>SPNS3</em></td>
+<td style="text-align: right;">0.00005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rs884250</td>
+<td style="text-align: left;">chr17:4448345</td>
+<td style="text-align: left;"><em>SPNS3</em></td>
+<td style="text-align: right;">0.00006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rs884251</td>
+<td style="text-align: left;">chr17:4448492</td>
+<td style="text-align: left;"><em>SPNS3</em></td>
+<td style="text-align: right;">0.00009</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="analysis-of-steatosis-associated-expression-quantitative-trait-locus-eqtl" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-of-steatosis-associated-expression-quantitative-trait-locus-eqtl">Analysis of steatosis-associated expression quantitative trait locus (eQTL)</h3>
+<p>Although the GWAS identified some <em>loci</em> associated with steatosis, the study’s reduced sample size limited its statistical power, potentially overlooking associations that would be detectable in a larger cohort. We overcame this limitation by performing a eQTL analysis, which links genetic variants to gene expression changes, providing a direct molecular link between genetic variants and disease traits. This method significantly enhances the statistical power, enabling the detection of thousands of eQTLs even with relatively small sample sizes <span class="citation" data-cites="yoo2021">(<a href="biblio.html#ref-yoo2021" role="doc-biblioref">Yoo et al., 2021</a>)</span>.</p>
+<p>Focusing on steatosis, eQTL mapping in a subgroup of 25 individuals with liver steatosis (&gt;33% liver fat) revealed 1,191 genes with significant eQTLs and 18,220 SNPs, with 70.2% of SNPs influencing multiple genes. On the other hand, in the non-steatosis group (&lt;5% liver fat, n=29), 764 genes and 14,510 SNPs were identified, with 56.2% of SNPs affecting multiple genes.</p>
+<p>To isolate steatosis-specific eQTLs, we compared the eQTLs identified in individuals with and without steatosis, revealing 760 SNPs unique to the steatosis group. These SNPs were subjected to association analysis with the steatosis trait using multiple genetic models. After adjusting for multiple testing, five SNPs were significantly associated with the steatosis phenotype (<a href="#fig-eqtl" class="quarto-xref">Figure&nbsp;<span>4</span></a>).</p>
+<div id="fig-eqtl" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eqtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig-eqtl.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eqtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Barplot with the distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis categories.
+</figcaption>
+</figure>
+</div>
+<p>In obese individuals with steatosis, eQTLs link specific genetic variants to changes in gene expression, highlighting key molecular mechanisms involved in NAFLD. For example, the minor allele of rs3127806 was negatively associated with the expression of <em>PDLIM7</em>, a gene involved in both inhibiting NF-κB-mediated inflammatory responses and promoting adipogenesis, linking it to obesity and fat storage processes<span class="citation" data-cites="jodo2020 fang2024">(<a href="biblio.html#ref-fang2024" role="doc-biblioref">Fang et al., 2024</a>; <a href="biblio.html#ref-jodo2020" role="doc-biblioref">Jodo et al., 2020</a>)</span>. Similarly, the minor allele of rs937583 was inversely associated with <em>FNL2</em> expression, a hypoxia-stimulated gene linked to hepatocellular carcinoma<span class="citation" data-cites="li2023">(<a href="biblio.html#ref-li2023" role="doc-biblioref">K. Li et al., 2023</a>)</span>. Another eQTL, chr3:9473234, was negatively associated with <em>ETS2</em>, a key regulator of inflammatory macrophages in the liver, reinforcing its role in NAFLD-related inflammation<span class="citation" data-cites="stankey2024">(<a href="biblio.html#ref-stankey2024" role="doc-biblioref">Stankey et al., 2024</a>)</span>. Additionally, the minor allele of rs3739310 was positively associated with <em>MSR1</em>, a gene linked to lipid-laden macrophages in the liver and correlated with steatosis severity<span class="citation" data-cites="govaere2022">(<a href="biblio.html#ref-govaere2022" role="doc-biblioref">Govaere et al., 2022</a>)</span>. These findings underscore the importance of eQTLs in regulating gene expression related to liver fat accumulation and inflammation, offering insights into the genetic factors contributing to NAFLD progression.</p>
+</section>
+</section>
 <section id="discusion" class="level2">
 <h2 class="anchored" data-anchor-id="discusion">Discusion</h2>
+<p>This study provides new insights into the molecular mechanisms underlying liver steatosis by focusing on the transcriptomic and genomic profiles of subcutaneous white adipose tissue (scWAT) and liver tissue from individuals with obesity. By leveraging both whole exome sequencing (WES) and transcriptome data, we identified a set of genes,genetic variants and expression quantitative trait loci (eQTLs), that may contribute to liver fat accumulation and the progression of steatosis in obese individuals.</p>
+<p>Previous studies have used transcriptomics and serum protein measurements to identify noninvasive biomarkers for NAFLD <span class="citation" data-cites="darci-maher2023 trinks2024">(<a href="biblio.html#ref-darci-maher2023" role="doc-biblioref">Darci-Maher et al., 2023</a>; <a href="biblio.html#ref-trinks2024" role="doc-biblioref">Trinks et al., 2024</a>)</span>. However, our study is the first, to our knowledge, to utilize RNA-seq data from both adipose tissue and liver, along with whole exome sequencing, in a cohort where NAFLD diagnosis is confirmed by gold-standard liver histology.</p>
+<p>The results from the transcriptomics analysis revealed distinct gene expression patterns between individuals with varying degrees of steatosis. In both scWAT and liver tissue, we identified genes involved in lipid metabolism, inflammation, and cellular structure, suggesting that both tissues play a significant role in the pathogenesis of steatosis. Interestingly, in the scWAT, the functional enrichment analysis revealed significant insights into the cellular and metabolic disruptions associated with steatosis. Key findings include the down-regulation of genes related to cellular structure and function, suggesting alterations that may impact cellular transport and structural stability, potentially influencing adipocyte functionality in lipid metabolism. Additionally, up-regulation in genes associated with negative regulation of cell growth suggests a possible failure to properly regulate adipocyte size and number, which could contribute to pathological adipose tissue expansion and dysfunction in steatosis. These finding alineate with the expandibility theory which points towards an impaired adipose tissue as root cause of ectopic lipid deposition <span class="citation" data-cites="virtue2010 torres-perez2015">(<a href="biblio.html#ref-torres-perez2015" role="doc-biblioref">Torres-Perez et al., 2015</a>; <a href="biblio.html#ref-virtue2010" role="doc-biblioref">Virtue et al., 2010</a>)</span>. In liver tissue, we observed an upregulation of the PPAR signaling pathway and downregulation of bile secretion and detoxification pathways, in agreement with the previously described imbalance in which fatty acid uptake and de novo synthesis exceed oxidation and secretion in individuals with steatosis <span class="citation" data-cites="musso2009">(<a href="biblio.html#ref-musso2009" role="doc-biblioref">MUSSO et al., 2009</a>)</span>.</p>
+<p>Interestingly, we did not find the most common genetic association with steatosis, <em>PNPLA3</em> <span class="citation" data-cites="romeo2008">(<a href="biblio.html#ref-romeo2008" role="doc-biblioref">Romeo et al., 2008</a>)</span>, which has been widely reported in previous studies. This is likely due to the reduced sample size of our cohort, which may have limited the power to detect such associations. Despite this caveat, we were able to identify some genetic loci that are potentially linked to liver fat accumulation. <em>S100A7</em>, part of the S100 protein family, is linked to inflammation and has been implicated in hepatic steatosis and the progression to hepatocellular carcinoma (HCC). Overexpression of S100 proteins is common in liver disease and drives inflammatory and pathological changes <span class="citation" data-cites="delangre2022">(<a href="biblio.html#ref-delangre2022" role="doc-biblioref">Delangre et al., 2022</a>)</span>. <em>KIRREL3</em> is associated with cell adhesion and may influence liver tissue integrity, potentially affecting steatosis through pathways like PI3K/AKT, which are involved in angiogenesis and metabolic regulation <span class="citation" data-cites="wang2023">(<a href="biblio.html#ref-wang2023" role="doc-biblioref">T. Wang et al., 2023</a>)</span>. <em>USP30</em> plays a role in mitochondrial quality control and lipid metabolism, essential processes in liver function, and its dysregulation can contribute to the accumulation of fat in hepatocytes <span class="citation" data-cites="wang2022">(<a href="biblio.html#ref-wang2022" role="doc-biblioref">F. Wang et al., 2022</a>)</span>. Finally, <em>SPNS3</em> is involved in lipid transport, and its regulation may influence lipid balance in the liver, further contributing to steatosis and its progression to more severe conditions such as non-alcoholic steatohepatitis (NASH) <span class="citation" data-cites="chaaba2005">(<a href="biblio.html#ref-chaaba2005" role="doc-biblioref">Chaaba et al., 2005</a>)</span>. The identification of these loci provides valuable targets for further research aimed at unraveling the genetic basis of steatosis and developing therapeutic interventions.</p>
+<p>In addition to the identified genetic associations, several eQTLs were found to regulate gene expression related to steatosis. For example, the minor allele of rs3127806 was linked to reduced expression of <em>PDLIM7</em>, a gene involved in inhibiting NF-κB-mediated inflammatory responses and promoting adipogenesis, thereby connecting it to obesity and fat storage <span class="citation" data-cites="jodo2020 fang2024">(<a href="biblio.html#ref-fang2024" role="doc-biblioref">Fang et al., 2024</a>; <a href="biblio.html#ref-jodo2020" role="doc-biblioref">Jodo et al., 2020</a>)</span>. Similarly, the minor allele of rs937583 was inversely associated with <em>FNL2</em> expression, a gene linked to hypoxia and hepatocellular carcinoma <span class="citation" data-cites="li2023">(<a href="biblio.html#ref-li2023" role="doc-biblioref">K. Li et al., 2023</a>)</span>.</p>
+<p>Notably, two eQTLs were related to macrophage regulation. The minor allele of chr3:9473234 was associated with reduced expression of <em>ETS2</em>, a key regulator of inflammatory macrophages in the liver, while rs3739310 was positively associated with <em>MSR1</em>, a gene involved in the formation of lipid-laden macrophages, which correlates with steatosis severity <span class="citation" data-cites="stankey2024 govaere2022">(<a href="biblio.html#ref-govaere2022" role="doc-biblioref">Govaere et al., 2022</a>; <a href="biblio.html#ref-stankey2024" role="doc-biblioref">Stankey et al., 2024</a>)</span>. These findings highlight the crucial role of eQTLs in modulating gene expression linked to fat accumulation and inflammation, providing deeper insights into the genetic mechanisms associated with steatosis.</p>
+<p>A major strength of this study lies in its multi-omic approach, integrating WES and transcriptomic data from both scWAT and liver tissue. This allowed for a comprehensive analysis of the genetic and molecular factors contributing to steatosis. Additionally, by performing eQTL mapping, we were able to link specific genetic variants to changes in gene expression, providing mechanistic insights into how these variants may influence the accumulation of fat in the liver. The focus on disease-specific eQTLs, particularly in the context of steatosis, enhances our understanding of the genetic architecture underlying this condition. Another strength is the use of a well-characterized cohort of individuals with obesity and liver biopsies, enabling the precise classification of steatosis and fibrosis stages.</p>
+<p>Despite these strengths, the study has several limitations. First, the relatively small sample size may have limited the statistical power to detect additional significant genetic associations, particularly in the EWAS. Larger cohorts are needed to validate our findings and potentially uncover more genetic loci associated with liver steatosis. Additionally, the cross-sectional nature of the study does not allow for the assessment of causal relationships between the identified genetic variants and steatosis progression. Longitudinal studies are required to clarify the temporal dynamics of these genetic and molecular changes.</p>
+<p>Steatosis is the initial and critical step in the progression of NAFLD/MASLD, setting the stage for further complications such as inflammation, fibrosis, and, ultimately, hepatocellular carcinoma. Given this, the findings of our study hold significant importance. Our study identified significant genetic variants and eQTLs associated with liver steatosis by leveraging WES and transcriptomic data from individuals with obesity. The results highlight the complex genetic and molecular mechanisms that contribute to the development and progression of MASLD, particularly through the regulation of gene expression in pathways related to lipid metabolism and inflammation. These findings provide valuable insights for future research and offer potential targets for developing therapeutic interventions to address MASLD in the context of obesity.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-barrera2024" class="csl-entry" role="listitem">
+Barrera, F., Uribe, J., Olvares, N., Huerta, P., Cabrera, D., &amp; Romero-Gómez, M. (2024). The Janus of a disease: Diabetes and metabolic dysfunction-associated fatty liver disease. <em>Annals of Hepatology</em>, <em>29</em>(4), 101501. doi: <a href="https://doi.org/10.1016/j.aohep.2024.101501">10.1016/j.aohep.2024.101501</a>
+</div>
+<div id="ref-buzzetti2016" class="csl-entry" role="listitem">
+Buzzetti, E., Pinzani, M., &amp; Tsochatzis, E. A. (2016). The multiple-hit pathogenesis of non-alcoholic fatty liver disease (NAFLD). <em>Metabolism</em>, <em>65</em>(8), 1038–1048. doi: <a href="https://doi.org/10.1016/j.metabol.2015.12.012">10.1016/j.metabol.2015.12.012</a>
+</div>
+<div id="ref-chaaba2005" class="csl-entry" role="listitem">
+Chaaba, R., Attia, N., Hammami, S., Smaoui, M., Mahjoub, S., Hammami, M., &amp; Masmoudi, A. (2005). <em>Lipids in Health and Disease</em>, <em>4</em>(1), 1. doi: <a href="https://doi.org/10.1186/1476-511x-4-1">10.1186/1476-511x-4-1</a>
+</div>
+<div id="ref-snpStats" class="csl-entry" role="listitem">
+Clayton, D. (2023). <em>snpStats: SnpMatrix and XSnpMatrix classes and methods</em>. doi: <a href="https://doi.org/10.18129/B9.bioc.snpStats">10.18129/B9.bioc.snpStats</a>
+</div>
+<div id="ref-darci-maher2023" class="csl-entry" role="listitem">
+Darci-Maher, N., Alvarez, M., Arasu, U. T., Selvarajan, I., Lee, S. H. T., Pan, D. Z., Miao, Z., Das, S. S., Kaminska, D., Örd, T., Benhammou, J. N., Wabitsch, M., Pisegna, J. R., Männistö, V., Pietiläinen, K. H., Laakso, M., Sinsheimer, J. S., Kaikkonen, M. U., Pihlajamäki, J., &amp; Pajukanta, P. (2023). Cross-tissue omics analysis discovers ten adipose genes encoding secreted proteins in obesity-related non-alcoholic fatty liver disease. <em>eBioMedicine</em>, <em>92</em>, 104620. doi: <a href="https://doi.org/10.1016/j.ebiom.2023.104620">10.1016/j.ebiom.2023.104620</a>
+</div>
+<div id="ref-devincentis2021" class="csl-entry" role="listitem">
+De Vincentis, A., Tavaglione, F., Spagnuolo, R., Pujia, R., Tuccinardi, D., Mascianà, G., Picardi, A., Antonelli Incalzi, R., Valenti, L., Romeo, S., &amp; Vespasiani-Gentilucci, U. (2021). Metabolic and genetic determinants for progression to severe liver disease in subjects with obesity from the UK Biobank. <em>International Journal of Obesity</em>, <em>46</em>(3), 486–493. doi: <a href="https://doi.org/10.1038/s41366-021-01015-w">10.1038/s41366-021-01015-w</a>
+</div>
+<div id="ref-delangre2022" class="csl-entry" role="listitem">
+Delangre, E., Oppliger, E., Berkcan, S., Gjorgjieva, M., Correia de Sousa, M., &amp; Foti, M. (2022). S100 Proteins in Fatty Liver Disease and Hepatocellular Carcinoma. <em>International Journal of Molecular Sciences</em>, <em>23</em>(19), 11030. doi: <a href="https://doi.org/10.3390/ijms231911030">10.3390/ijms231911030</a>
+</div>
 <div id="ref-dobin2012" class="csl-entry" role="listitem">
 Dobin, A., Davis, C. A., Schlesinger, F., Drenkow, J., Zaleski, C., Jha, S., Batut, P., Chaisson, M., &amp; Gingeras, T. R. (2012). STAR: ultrafast universal RNA-seq aligner. <em>Bioinformatics</em>, <em>29</em>(1), 15–21. doi: <a href="https://doi.org/10.1093/bioinformatics/bts635">10.1093/bioinformatics/bts635</a>
 </div>
 <div id="ref-ewels2020" class="csl-entry" role="listitem">
 Ewels, P. A., Peltzer, A., Fillinger, S., Patel, H., Alneberg, J., Wilm, A., Garcia, M. U., Di Tommaso, P., &amp; Nahnsen, S. (2020). The nf-core framework for community-curated bioinformatics pipelines. <em>Nature Biotechnology</em>, <em>38</em>(3), 276–278. doi: <a href="https://doi.org/10.1038/s41587-020-0439-x">10.1038/s41587-020-0439-x</a>
+</div>
+<div id="ref-fang2024" class="csl-entry" role="listitem">
+Fang, L., Liu, C., Jiang, Z., Wang, M., Geng, K., Xu, Y., Zhu, Y., Fu, Y., Xue, J., Shan, W., Zhang, Q., Chen, J., Chen, J., Zhao, M., Guo, Y., Siu, K. W. M., Chen, Y. E., Xu, Y., Liu, D., &amp; Zheng, L. (2024). Annexin A1 binds PDZ and LIM domain 7 to inhibit adipogenesis and prevent obesity. <em>Signal Transduction and Targeted Therapy</em>, <em>9</em>(1). doi: <a href="https://doi.org/10.1038/s41392-024-01930-0">10.1038/s41392-024-01930-0</a>
 </div>
 <div id="ref-garcia2020" class="csl-entry" role="listitem">
 Garcia, M., Juhos, S., Larsson, M., Olason, P. I., Martin, M., Eisfeldt, J., DiLorenzo, S., Sandgren, J., Díaz De Ståhl, T., Ewels, P., Wirta, V., Nistér, M., Käller, M., &amp; Nystedt, B. (2020). Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants. <em>F1000Research</em>, <em>9</em>, 63. doi: <a href="https://doi.org/10.12688/f1000research.16665.2">10.12688/f1000research.16665.2</a>
@@ -452,14 +658,44 @@ Garcia, M., Juhos, S., Larsson, M., Olason, P. I., Martin, M., Eisfeldt, J., DiL
 <div id="ref-garrison2012" class="csl-entry" role="listitem">
 Garrison, E., &amp; Marth, G. (2012). <em>Haplotype-based variant detection from short-read sequencing</em>. doi: <a href="https://doi.org/10.48550/ARXIV.1207.3907">10.48550/ARXIV.1207.3907</a>
 </div>
+<div id="ref-govaere2022" class="csl-entry" role="listitem">
+Govaere, O., Petersen, S. K., Martinez-Lopez, N., Wouters, J., Van Haele, M., Mancina, R. M., Jamialahmadi, O., Bilkei-Gorzo, O., Lassen, P. B., Darlay, R., Peltier, J., Palmer, J. M., Younes, R., Tiniakos, D., Aithal, G. P., Allison, M., Vacca, M., Göransson, M., Berlinguer-Palmini, R., … Härtlova, A. (2022). Macrophage scavenger receptor 1 mediates lipid-induced inflammation in non-alcoholic fatty liver disease. <em>Journal of Hepatology</em>, <em>76</em>(5), 1001–1012. doi: <a href="https://doi.org/10.1016/j.jhep.2021.12.012">10.1016/j.jhep.2021.12.012</a>
+</div>
+<div id="ref-jodo2020" class="csl-entry" role="listitem">
+Jodo, A., Shibazaki, A., Onuma, A., Kaisho, T., &amp; Tanaka, T. (2020). PDLIM7 synergizes with PDLIM2 and p62/Sqstm1 to inhibit inflammatory signaling by promoting degradation of the p65 subunit of NF-κB. <em>Frontiers in Immunology</em>, <em>11</em>. doi: <a href="https://doi.org/10.3389/fimmu.2020.01559">10.3389/fimmu.2020.01559</a>
+</div>
+<div id="ref-juanola2021" class="csl-entry" role="listitem">
+Juanola, O., Martínez-López, S., Francés, R., &amp; Gómez-Hurtado, I. (2021). Non-Alcoholic Fatty Liver Disease: Metabolic, Genetic, Epigenetic and Environmental Risk Factors. <em>International Journal of Environmental Research and Public Health</em>, <em>18</em>(10), 5227. doi: <a href="https://doi.org/10.3390/ijerph18105227">10.3390/ijerph18105227</a>
+</div>
 <div id="ref-kleiner2005" class="csl-entry" role="listitem">
 Kleiner, D. E., Brunt, E. M., Van Natta, M., Behling, C., Contos, M. J., Cummings, O. W., Ferrell, L. D., Liu, Y. C., Torbenson, M. S., Unalp-Arida, A., Yeh, M., McCullough, A. J., &amp; Sanyal, A. J. (2005). Design and validation of a histological scoring system for nonalcoholic fatty liver disease. <em>Hepatology</em>, <em>41</em>(6), 1313–1321. doi: <a href="https://doi.org/10.1002/hep.20701">10.1002/hep.20701</a>
+</div>
+<div id="ref-gprofiler2" class="csl-entry" role="listitem">
+Kolberg, L., Raudvere, U., Kuzmin, I., Vilo, J., &amp; Peterson, H. (2020). <em>gprofiler2– an r package for gene list functional enrichment analysis and namespace conversion toolset g:profiler: Vols. 9 (ELIXIR)</em>. <em>9 (ELIXIR)</em>.
 </div>
 <div id="ref-li2011" class="csl-entry" role="listitem">
 Li, H. (2011). A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. <em>Bioinformatics</em>, <em>27</em>(21), 2987–2993. doi: <a href="https://doi.org/10.1093/bioinformatics/btr509">10.1093/bioinformatics/btr509</a>
 </div>
+<div id="ref-li2023" class="csl-entry" role="listitem">
+Li, K., Yang, Y., Ma, M., Lu, S., &amp; Li, J. (2023). Hypoxia-based classification and prognostic signature for clinical management of hepatocellular carcinoma. <em>World Journal of Surgical Oncology</em>, <em>21</em>(1). doi: <a href="https://doi.org/10.1186/s12957-023-03090-x">10.1186/s12957-023-03090-x</a>
+</div>
+<div id="ref-lopez-yus2024" class="csl-entry" role="listitem">
+Lopez-Yus, M., Hörndler, C., Borlan, S., Bernal-Monterde, V., &amp; Arbones-Mainar, J. M. (2024). Unraveling Adipose Tissue Dysfunction: Molecular Mechanisms, Novel Biomarkers, and Therapeutic Targets for Liver Fat Deposition. <em>Cells</em>, <em>13</em>(5), 380. doi: <a href="https://doi.org/10.3390/cells13050380">10.3390/cells13050380</a>
+</div>
+<div id="ref-love2014" class="csl-entry" role="listitem">
+Love, M. I., Huber, W., &amp; Anders, S. (2014). Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. <em>Genome Biology</em>, <em>15</em>(12). doi: <a href="https://doi.org/10.1186/s13059-014-0550-8">10.1186/s13059-014-0550-8</a>
+</div>
 <div id="ref-martin2011" class="csl-entry" role="listitem">
 Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. <em>EMBnet.journal</em>, <em>17</em>(1), 10. doi: <a href="https://doi.org/10.14806/ej.17.1.200">10.14806/ej.17.1.200</a>
+</div>
+<div id="ref-miao2024" class="csl-entry" role="listitem">
+Miao, L., Targher, G., Byrne, C. D., Cao, Y.-Y., &amp; Zheng, M.-H. (2024). Current status and future trends of the global burden of MASLD. <em>Trends in Endocrinology &amp; Metabolism</em>, <em>35</em>(8), 697–707. doi: <a href="https://doi.org/10.1016/j.tem.2024.02.007">10.1016/j.tem.2024.02.007</a>
+</div>
+<div id="ref-motta2023" class="csl-entry" role="listitem">
+Motta, B. M., Masarone, M., Torre, P., &amp; Persico, M. (2023). From Non-Alcoholic Steatohepatitis (NASH) to Hepatocellular Carcinoma (HCC): Epidemiology, Incidence, Predictions, Risk Factors, and Prevention. <em>Cancers</em>, <em>15</em>(22), 5458. doi: <a href="https://doi.org/10.3390/cancers15225458">10.3390/cancers15225458</a>
+</div>
+<div id="ref-musso2009" class="csl-entry" role="listitem">
+MUSSO, G., GAMBINO, R., &amp; CASSADER, M. (2009). Recent insights into hepatic lipid metabolism in non-alcoholic fatty liver disease (NAFLD). <em>Progress in Lipid Research</em>, <em>48</em>(1), 1–26. doi: <a href="https://doi.org/10.1016/j.plipres.2008.08.001">10.1016/j.plipres.2008.08.001</a>
 </div>
 <div id="ref-patro2017" class="csl-entry" role="listitem">
 Patro, R., Duggal, G., Love, M. I., Irizarry, R. A., &amp; Kingsford, C. (2017). Salmon provides fast and bias-aware quantification of transcript expression. <em>Nature Methods</em>, <em>14</em>(4), 417–419. doi: <a href="https://doi.org/10.1038/nmeth.4197">10.1038/nmeth.4197</a>
@@ -467,8 +703,47 @@ Patro, R., Duggal, G., Love, M. I., Irizarry, R. A., &amp; Kingsford, C. (2017).
 <div id="ref-purcell2007" class="csl-entry" role="listitem">
 Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A. R., Bender, D., Maller, J., Sklar, P., Bakker, P. I. W. de, Daly, M. J., &amp; Sham, P. C. (2007). PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses. <em>The American Journal of Human Genetics</em>, <em>81</em>(3), 559–575. doi: <a href="https://doi.org/10.1086/519795">10.1086/519795</a>
 </div>
+<div id="ref-rinella2023" class="csl-entry" role="listitem">
+Rinella, M. E., Lazarus, J. V., Ratziu, V., Francque, S. M., Sanyal, A. J., Kanwal, F., Romero, D., Abdelmalek, M. F., Anstee, Q. M., Arab, J. P., Arrese, M., Bataller, R., Beuers, U., Boursier, J., Bugianesi, E., Byrne, C. D., Castro Narro, G. E., Chowdhury, A., Cortez-Pinto, H., … Newsome, P. N. (2023). A multisociety Delphi consensus statement on new fatty liver disease nomenclature. <em>Hepatology</em>, <em>78</em>(6), 1966–1986. doi: <a href="https://doi.org/10.1097/hep.0000000000000520">10.1097/hep.0000000000000520</a>
+</div>
+<div id="ref-romeo2008" class="csl-entry" role="listitem">
+Romeo, S., Kozlitina, J., Xing, C., Pertsemlidis, A., Cox, D., Pennacchio, L. A., Boerwinkle, E., Cohen, J. C., &amp; Hobbs, H. H. (2008). Genetic variation in PNPLA3 confers susceptibility to nonalcoholic fatty liver disease. <em>Nature Genetics</em>, <em>40</em>(12), 1461–1465. doi: <a href="https://doi.org/10.1038/ng.257">10.1038/ng.257</a>
+</div>
+<div id="ref-MatrixEQTL" class="csl-entry" role="listitem">
+Shabalin, A. A. (2012). <em>Matrix <span></span>eQTL<span></span>: Ultra fast <span></span>eQTL<span></span> analysis via large matrix operations</em>. <em>28</em>. Retrieved from <a href="http://www.bios.unc.edu/research/genomic_software/Matrix_eQTL/">http://www.bios.unc.edu/research/genomic_software/Matrix_eQTL/</a>
+</div>
+<div id="ref-stankey2024" class="csl-entry" role="listitem">
+Stankey, C. T., Bourges, C., Haag, L. M., Turner-Stokes, T., Piedade, A. P., Palmer-Jones, C., Papa, I., Silva dos Santos, M., Zhang, Q., Cameron, A. J., Legrini, A., Zhang, T., Wood, C. S., New, F. N., Randzavola, L. O., Speidel, L., Brown, A. C., Hall, A., Saffioti, F., … Lee, J. C. (2024). A disease-associated gene desert directs macrophage inflammation through ETS2. <em>Nature</em>, <em>630</em>(8016), 447–456. doi: <a href="https://doi.org/10.1038/s41586-024-07501-1">10.1038/s41586-024-07501-1</a>
+</div>
+<div id="ref-tacke2024" class="csl-entry" role="listitem">
+Tacke, F., Horn, P., Wai-Sun Wong, V., Ratziu, V., Bugianesi, E., Francque, S., Zelber-Sagi, S., Valenti, L., Roden, M., Schick, F., Yki-Järvinen, H., Gastaldelli, A., Vettor, R., Frühbeck, G., &amp; Dicker, D. (2024). EASL<span></span>EASD<span></span>EASO Clinical Practice Guidelines on the management of metabolic dysfunction-associated steatotic liver disease (MASLD). <em>Journal of Hepatology</em>, <em>81</em>(3), 492–542. doi: <a href="https://doi.org/10.1016/j.jhep.2024.04.031">10.1016/j.jhep.2024.04.031</a>
+</div>
 <div id="ref-torres-perez2015" class="csl-entry" role="listitem">
 Torres-Perez, E., Valero, M., Garcia-Rodriguez, B., Gonzalez-Irazabal, Y., Calmarza, P., Calvo-Ruata, L., Ortega, C., Garcia-Sobreviela, M. P., Sanz-Paris, A., Artigas, J. M., Lagos, J., &amp; Arbones-Mainar, J. M. (2015). The FAT expandability (FATe) project: Biomarkers to determine the limit of expansion and the complications of obesity. <em>Cardiovascular Diabetology</em>, <em>14</em>(1), 1–8. doi: <a href="https://doi.org/10.1186/s12933-015-0203-6">10.1186/s12933-015-0203-6</a>
+</div>
+<div id="ref-trinks2024" class="csl-entry" role="listitem">
+Trinks, J., Mascardi, M. F., Gadano, A., &amp; Marciano, S. (2024). Omics-based biomarkers as useful tools in metabolic dysfunction-associated steatotic liver disease clinical practice: How far are we? <em>World Journal of Gastroenterology</em>, <em>30</em>(14), 1982–1989. doi: <a href="https://doi.org/10.3748/wjg.v30.i14.1982">10.3748/wjg.v30.i14.1982</a>
+</div>
+<div id="ref-virtue2010" class="csl-entry" role="listitem">
+Virtue, S., &amp; Vidal-Puig, A. (2010). Adipose tissue expandability, lipotoxicity and the Metabolic Syndrome <span></span> An allostatic perspective. <em>Biochimica Et Biophysica Acta (BBA) - Molecular and Cell Biology of Lipids</em>, <em>1801</em>(3), 338–349. doi: <a href="https://doi.org/10.1016/j.bbalip.2009.12.006">10.1016/j.bbalip.2009.12.006</a>
+</div>
+<div id="ref-wang2013" class="csl-entry" role="listitem">
+Wang, D. Q.-H., Portincasa, P., &amp; Neuschwander-Tetri, B. A. (2013). Steatosis in the Liver. <em>Comprehensive Physiology</em>, 1493–1532. doi: <a href="https://doi.org/10.1002/cphy.c130001">10.1002/cphy.c130001</a>
+</div>
+<div id="ref-wang2022" class="csl-entry" role="listitem">
+Wang, F., Gao, Y., Zhou, L., Chen, J., Xie, Z., Ye, Z., &amp; Wang, Y. (2022). USP30: Structure, emerging physiological role, and target inhibition. <em>Frontiers in Pharmacology</em>, <em>13</em>. doi: <a href="https://doi.org/10.3389/fphar.2022.851654">10.3389/fphar.2022.851654</a>
+</div>
+<div id="ref-wang2023" class="csl-entry" role="listitem">
+Wang, T., Chen, S., Wang, Z., Li, S., Fei, X., Wang, T., &amp; Zhang, M. (2023). KIRREL promotes the proliferation of gastric cancer cells and angiogenesis through the PI3K/AKT/mTOR pathway. <em>Journal of Cellular and Molecular Medicine</em>, <em>28</em>(1). doi: <a href="https://doi.org/10.1111/jcmm.18020">10.1111/jcmm.18020</a>
+</div>
+<div id="ref-yoo2021" class="csl-entry" role="listitem">
+Yoo, T., Joo, S. K., Kim, H. J., Kim, H. Y., Sim, H., Lee, J., Kim, H.-H., Jung, S., Lee, Y., Jamialahmadi, O., Romeo, S., Jeong, W.-I., Hwang, G.-S., Kang, K. W., Kim, J. W., Kim, W., &amp; Choi, M. (2021). Disease-specific eQTL screening reveals an anti-fibrotic effect of AGXT2 in non-alcoholic fatty liver disease. <em>Journal of Hepatology</em>, <em>75</em>(3), 514–523. doi: <a href="https://doi.org/10.1016/j.jhep.2021.04.011">10.1016/j.jhep.2021.04.011</a>
+</div>
+<div id="ref-younossi2023" class="csl-entry" role="listitem">
+Younossi, Z. M., Golabi, P., Paik, J. M., Henry, A., Van Dongen, C., &amp; Henry, L. (2023). The global epidemiology of nonalcoholic fatty liver disease (NAFLD) and nonalcoholic steatohepatitis (NASH): a systematic review. <em>Hepatology</em>, <em>77</em>(4), 1335–1347. doi: <a href="https://doi.org/10.1097/hep.0000000000000004">10.1097/hep.0000000000000004</a>
+</div>
+<div id="ref-zheng2012" class="csl-entry" role="listitem">
+Zheng, X., Levine, D., Shen, J., Gogarten, S. M., Laurie, C., &amp; Weir, B. S. (2012). A high-performance computing toolset for relatedness and principal component analysis of SNP data. <em>Bioinformatics</em>, <em>28</em>(24), 3326–3328. doi: <a href="https://doi.org/10.1093/bioinformatics/bts606">10.1093/bioinformatics/bts606</a>
 </div>
 </div>
 </section>

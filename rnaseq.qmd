@@ -317,7 +317,7 @@ plot_grid(p3, p4, labels = c('scWAT', 'Liver'))
 
 #### Modeling raw counts
 
-In our study, the `DESeq2` package was employed to analyze differential gene expression across scWAT samples with varying degrees of liver steatosis. Initially, we configured the `DESeq2` object using the Likelihood Ratio Test (LRT) method, suitable for handling complex comparisons involving multiple levels of a factor.
+In our study, the `DESeq2` package was employed to analyze differential gene expression across scWAT samples with varying degrees of liver steatosis. Initially, we configured the `DESeq2` object using the Likelihood Ratio Test (LRT) , which allowed us to account for all three steatosis categories: <5% (no steatosis), 5-33% (moderate steatosis), and >33% (severe steatosis). This approach enabled the model to consider the gene expression changes across the full spectrum of steatosis progression.
 
 ```{r}
 #| cache: true
@@ -395,7 +395,7 @@ down <- sum(res_sc_df$log2FoldChange < 0, na.rm = TRUE)
 
 ```
 
-In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the subcutaneous white adipose tissue (scWAT) of individuals according their steatosis degree. Because we were mostly interested in transcriptional changes that may precede the initiation of the steatosis process, we focused on the contrast between those individuals with the highest liver steatosis extension (\>33%) and their counterparts with no steatosis. Comparing these two groups and applying a false discovery rate (FDR) cutoff of less than 0.05, the number of statistically significant differentially expressed genes (DEGs) was greatly reduced to `r nrow(degs_sc)`. Of these, only `r sum(degs_sc$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_sc$log2FoldChange<0)` were downregulated (@tbl-degs_sc)
+Because we were mostly interested in transcriptional changes that may precede the initiation of the steatosis process, we focused on the contrast between those individuals with the highest liver steatosis extension (\>33%) and their counterparts with no steatosis. In our differential expression analysis using `DESeq2` with the LRT model, we initially identified `r up` genes as upregulated and `r down` as downregulated in the subcutaneous white adipose tissue (scWAT) of individuals according their steatosis degree.  Comparing these two groups and applying a false discovery rate (FDR) cutoff of less than 0.05, the number of statistically significant differentially expressed genes (DEGs) was greatly reduced to `r nrow(degs_sc)`. Of these, only `r sum(degs_sc$log2FoldChange>0)` genes were found to be upregulated, while `r sum(degs_sc$log2FoldChange<0)` were downregulated (@tbl-degs_sc)
 
 ```{r}
 #| label: tbl-degs_sc

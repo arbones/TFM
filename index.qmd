@@ -10,15 +10,15 @@ toc: false
 
 ![](images/uvic_logo.png)
 
-## Title of the work
+## Omic Insights to decipher the role of Subcutaneous White Adipose Tissue Heterogeneity in metabolic-dysfunction associated steatotic liver disease (MASLD) Progression
 
 by **Jose Miguel Arbones Mainar**
 
 Supervisor: Laura Puente Santamaría, PhD. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
 Co-supervisor: Alberto Cebollada Solanas, MSc. Biocomputing Unit, Instituto Aragonés de Ciencias de la Salud\
-Academic tutor:
+Academic tutor: Josep M. Serrat, PhD . Departament de Biociències. Universitat de Vic.
 
-Biosciences Department\
+Biociències Department\
 University of Vic – Central University of Catalonia\
 September 9th, 2024
 

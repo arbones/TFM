@@ -33,37 +33,47 @@ meta_data <- read_csv("data/20240813_metadata.csv") |>
 
 # **Manuscript** {.unnumbered}
 
-# TITULO {.unnumbered}
+# Omic Insights to decipher the role of Subcutaneous White Adipose Tissue Heterogeneity in metabolic-dysfunction associated steatotic liver disease (MASLD) Progression {.unnumbered}
 
 ## Abstract
 
 ## Introduction
 
+Over recent decades, lifestyle changes have driven a global surge in obesity, metabolic disorders, and chronic liver conditions, resulting in the widespread prevalence of Steatotic Liver Disease (SLD). Metabolic-dysfunction associated steatotic liver disease (MASLD), formerly known as NAFLD [@rinella2023], is now the most common chronic liver disorder , affecting approximately 30% of adults [@younossi2023]. As the prevalence of MASLD continues to rise, it is projected to become a leading cause of end-stage liver disease [@miao2024].
+
+SLD encompasses a spectrum of liver injury, beginning with hepatic fat accumulation (steatosis), which can progress to metabolic-dysfunction associated steatohepatitis (MASH) [@buzzetti2016]. MASH is characterized by liver inflammation and hepatocyte ballooning, with 15% of patients progressing to more severe conditions, such as fibrosis, cirrhosis, and hepatocellular carcinoma [@motta2023]. SLD is often seen as the hepatic manifestation of metabolic syndrome, significantly increasing the risk of type 2 diabetes, dyslipidemia, and cardiovascular disease [@barrera2024]. Addressing the root cause—steatosis—is crucial for developing targeted therapies and improving patient outcomes. Early detection and intervention remain vital to halting disease progression, with non-invasive biomarkers offering a promising alternative to liver biopsy [@tacke2024].
+
+The pathophysiology of SLD involves complex interactions between genetic, metabolic, and environmental factors [@juanola2021; @devincentis2021]. A key feature is the accumulation of triglycerides in hepatocytes, leading to hepatic steatosis [@wang2013]. Adipose tissue (AT) plays a central role in this process, functioning as more than just a fat storage organ. It regulates metabolism, energy balance, insulin sensitivity, and immune responses [@lopez-yus2024]. The adipose tissue expandability hypothesis suggests that subcutaneous white adipose tissue (scWAT) has a limited capacity for storing excess calories. Once scWAT reaches its limit, lipids are redirected to other organs, such as the liver and visceral adipose tissue (visWAT), triggering insulin resistance and related metabolic complications [@virtue2010].
+
+Understanding WAT's complexity and functionality is crucial for unraveling the mechanisms underlying obesity-related comorbidities, including MASLD. This knowledge will aid in developing effective biomarkers and therapeutic strategies targeting WAT dysfunction.
+
+This study aimed to elucidate the molecular mechanisms of steatosis in obese individuals through a cross-tissue transcriptomic analysis of scWAT and liver. We also performed an epigenome-wide association study (EWAS) to identify genes associated with liver fat accumulation and investigate genetic variants through whole exome sequencing (WES). Lastly, we characterized disease-specific expression quantitative trait loci (eQTLs) in patients with steatosis, leveraging transcriptome and genome data to uncover novel genetic mechanisms underlying MASLD and improve the accuracy of genetic risk prediction.
+
 ## Material and methods
+
+Methods are extensively described in the *Appendices 2-4*.
 
 ### Human cohort description
 
-The cohort used for this study was the FATe cohort, a longitudinal cohort of obese patients undergoing bariatric surgery in Miguel Servet University Hospital (HUMS, Zaragoza, Spain), that donated blood samples, subcutaneous and visceral adipose tissue biopsies and eventually liver biopsies. The FATe cohort is a live cohort in which patients have been recruited at different time points since 2013 and undergone different procedures and techniques according to the research needs [@torres-perez2015].
+The study cohort consisted of participants from the FATe cohort [@torres-perez2015], a longitudinal group of patients suffering obesity undergoing bariatric surgery at Miguel Servet University Hospital (HUMS, Zaragoza, Spain). This study is encompassed for those patients who simultaneusly donated blood samples, as well as subcutaneous adipose tissue biopsies and liver biopsies. The FATe cohort, established in 2013, is ongoing, with patients recruited at various time points and subjected to different procedures based on research needs.
 
-Patients were screened to exclude alcohol or drugs abuse, autoimmune disease, chronic inflammatory diseases or chronic infectious diseases (HIV, HBV, HCV). All subjects in the cohort provided written consent and the study was approved by the Regional Institutional Review Board of Ethics at Aragón, Spain (CEIC-A). Samples from patients included in this study were stored by the Biobank of the Aragon Health System (PT20/00112), integrated in the Spanish National Biobanks Network and they were processed following standard operating procedures.
+Patients were screened to exclude those with alcohol or drug abuse, autoimmune, chronic inflammatory, or infectious diseases (HIV, HBV, HCV). All participants provided written informed consent, and the study received approval from the Aragón Regional Ethics Committee (CEIC-A). The samples used were stored and processed by the Biobank of the Aragon Health System, adhering to standard operating procedures and integrated into the Spanish National Biobanks Network.
 
 ### Collection and characterization of adipose and liver biosies
 
-Biopsies (\~3 cm3) of AT from both the subcutaneous and the visceral fat depot were obtained during surgery with a bipolar/ultra-sonic device (Thunderbeat. Olympus, Spain) and extracted *via* a 12 mm trocar (Applied Medical Europe, Spain) inserted in the left hypochondrium during laparoscopic surgery. Liver biopsies were also obtained during the surgery and were deemed adequate when they were at least 16 mm in length and included at least 6 portal tracts.
+Biopsies (\~3 cm3) of AT from both the subcutaneous depot were obtained during surgery with a bipolar/ultra-sonic device (Thunderbeat) and extracted *via* a 12 mm trocar (Applied Medical) inserted in the left hypochondrium during laparoscopic surgery. Liver biopsies were also obtained during the surgery and were deemed adequate when they were at least 16 mm in length and included at least 6 portal tracts.
 
 Paraffin sections of livers were stained with hematoxylin-eosin (H&E). Pathological features of steatosis, lobular inflammation, hepatocellular ballooning, and fibrosis were scored by an experienced pathologist, according to criteria established by the Nonalcoholic Steatohepatitis Clinical Research Network [@kleiner2005].
 
 ### Genomic DNA isolation
 
-DNA from buffy coat was isolated
-
-The concentration and purity of the gDNA were determined by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).
+Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen). The concentration and purity of the gDNA were determined by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher).
 
 ### Whole Exome Sequencing
 
 Genomic DNA was randomly sheared into fragments of 180-280 bp, which were end-repaired, A-tailed, and ligated with Illumina adapters. The adapter-ligated fragments were PCR amplified, size selected, and purified. Hybridization capture was performed using biotin-labeled probes, with magnetic beads used for exon capture, followed by washing and probe digestion. The enriched libraries were quantified, pooled, and sequenced by Novogene on Illumina platforms.
 
-The computational analysis was managed using Nextflow (v23.10.1) with the `nf-core/sarek`pipeline (version 3.4.1) [@garcia2020], optimized for variant calling. Sequencing data were aligned to the GATK GRCh38 human reference genome, and Freebayes was used to call variants [@garrison2012]. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant. The process adhered to GATK best practices for quality score recalibration and variant filtering, ensuring accuracy and reliability. Further postprocessing of the obtained VCF files involved normalization using `bcftools` [@li2011], merging VCF files, and removing duplicate variants. The final VCF file was transformed into a binary ped format using `PLINK`[@purcell2007], with filters applied for minor allele frequency, genotyping completeness, and Hardy-Weinberg equilibrium.
+For the computational analysis we used Nextflow (v23.10.1) with the `nf-core/sarek`pipeline (version 3.4.1) [@garcia2020], optimized for variant calling. Sequencing data were aligned to the GATK GRCh38 human reference genome, and Freebayes was used to call variants [@garrison2012]. The resulting variants were stored in Variant Call Format (VCF) files, which contain detailed metadata and structured information about each detected variant. The `nf-core` pipeline was run in the Biocomputation Unit in the Instituto Aragonés de Ciencias de la Salud. The process adhered to GATK best practices for quality score recalibration and variant filtering, ensuring accuracy and reliability. Further postprocessing of the obtained VCF files involved normalization using `bcftools` [@li2011], merging VCF files, and removing duplicate variants. The final VCF file was transformed into a binary ped format using `PLINK`[@purcell2007], with filters applied for minor allele frequency, genotyping completeness, and Hardy-Weinberg equilibrium.
 
 ### RNA isolation
 
@@ -71,11 +81,11 @@ Total RNA was isolated from frozen biopsies of scWAT and cell cultures using TRI
 
 ### RNA Sequencing
 
-RNA integrity was assessed using the RNA Integrity Number (RIN) on the Agilent 2200 TapeStation with the RNA ScreenTape assay. Stranded mRNA libraries were prepared using the Novogene NGS RNA Library Prep Set (PT042), involving poly-T oligo-attached magnetic bead mRNA isolation, cDNA synthesis, adapter ligation, and PCR amplification. Libraries passing quality controls were sequenced (2x150 bp) on the Illumina Novaseq X Plus platform. The `nf-core/rnaseq` pipeline [@ewels2020] in Nextflow (version 23.10.1) was employed for data processing, including trimming with `Cutadapt` [@martin2011], alignment with `STAR` [@dobin2012], and quantification with `Salmon` [@patro2017], using GRCh38.p13 and Gencode v40 as references. Quality control was conducted throughout the process, with mapping efficiencies averaging around 90% for both liver and scWAT samples.
+RNA integrity was assessed using the RNA Integrity Number (RIN) on the Agilent 2200 TapeStation with the RNA ScreenTape assay. Stranded mRNA libraries were prepared using the Novogene NGS RNA Library Prep Set (PT042), involving poly-T oligo-attached magnetic bead mRNA isolation, cDNA synthesis, adapter ligation, and PCR amplification. Libraries passing quality controls were sequenced (2x150 bp) on the Illumina Novaseq X Plus platform. The `nf-core/rnaseq` pipeline [@ewels2020] in Nextflow (version 23.10.1) was employed for data processing, including trimming with `Cutadapt` [@martin2011], alignment with `STAR` [@dobin2012], and quantification with `Salmon` [@patro2017], using GRCh38.p13 and Gencode v40 as references. Quality control was conducted throughout the process, with mapping efficiencies averaging around 90% for both liver and scWAT samples.The `nf-core` pipeline was run in the Biocomputation Unit in the Instituto Aragonés de Ciencias de la Salud.
 
-### Statistical analyses
+### Statistical and bioinformatics analyses
 
-All statistical analyses were performed using `r R.Version()$version.string` (http://www.r-project.org)
+All statistical analyses were performed using `r R.Version()$version.string` (http://www.r-project.org) and the appropiate packages. 
 
 #### Phenotype comparison
 
@@ -83,17 +93,29 @@ Results are expressed as number of cases (%) or median \[interquartile range\]. 
 
 #### Differential gene expression analysis
 
+We used gene count data and the Likelihood Ratio Test (LRT) within `DESeq2` [@love2014] for differential expression analysis across different steatosis categories, normalizing count data with the median-of-ratios method to account for differences in library size. Gene-wise dispersion was estimated and modeled to reflect variance across samples, with a curve-fitting process applied to improve dispersion accuracy.
+
 #### Whole exome sequencing analysis
 
-#### eQTL
+First, we transformed the data from PLINK to GDS format for computational efficiency with the `SNPRelate` package [@zheng2012] and applied linkage disequilibrium (LD) pruning to focus on significant SNPs. The pruned SNPs were then analyzed via PCA to visualize population structure. We incorporated principal components as covariates in our exome-wide association study (EWAS) to control for population structure, ensuring that associations detected were driven by true genetic influences rather than confounding factors. To further assess potential inflation in genetic associations, we generated quantile-quantile (Q-Q) plots.
+
+We then employed the `snpStats` [@snpStats] package to perform a genetic association study between steatosis and SNPs, accounting for confounders such as sex and the first two principal components (PC1 and PC2). This generalized linear model (GLM) approach allowed for accurate interpretation of genotype-phenotype associations. Finally, the results were visualized using a Manhattan plot, which displayed the distribution of p-values across all chromosomes, highlighting key genetic loci potentially linked to liver steatosis.
+
+#### eQTL analysis
+
+Transcriptome and genome data were integrated for expression quantitative trait loci (eQTL) mapping using R and the `MatrixEQTL`\` package [@MatrixEQTL]. No genotype imputation was performed, and sex was included as a covariate in the analysis. The cohort was divided into two groups: no steatosis (liver fat content \< 5%, n = 29) and steatosis (liver fat content \> 33%, n = 25). eQTL mapping was conducted separately for each group, and eQTLs common to both groups were excluded to focus on steatosis-specific eQTLs.
+
+To refine the list of steatosis-specific eQTLs, the most significant SNP per gene was selected, retaining only those with an absolute β coefficient greater than 10. SNPs that failed Hardy-Weinberg equilibrium (HWE p-value \< 0.0001) were also excluded from further analysis. A genome-wide association analysis was then performed for the remaining SNPs using five genetic models (codominant, dominant, recessive, overdominant, and log-additive) with the R package SNPassoc. For each eQTL, the model with the lowest p-value was selected.
 
 #### Functional enrichment analysis
 
-Enrichment analysis for each condition, tissue and gene module was performed using the `gprofiler2` R package ( v. `r packageVersion("gprofiler2")`). The top pathways with an FDR-corrected p-value \< 0.05 were considered significantly relevant.
+Enrichment analysis for each condition, tissue and gene module was performed using the `gprofiler2` R package [@gprofiler2]. The top pathways with an FDR-corrected p-value \< 0.05 were considered significantly relevant.
 
 ## Results
 
-This multi-omics study included 80 individuals with obesity who underwent a liver histological characterization to determine the presence of fibrosis and lipid accumulation (steatosis). Fibrosis was scored from 0 to 3 and steatosis categorized according the observed lipid content in the hepatocyte (\<5%, 5-33%, and \>33%) . Individuals´ median BMI was 45.9 kg/m$^2$, the median age was 49 yrs (range 22–61), and 75% were women, with no observed steatosis-based differences in these parameters (as shown in @tbl-ta1).
+### Phenotypic characterization of the cohort
+
+This multi-omics study included 80 individuals with obesity who underwent a liver histological characterization to determine the presence of fibrosis and lipid accumulation (steatosis). Fibrosis was scored from 0 to 3 and steatosis categorized according the observed lipid content in the hepatocyte (\<5%, 5-33%, and \>33%) . Individuals´ median BMI was 45.9 kg/m$^2$, the median age was 49 yrs (range 22–61) and 75% were women, with no observed steatosis-based differences in these parameters (@tbl-ta1).
 
 ```{r}
 #| label: tbl-ta1
@@ -107,4 +129,97 @@ t1 <- createTable(c1, show.all = T)
 export2md(t1, caption = "")
 ```
 
+### Transcriptomic Analysis of scWAT and Liver
+
+In this study, we performed differential gene expression analysis on both subcutaneous white adipose tissue (scWAT) and liver samples from individuals with obesity and varying degrees of liver steatosis. We utilized the Likelihood Ratio Test (LRT) model to account for the complexity of comparing multiple levels of steatosis. While the model considered all three categories, the reported log-fold changes represent the gene expression ratios between individuals with the highest steatosis (\>33%) and those with the lowest steatosis (\<5%). Initial analysis identified 9,849 upregulated and 4,682 downregulated genes in scWAT of the highest steatosis group. Focusing on individuals with severe steatosis (\>33%) compared to those without steatosis (\<5%), and applying a false discovery rate (FDR) cutoff of \<0.05, the list of differentially expressed genes (DEGs) was reduced to 20, with 2 upregulated and 18 downregulated (@fig-volcano). These DEGs were further examined through boxplots, showing consistent expression changes across steatosis groups, suggesting their relevance in the progression of steatosis (*Appendix 2*).
+
+::: {#fig-volcano}
+![](images/fig-volcano_sc-1.png)
+
+![](images/fig-volcano_liver-1.png)
+
+**Volcano plots** showing differentially expressed genes (DEGs, in red) in individuals with the highest (\>33%) compared to the lowest (\<5%) degree of steatosis.
+:::
+
+Similarly, in the liver, the initial analysis identified 7,748 upregulated and 6,810 downregulated genes in individuals with severe steatosis compared to those with no steatosis. However, when applying the stringent FDR cutoff of \<0.05, the significant DEGs were reduced to 12, with 1 upregulated and 11 downregulated. Among these, IGFBP2 showed the most substantial changes in expression, highlighted in the volcano plot (@fig-volcano). Expression patterns of these DEGs were visualized using boxplots across steatosis groups, showing a clear stepwise progression in gene expression levels as steatosis severity increased, reinforcing their potential role in liver fat accumulation (*Appendix 2*).
+
+To explore the biological processes and pathways associated with steatosis, we performed functional enrichment analysis of the DEGs. In scWAT, the analysis revealed downregulation of terms related to cellular structure and function, such as microtubule-associated complexes and cytoplasmic microtubule organization, indicating potential disruptions in adipocyte functionality (@fig-profile). Upregulation of pathways related to negative regulation of cell growth suggests possible dysregulation of adipocyte expansion during steatosis progression.
+
+::: {#fig-profile}
+![(a) Subcutaneous adipose tissue (scWAT)](images/fig-go_sc.png)
+
+![(b) Liver](images/fig-go_liver.png)
+
+**Functional enrichment analysis** of statistically significant (p\<0.001) up- and down-regulated genes of individuals with the highest (\>33%) compared to the lowest (\<5%) degree of steatosis. The x-axis shows the terms and the y-axis shows the enrichment p-values on the −log10 scale (MF: Molecular function, CC: Cellular compartment, BP: biological process, KEGG: Kyoto Encyclopedia of Genes and Genomes, WP: WikiPathways). Each circle on the plot corresponds to a single term. Circles are colored according to the origin of annotation and size scaled according to the total number of genes annotated to the corresponding term. The locations on the x-axis are fixed. Terms from the same GO subtree are located closer to each other on the x-axis, which helps to highlight different enriched GO sub-branches making plots from different queries comparable. Selected terms from different sources are labeled with numbers on the plot and their p-values indicated in the attached tables.
+:::
+
+In the liver, functional enrichment highlighted lipid-related processes, including upregulation of the PPAR signaling pathway, fatty acid transporters, and lipid localization, indicating an enhanced capacity for lipid uptake and storage in response to steatosis (@fig-profile). Concurrently, downregulation of bile secretion and detoxification pathways, such as aflatoxin B1 metabolism, points to impaired lipid metabolism and increased susceptibility to liver damage during advanced stages of steatosis.
+
+These findings collectively highlight the complex interplay between lipid metabolism, storage, and detoxification in both scWAT and liver during steatosis, providing insights into the molecular mechanisms underlying steatosis progression.
+
+### Exome-wide association analysis
+
+For the exome-wide association study (EWAS), only individuals from the two extreme steatosis groups, those with no steatosis (\<5%, n = 29) and those with severe steatosis (\>33%, n = 25), were compared. This approach enhanced the contrast between cases and controls, improving the power to detect significant genetic associations. No statistically significant differences were found in key variables such as age, gender, body mass index, or liver fibrosis between these groups, confirming a uniform distribution as shown in @tbl-ta1. Yet, principal component cnalysis (PCA) of the genotype data, following linkage disequilibrium (LD) pruning, although showed no distinct clustering by sex it revealed subtle genetic variability related to liver steatosis. As this genetic variation may influence GWAS outcomes, principal components (PC1 and PC2) were included as covariates to adjust for population structure. A quantile-quantile (Q-Q) plot indicated no significant inflation in genetic associations (lambda ≈ 1) (*Appendix 3*).
+
+The EWAS was adjusted for confounders such as sex and principal components (PC1 and PC2). A Manhattan plot visualized the genome-wide p-values, and while no SNPs surpassed the stringent Bonferroni threshold (p = 10$^-5.99$), 9 SNPs exhibited p-values below 10$^{-4}$ (@fig-mh).
+
+::: {#fig-mh}
+![](images/fig-manhattan.png)
+
+Plot of the p-values for each SNP in the EWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10$^{-6}$, 10$^{-4}$ in blue)
+:::
+
+Notably, genes associated with these SNPs, *S100A7*, *KIRREL3*, *USP30*, and *SPNS3*, are involved in biological processes relevant to obesity and liver steatosis, such as inflammation, cell adhesion, mitochondrial function, and lipid metabolism (@tbl-gwas). *S100A7* is linked to chronic inflammation in obesity, *KIRREL3* may affect tissue integrity and liver function, *USP30* plays a role in mitochondrial quality control, and *SPNS3* is implicated in sphingolipid transport, a process associated with metabolic disturbances in obesity. These findings highlight potential pathways contributing to liver fat accumulation in obese individuals.
+
+::: {#tbl-gwas}
+| Reference SNP | location        | Gene      |       P |
+|:--------------|:----------------|:----------|--------:|
+| rs3006428     | chr1:153439916  |           | 0.00007 |
+| rs3014836     | chr1:153458724  | *S100A7*  | 0.00007 |
+| rs1574534     | chr11:126446715 | *KIRREL3* | 0.00009 |
+| rs7967182     | chr12:109073339 | *USP30*   | 0.00008 |
+| rs28567464    | chr16:55767290  |           | 0.00010 |
+| rs2047233     | chr17:4446887   | *SPNS3*   | 0.00005 |
+| rs2047232     | chr17:4447072   | *SPNS3*   | 0.00005 |
+| rs1485206327  | chr17:4447072   | *SPNS3*   | 0.00005 |
+| rs884250      | chr17:4448345   | *SPNS3*   | 0.00006 |
+| rs884251      | chr17:4448492   | *SPNS3*   | 0.00009 |
+
+Single nucleotide polymorphism (SNP) and gene
+:::
+
+### Analysis of steatosis-associated expression quantitative trait locus (eQTL)
+
+Although the GWAS identified some _loci_ associated with steatosis, the study’s reduced sample size limited its statistical power, potentially overlooking associations that would be detectable in a larger cohort. We overcame this limitation by performing a eQTL analysis, which links genetic variants to gene expression changes, providing a direct molecular link between genetic variants and disease traits. This method significantly enhances the statistical power, enabling the detection of thousands of eQTLs even with relatively small sample sizes [@yoo2021].
+
+Focusing on steatosis, eQTL mapping in a subgroup of 25 individuals with liver steatosis (\>33% liver fat) revealed 1,191 genes with significant eQTLs and 18,220 SNPs, with 70.2% of SNPs influencing multiple genes. On the other hand, in the non-steatosis group (\<5% liver fat, n=29), 764 genes and 14,510 SNPs were identified, with 56.2% of SNPs affecting multiple genes.
+
+To isolate steatosis-specific eQTLs, we compared the eQTLs identified in individuals with and without steatosis, revealing 760 SNPs unique to the steatosis group. These SNPs were subjected to association analysis with the steatosis trait using multiple genetic models. After adjusting for multiple testing, five SNPs were significantly associated with the steatosis phenotype (@fig-eqtl).
+
+::: {#fig-eqtl}
+![](images/fig-eqtl.png)
+
+Barplot with the distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis categories.
+:::
+
+In obese individuals with steatosis, eQTLs link specific genetic variants to changes in gene expression, highlighting key molecular mechanisms involved in NAFLD. For example, the minor allele of rs3127806 was negatively associated with the expression of *PDLIM7*, a gene involved in both inhibiting NF-κB-mediated inflammatory responses and promoting adipogenesis, linking it to obesity and fat storage processes[@jodo2020; @fang2024]. Similarly, the minor allele of rs937583 was inversely associated with *FNL2* expression, a hypoxia-stimulated gene linked to hepatocellular carcinoma[@li2023]. Another eQTL, chr3:9473234, was negatively associated with *ETS2*, a key regulator of inflammatory macrophages in the liver, reinforcing its role in NAFLD-related inflammation[@stankey2024]. Additionally, the minor allele of rs3739310 was positively associated with *MSR1*, a gene linked to lipid-laden macrophages in the liver and correlated with steatosis severity[@govaere2022]. These findings underscore the importance of eQTLs in regulating gene expression related to liver fat accumulation and inflammation, offering insights into the genetic factors contributing to NAFLD progression.
+
 ## Discusion
+
+This study provides new insights into the molecular mechanisms underlying liver steatosis by focusing on the transcriptomic and genomic profiles of subcutaneous white adipose tissue (scWAT) and liver tissue from individuals with obesity. By leveraging both whole exome sequencing (WES) and transcriptome data, we identified a set of genes,genetic variants and expression quantitative trait loci (eQTLs), that may contribute to liver fat accumulation and the progression of steatosis in obese individuals.
+
+Previous studies have used transcriptomics and serum protein measurements to identify noninvasive biomarkers for NAFLD [@darci-maher2023; @trinks2024]. However, our study is the first, to our knowledge, to utilize RNA-seq data from both adipose tissue and liver, along with whole exome sequencing, in a cohort where NAFLD diagnosis is confirmed by gold-standard liver histology.
+
+The results from the transcriptomics analysis revealed distinct gene expression patterns between individuals with varying degrees of steatosis. In both scWAT and liver tissue, we identified genes involved in lipid metabolism, inflammation, and cellular structure, suggesting that both tissues play a significant role in the pathogenesis of steatosis. Interestingly, in the scWAT, the functional enrichment analysis revealed significant insights into the cellular and metabolic disruptions associated with steatosis. Key findings include the down-regulation of genes related to cellular structure and function, suggesting alterations that may impact cellular transport and structural stability, potentially influencing adipocyte functionality in lipid metabolism. Additionally, up-regulation in genes associated with negative regulation of cell growth suggests a possible failure to properly regulate adipocyte size and number, which could contribute to pathological adipose tissue expansion and dysfunction in steatosis. These finding alineate with the expandibility theory which points towards an impaired adipose tissue as root cause of ectopic lipid deposition [@virtue2010; @torres-perez2015]. In liver tissue, we observed an upregulation of the PPAR signaling pathway and downregulation of bile secretion and detoxification pathways, in agreement with the previously described imbalance in which fatty acid uptake and de novo synthesis exceed oxidation and secretion in individuals with steatosis [@musso2009].
+
+Interestingly, we did not find the most common genetic association with steatosis, *PNPLA3* [@romeo2008], which has been widely reported in previous studies. This is likely due to the reduced sample size of our cohort, which may have limited the power to detect such associations. Despite this caveat, we were able to identify some genetic loci that are potentially linked to liver fat accumulation. *S100A7*, part of the S100 protein family, is linked to inflammation and has been implicated in hepatic steatosis and the progression to hepatocellular carcinoma (HCC). Overexpression of S100 proteins is common in liver disease and drives inflammatory and pathological changes [@delangre2022]. *KIRREL3* is associated with cell adhesion and may influence liver tissue integrity, potentially affecting steatosis through pathways like PI3K/AKT, which are involved in angiogenesis and metabolic regulation [@wang2023]. *USP30* plays a role in mitochondrial quality control and lipid metabolism, essential processes in liver function, and its dysregulation can contribute to the accumulation of fat in hepatocytes [@wang2022]. Finally, *SPNS3* is involved in lipid transport, and its regulation may influence lipid balance in the liver, further contributing to steatosis and its progression to more severe conditions such as non-alcoholic steatohepatitis (NASH) [@chaaba2005]. The identification of these loci provides valuable targets for further research aimed at unraveling the genetic basis of steatosis and developing therapeutic interventions.
+
+In addition to the identified genetic associations, several eQTLs were found to regulate gene expression related to steatosis. For example, the minor allele of rs3127806 was linked to reduced expression of *PDLIM7*, a gene involved in inhibiting NF-κB-mediated inflammatory responses and promoting adipogenesis, thereby connecting it to obesity and fat storage [@jodo2020; @fang2024]. Similarly, the minor allele of rs937583 was inversely associated with *FNL2* expression, a gene linked to hypoxia and hepatocellular carcinoma [@li2023]. 
+
+Notably, two eQTLs were related to macrophage regulation. The minor allele of chr3:9473234 was associated with reduced expression of *ETS2*, a key regulator of inflammatory macrophages in the liver, while rs3739310 was positively associated with *MSR1*, a gene involved in the formation of lipid-laden macrophages, which correlates with steatosis severity [@stankey2024; @govaere2022]. These findings highlight the crucial role of eQTLs in modulating gene expression linked to fat accumulation and inflammation, providing deeper insights into the genetic mechanisms associated with steatosis.
+
+A major strength of this study lies in its multi-omic approach, integrating WES and transcriptomic data from both scWAT and liver tissue. This allowed for a comprehensive analysis of the genetic and molecular factors contributing to steatosis. Additionally, by performing eQTL mapping, we were able to link specific genetic variants to changes in gene expression, providing mechanistic insights into how these variants may influence the accumulation of fat in the liver. The focus on disease-specific eQTLs, particularly in the context of steatosis, enhances our understanding of the genetic architecture underlying this condition. Another strength is the use of a well-characterized cohort of individuals with obesity and liver biopsies, enabling the precise classification of steatosis and fibrosis stages.
+
+Despite these strengths, the study has several limitations. First, the relatively small sample size may have limited the statistical power to detect additional significant genetic associations, particularly in the EWAS. Larger cohorts are needed to validate our findings and potentially uncover more genetic loci associated with liver steatosis. Additionally, the cross-sectional nature of the study does not allow for the assessment of causal relationships between the identified genetic variants and steatosis progression. Longitudinal studies are required to clarify the temporal dynamics of these genetic and molecular changes.
+
+Steatosis is the initial and critical step in the progression of NAFLD/MASLD, setting the stage for further complications such as inflammation, fibrosis, and, ultimately, hepatocellular carcinoma. Given this, the findings of our study hold significant importance. Our study identified significant genetic variants and eQTLs associated with liver steatosis by leveraging WES and transcriptomic data from individuals with obesity. The results highlight the complex genetic and molecular mechanisms that contribute to the development and progression of MASLD, particularly through the regulation of gene expression in pathways related to lipid metabolism and inflammation. These findings provide valuable insights for future research and offer potential targets for developing therapeutic interventions to address MASLD in the context of obesity.

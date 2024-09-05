@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.4">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -264,7 +264,7 @@ window.Quarto = {
   <li><a href="#library-preparation-and-sequencing" id="toc-library-preparation-and-sequencing" class="nav-link" data-scroll-target="#library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</a></li>
   <li><a href="#variant-calling-workflow" id="toc-variant-calling-workflow" class="nav-link" data-scroll-target="#variant-calling-workflow"><span class="header-section-number">3.2.3</span> Variant Calling workflow</a></li>
   <li><a href="#quality-control-qc-and-reads-preprocessing" id="toc-quality-control-qc-and-reads-preprocessing" class="nav-link" data-scroll-target="#quality-control-qc-and-reads-preprocessing"><span class="header-section-number">3.2.4</span> Quality control (QC) and reads preprocessing</a></li>
-  <li><a href="#vcf-processing-anf-plink-transformation" id="toc-vcf-processing-anf-plink-transformation" class="nav-link" data-scroll-target="#vcf-processing-anf-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing anf PLINK transformation</a></li>
+  <li><a href="#vcf-processing-and-plink-transformation" id="toc-vcf-processing-and-plink-transformation" class="nav-link" data-scroll-target="#vcf-processing-and-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing and PLINK transformation</a></li>
   </ul></li>
   <li><a href="#descriptive-analysis-of-phenotype-and-covariates" id="toc-descriptive-analysis-of-phenotype-and-covariates" class="nav-link" data-scroll-target="#descriptive-analysis-of-phenotype-and-covariates"><span class="header-section-number">3.3</span> Descriptive analysis of phenotype and covariates</a></li>
   <li><a href="#population-structure" id="toc-population-structure" class="nav-link" data-scroll-target="#population-structure"><span class="header-section-number">3.4</span> Population structure</a></li>
@@ -330,7 +330,7 @@ window.Quarto = {
 <h2 data-number="3.2" class="anchored" data-anchor-id="experimental-design"><span class="header-section-number">3.2</span> Experimental design</h2>
 <section id="dna-isolation-and-extraction" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="dna-isolation-and-extraction"><span class="header-section-number">3.2.1</span> DNA isolation and extraction</h3>
-<p>Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen)</p>
+<p>Serum samples from patients were stored in the Biobank of the Aragon Health System. Genomic DNA was isolated from buffy coat samples using the FlexiGene DNA AGF3000 kit (Qiagen,) according to the manufacturer’s protocol. The isolation process was automated on the AutoGenFlex 3000 workstation (Autogen).</p>
 </section>
 <section id="library-preparation-and-sequencing" class="level3 page-columns page-full" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="library-preparation-and-sequencing"><span class="header-section-number">3.2.2</span> Library Preparation and Sequencing</h3>
@@ -360,8 +360,8 @@ Figure&nbsp;3.1: Library Preparation Workflow
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="quality-control-qc-and-reads-preprocessing"><span class="header-section-number">3.2.4</span> Quality control (QC) and reads preprocessing</h3>
 <p>All QC results from the differents steps in the <code>nf-core/sarek</code> pipeline were summarized in the (<a href="documents/multiqc_report_wes.html" target="_blank">Multiqc report</a>)</p>
 </section>
-<section id="vcf-processing-anf-plink-transformation" class="level3" data-number="3.2.5">
-<h3 data-number="3.2.5" class="anchored" data-anchor-id="vcf-processing-anf-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing anf PLINK transformation</h3>
+<section id="vcf-processing-and-plink-transformation" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="vcf-processing-and-plink-transformation"><span class="header-section-number">3.2.5</span> VCF processing and PLINK transformation</h3>
 <p>The next computational steps were carried out with the programs <code>bcftools</code> <span class="citation" data-cites="li2011">(<a href="biblio.html#ref-li2011" role="doc-biblioref">Li, 2011</a>)</span> and <code>PLINK</code> <span class="citation" data-cites="purcell2007">(<a href="biblio.html#ref-purcell2007" role="doc-biblioref">Purcell et al., 2007</a>)</span> in the command line using . Normalization, performed using <code>bcftools norm</code>, corrects for base misalignments and merges multi-nucleotide polymorphisms (MNPs) into single entries, ensuring that variants are represented consistently across datasets. This process was executed on individual VCF files, which were then indexed for efficient access. Following normalization, the <code>bcftools merge</code> command was employed to merge all normalized VCF files into a single file. This merging step is crucial for subsequent analyses as it compiles all variant data into a unified dataset, facilitating easier manipulation and analysis. Subsequently, duplicate variants were removed using <code>bcftools norm</code> with the <code>--rm-dup</code> option, targeting both single nucleotide polymorphisms (SNPs) and insertions-deletions (indels). This removal is essential to prevent redundancy in variant representation, which can skew allele frequency calculations and other statistical analyses.</p>
 <p>The final preprocessing step involved transforming the VCF file for compatibility with the <code>PLINK</code> toolset, a widely used software package for genome association studies. The <code>plink</code> command was utilized to convert VCF data into binary ped files while applying several filters: only SNPs with a minor allele frequency (MAF) of at least 0.05 were retained, and variants with more than 30% missing genotyping information were excluded. Additionally, a stringent Hardy-Weinberg equilibrium threshold was set to minimize the inclusion of potentially erroneous genotypes. This transformation prepares the dataset for robust statistical analyses, allowing for the exploration of genetic associations and population structure with high reliability.</p>
 <div class="cell">
@@ -644,12 +644,12 @@ Table&nbsp;3.1: Main phenotypic characterists in the genotyped cohort according 
 <p>Data represent median[IQR] or number of cases (%).<br>
 p.overall: Kruskal-Wallis´ associated p-value.<br>
 p.5-33% vs &gt;33%: p- value for the comparison between &lt;5% vs &gt;33% steatosis (Mann-Whithney)</p>
-<p>In genome/exome-wide association studies of qualitative traits, the analysis is typically conducted between two groups to maximize the detection of genetic variants associated with the trait of interest. In this study, the cohort was divided into three groups based on liver fat content (&lt;5%, 5-33%, &gt;33%), but for the GWAS, only the two extreme groups—29 obese individuals with no steatosis (&lt;5%) and 25 individuals with severe steatosis (&gt;33%)—were compared. This approach enhances the contrast between cases and controls, reduces noise and heterogeneity, and increases the likelihood of identifying significant genetic associations by focusing on individuals with the most distinct phenotypic differences.</p>
+<p>In genome/exome-wide association studies of qualitative traits, the analysis is typically conducted between two groups to maximize the detection of genetic variants associated with the trait of interest. In this study, the cohort was divided into three groups based on liver fat content (&lt;5%, 5-33%, &gt;33%), but for the EWAS, only the two extreme groups—29 obese individuals with no steatosis (&lt;5%) and 25 individuals with severe steatosis (&gt;33%)—were compared. This approach enhances the contrast between cases and controls, reduces noise and heterogeneity, and increases the likelihood of identifying significant genetic associations by focusing on individuals with the most distinct phenotypic differences.</p>
 </section>
 <section id="population-structure" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="population-structure"><span class="header-section-number">3.4</span> Population structure</h2>
-<p>First, we aimed to investigate population structure and ancestry, utilizing Principal Component Analysis (PCA) to explore genetic variation. We first transformed genetic data from PLINK to GDS format for efficiency and applied linkage disequilibrium (LD) pruning to focus on significant SNPs, essential for PCA’s computational efficiency. The pruned SNPs were analyzed using PCA to visualize the population structure, revealing no distinct clustering by sex but some dispersion related to liver steatosis levels (<a href="#fig-ancestry" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>).</p>
-<p>The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in genome-wide association studies (GWAS). Given this variability, we recommend incorporating principal components as covariates in GWAS to adjust for underlying population structure, thereby enhancing the robustness of GWAS findings. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors, demonstrating the strategic integration of data transformation, pruning, and analysis in genetic studies.</p>
+<p>First, we transformed genetic data from PLINK to Genomic Data Structure (<a href="https://bioconductor.org/packages/release/bioc/vignettes/gdsfmt/inst/doc/gdsfmt.html%7Btarget=%22_blank%22%7D">GDS</a>) format for efficiency. GDS format is required for the <code>SNPRelate</code> package <span class="citation" data-cites="zheng2012">(<a href="biblio.html#ref-zheng2012" role="doc-biblioref">Zheng et al., 2012</a>)</span> to 1) apply linkage disequilibrium (LD) pruning to focus on significant SNPs and 2) use PCA to visualize the population structure. These processes revealed no distinct clustering by sex but some dispersion related to liver steatosis levels (<a href="#fig-ancestry" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>).</p>
+<p>The PCA results indicated subtle genetic variability associated with liver steatosis, suggesting its potential to influence outcomes in the subsequent EWAS. Given this variability, we incorporated the principal components as covariates in EWAS to adjust for underlying population structure, thereby enhancing its robustness. This approach ensures that associations detected are due to genuine genetic influences rather than confounding factors.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -763,7 +763,7 @@ Figure&nbsp;3.3: QQ plot of observed vs expected p values
 </div>
 </div>
 </div>
-<p>In our genetic association study, we utilized the <code>snp.rhs.tests</code> function from the <code>snpStats</code> package to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.</p>
+<p>In our genetic association study, we utilized the <code>snp.rhs.tests</code> function from the <code>snpStats</code> package <span class="citation" data-cites="snpStats">(<a href="biblio.html#ref-snpStats" role="doc-biblioref">Clayton, 2023</a>)</span> to investigate the relationship between the trait steatosis and SNPs, factoring in potential confounders such as sex and principal components PC1 and PC2. This function is specifically designed to fit a generalized linear model (GLM) where the phenotype is treated as the dependent variable. Importantly, this model allows for the inclusion of one or more covariates— in this case, reported sex and the principal components — which serve as independent variables. These covariates are critical as they help control for potential confounders that could influence the phenotype-genotype association, thus providing a more accurate interpretation of the genetic data.</p>
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
@@ -799,7 +799,7 @@ Figure&nbsp;3.3: QQ plot of observed vs expected p values
 <img src="wes_files/figure-html/fig-manhattan-1.png" class="img-fluid figure-img column-body-outset-right" width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manhattan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.4: Plot of the p-values for each SNP in the GWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10<span class="math inline">\(^{-6}\)</span>, 0.0001 in blue)
+Figure&nbsp;3.4: Plot of the p-values for each SNP in the EWAS by their position in the genome. The horizontal lines show the thresholds for genome wide significance (Bonferroni in red: 10<span class="math inline">\(^{-6}\)</span>, 10<span class="math inline">\(^{-4}\)</span> in blue)
 </figcaption>
 </figure>
 </div>
@@ -939,6 +939,9 @@ Battram, T., Gaunt, T. R., Relton, C. L., Timpson, N. J., &amp; Hemani, G. (2022
 <div id="ref-chatterjee2016" class="csl-entry" role="listitem">
 Chatterjee, N., Shi, J., &amp; García-Closas, M. (2016). Developing and evaluating polygenic risk prediction models for stratified disease prevention. <em>Nature Reviews Genetics</em>, <em>17</em>(7), 392–406. doi: <a href="https://doi.org/10.1038/nrg.2016.27">10.1038/nrg.2016.27</a>
 </div>
+<div id="ref-snpStats" class="csl-entry" role="listitem">
+Clayton, D. (2023). <em>snpStats: SnpMatrix and XSnpMatrix classes and methods</em>. doi: <a href="https://doi.org/10.18129/B9.bioc.snpStats">10.18129/B9.bioc.snpStats</a>
+</div>
 <div id="ref-dongiovanni2017" class="csl-entry" role="listitem">
 Dongiovanni, P., Stender, S., Pietrelli, A., Mancina, R. M., Cespiati, A., Petta, S., Pelusi, S., Pingitore, P., Badiali, S., Maggioni, M., Mannisto, V., Grimaudo, S., Pipitone, R. M., Pihlajamaki, J., Craxi, A., Taube, M., Carlsson, L. M. S., Fargion, S., Romeo, S., … Valenti, L. (2017). Causal relationship of hepatic fat with liver damage and insulin resistance in nonalcoholic fatty liver. <em>Journal of Internal Medicine</em>, <em>283</em>(4), 356–370. doi: <a href="https://doi.org/10.1111/joim.12719">10.1111/joim.12719</a>
 </div>
@@ -956,6 +959,9 @@ Li, H. (2011). A statistical framework for SNP calling, mutation discovery, asso
 </div>
 <div id="ref-purcell2007" class="csl-entry" role="listitem">
 Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A. R., Bender, D., Maller, J., Sklar, P., Bakker, P. I. W. de, Daly, M. J., &amp; Sham, P. C. (2007). PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses. <em>The American Journal of Human Genetics</em>, <em>81</em>(3), 559–575. doi: <a href="https://doi.org/10.1086/519795">10.1086/519795</a>
+</div>
+<div id="ref-zheng2012" class="csl-entry" role="listitem">
+Zheng, X., Levine, D., Shen, J., Gogarten, S. M., Laurie, C., &amp; Weir, B. S. (2012). A high-performance computing toolset for relatedness and principal component analysis of SNP data. <em>Bioinformatics</em>, <em>28</em>(24), 3326–3328. doi: <a href="https://doi.org/10.1093/bioinformatics/bts606">10.1093/bioinformatics/bts606</a>
 </div>
 </div>
 </section>

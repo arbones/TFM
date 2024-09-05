@@ -18,7 +18,8 @@ library(MatrixEQTL)
 library(tidyverse)
 library(org.Hs.eg.db)
 library(SNPassoc)
-library(org.Hs.eg.db)
+library(kableExtra)
+
 
 conflicted::conflicts_prefer(dplyr::select(), 
                              dplyr::filter(),
@@ -32,7 +33,7 @@ Genome-wide association studies (GWAS) have identified loci associated with NAFL
 
 To enhance our understanding of the genetic basis of NAFLD, mapping expression quantitative trait loci (eQTLs) provides a powerful approach. eQTL analysis links specific genetic variants with changes in gene expression, offering interpretable molecular connections between genetic variants and traits of interest [@albert2015; @yoo2021]. This method significantly increases statistical power, allowing the detection of thousands of eQTLs even in relatively small sample sizes [@montgomery2010; @yoo2021].
 
-In the context of obesity, where both adipose tissue and liver function are often compromised, integrating eQTL analysis within a multi-omic framework is essential. The goal of this study is to identify and characterize disease-specific eQTLs in patients with steatosis using gene expression in the liver and whole exome sequencing data. We aim to uncover novel genetic mechanisms underlying NAFLD and to improve the accuracy of genetic risk prediction for this complex disease.
+In the context of obesity, where both adipose tissue and liver function are often compromised, integrating eQTL analysis within a multi-omic framework is essential. The goal of this study was to identify and characterize disease-specific eQTLs in patients with steatosis using gene expression in the liver and whole exome sequencing data. We aim to uncover novel genetic mechanisms underlying NAFLD and to improve the accuracy of genetic risk prediction for this complex disease.
 
 ## Methods
 
@@ -42,12 +43,28 @@ To identify steatosis-related eQTLs, the cohort was divided into two groups: no-
 
 To refine the list of steatosis-specific eQTLs, we selected the most significant SNP per gene, retaining only those eQTLs with an absolute β coefficient greater than 10. These eQTLs were further filtered by removing any SNPs that did not meet Hardy-Weinberg equilibrium (HWE) criteria (HWE p-value \< 0.0001).
 
-A genome-wide association analysis was then performed between the identified SNPs and the dependent variable (steatosis) in the whole cohort using five different genetic models (inheritance patterns): codominant, dominant, recessive, overdominant, and log-additive, utilizing the R package `SNPassoc` (version `r packageVersion("SNPassoc")`) [@SNPassoc]. For each eQTL, the model with the lowest p-value was selected for further analysis. Finally, the results were visualized by plotting the association data across three histologically defined steatosis groups (\<5%, 5-33%, and \>33%). Genotypes were coded as 0, 1, or 2, corresponding to the number of minor alleles present at each SNP.
+A genome-wide association analysis was then performed between the identified SNPs and the dependent variable (steatosis) in the whole cohort using five different genetic models (inheritance patterns): codominant, dominant, recessive, overdominant, and log-additive, utilizing the R package `SNPassoc` (version `r packageVersion("SNPassoc")`) [@SNPassoc]. For each eQTL, the model with the lowest p-value was selected for further analysis. Finally, the results were visualized by plotting the association data across three histologically defined steatosis groups (\<5%, 5-33%, and \>33%). Genotypes were coded as 0, 1, or 2, corresponding to the number of minor alleles present at each SNP (*See flowchart below*).
+
+```{mermaid}
+flowchart TD
+    C[Transcriptome and Genome Data Integration] --> D[eQTL Mapping using R and MatrixEQTL]
+    D --> E{Steatosis Grouping}
+    E --> H[Separate eQTL Mapping for No Steatosis Group]
+    E --> I[Separate eQTL Mapping for Steatosis Group]
+    H --> N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]
+    I --> N[Filter eQTLs with FDR less than 0.001 and Beta greater than 10]
+    N --> X[Selection of the most significant SNP per gene]
+    X --> P[SNPs unique to the steatosis group]
+    P --> Q[GWAS for steatosis]
+    Q --> R[ Filterd out HWE<0.0001]
+    R --> W[FDR less 0.001]
+```
 
 ## Results
 
 ```{r}
 #| output: false
+#| echo: false
 
 ###################
 # Genotype data ###
@@ -110,10 +127,14 @@ counts <- counts_na |>
   column_to_rownames("symbol")
 ```
 
-### Analysis of eQTL
-
 ```{r}
 #| output: false
+
+### Analysis of eQTL in the whole cohort ###
+############################################
+
+
+
 
 expression_liver <- counts |> 
   select(starts_with("L_")) 
@@ -193,11 +214,7 @@ multiple <- round(sum(t$n > 1) / nrow(t) * 100, digits = 1)
 
 ```
 
-After quality assessment of the genotype and liver transcriptome data from `r nrow(pheno_liver)` individuals with obesity , `r nrow(counts)` transcripts and `r ncol(geno_matrix)` SNPs were subject eQTL mapping using an additive linear model. We identified `r n_distinct(eqtl_top_liver$gene)` genes with eQTLs (cis and trans) at FDR = `r fdr`, and `r n_distinct(eqtl_top_liver$SNP)` significant SNPs. Among the eQTL-SNPs, `r multiple`% had an effect on multiple genes, , highlighting the potential pleiotropy of these genetic variants in the regulation of gene expression.
-
-This approach allowed us to uncover a significant number of eQTLs with robust statistical support, offering insights into the genetic regulation of liver gene expression in individuals with obesity. The high percentage of SNPs affecting multiple genes suggests complex regulatory mechanisms at play, which may contribute to the pathogenesis of related diseases.
-
-### Steatosis-eQTL
+### eQTLs in the individuals with steatosis
 
 ```{r}
 #| output: false
@@ -287,9 +304,9 @@ eqtl_single_gene_steato <- eqtl_top_steato |>
 
 ```
 
-In this subgroup of `r nrow(pheno_steato)` individuals with obesity and statosis , `r nrow(counts)` transcripts and `r ncol(geno_matrix)` SNPs were subject eQTL mapping. We identified `r n_distinct(eqtl_top_steato$gene)` genes with eQTLs (cis and trans) at FDR = `r fdr`, and `r n_distinct(eqtl_top_steato$SNP)` significant SNPs. Among the eQTL-SNPs, `r multiple`% had an effect on multiple genes. This subset of eQTLs provides valuable insights into the specific genetic variants that may contribute to the development and progression of liver steatosis in obese individuals. The high proportion of SNPs affecting multiple genes underscores the complexity of the genetic regulation of liver gene expression in the context of steatosis.
+In this subgroup of `r nrow(pheno_steato)` individuals with obesity and steatosis (\>35%) , `r nrow(counts)` transcripts and `r ncol(geno_matrix)` SNPs were subject eQTL mapping. We identified `r n_distinct(eqtl_top_steato$gene)` genes with eQTLs (cis and trans) at FDR = `r fdr`, and `r n_distinct(eqtl_top_steato$SNP)` significant SNPs. Among the eQTL-SNPs, `r multiple`% had an effect on multiple genes. This subset of eQTLs provides valuable insights into the specific genetic variants that may contribute to the development and progression of liver steatosis in obese individuals. The high proportion of SNPs affecting multiple genes underscores the complexity of the genetic regulation of liver gene expression in the context of steatosis.
 
-### Non steatosis-eQTL
+### eQTLs in individuals without steatosis
 
 ```{r}
 #| output: false
@@ -379,15 +396,9 @@ eqtl_single_gene_healthy <- eqtl_top_healthy |>
 
 ```
 
-In the non-steatosis subgroup, encompassed with `r nrow(pheno_healthy)` individuals with obesity , `r nrow(counts)` transcripts and `r ncol(geno_matrix)` SNPs were subject eQTL mapping. We identified `r n_distinct(eqtl_top_healthy$gene)` genes with eQTLs (cis and trans) at FDR = `r fdr`, and `r n_distinct(eqtl_top_healthy$SNP)` significant SNPs. Among the eQTL-SNPs, `r multiple`% had an effect on multiple genes.  
+In the non-steatosis subgroup, encompassed with `r nrow(pheno_healthy)` individuals with obesity , `r nrow(counts)` transcripts and `r ncol(geno_matrix)` SNPs were subject eQTL mapping. We identified `r n_distinct(eqtl_top_healthy$gene)` genes with eQTLs (cis and trans) at FDR = `r fdr`, and `r n_distinct(eqtl_top_healthy$SNP)` significant SNPs. Among the eQTL-SNPs, `r multiple`% had an effect on multiple genes.
 
-This analysis allowed us to identify a significant number of eQTLs specific to individuals without steatosis, providing insights into the genetic regulation of liver gene expression in a healthier metabolic context. The lower proportion of SNPs affecting multiple genes compared to the steatosis group suggests potential differences in the genetic architecture underlying gene expression in individuals with and without liver steatosis. 
-
-```{r}
-#| eval: false
-# Close the GDS file after analysis to free resources
-closefn.gds(genotype.gds) ### como se llama ???
-```
+This analysis allowed us to identify a significant number of eQTLs specific to individuals without steatosis, providing insights into the genetic regulation of liver gene expression in a healthier metabolic context. The lower proportion of SNPs affecting multiple genes compared to the steatosis group suggests potential differences in the genetic architecture underlying gene expression in individuals with and without liver steatosis.
 
 ### Identification of Steatosis-Specific eQTLs and Their Association with Steatosis Phenotypes
 
@@ -438,22 +449,34 @@ final <- final0 |>
 
 ```
 
-
-
 To identify steatosis-specific eQTLs, we first determined the SNPs that were unique to the steatosis group by comparing eQTLs identified in individuals with and without steatosis. This analysis revealed a set of `r length(dif)` SNPs specific to the steatosis group.
 
 Next, we performed a genome-wide association analysis on these steatosis-specific SNPs using genotype data from the liver samples. The analysis included a binary steatosis phenotype, where individuals with liver fat content greater than 33% were classified as having steatosis. The association analysis was conducted using multiple genetic models (codominant, dominant, recessive, overdominant, and log-additive), and for each SNP, the model with the lowest p-value was selected.
 
 To ensure robustness, only SNPs that passed the Hardy-Weinberg equilibrium filter (HWE ≥ 0.0001) were included in the final analysis. After adjusting for multiple testing using the false discovery rate (FDR) method, we identified `r nrow(final)` significant SNPs associated with the steatosis phenotype at an FDR threshold of 0.01. These results highlight specific genetic variants that may play a critical role in the development and progression of steatosis, offering potential targets for further investigation in the context of non-alcoholic fatty liver disease (NAFLD).
 
-These SNPs were further annotated using biomaRt to map them to corresponding genes and reference SNP IDs. The final list of steatosis-specific eQTLs provided insights into the genetic mechanisms underlying steatosis in the liver, revealing potential candidate genes for further study.
+These SNPs were further annotated using `biomaRt` [@biomaRt] to map them to corresponding genes and reference SNP IDs. The final list of steatosis-specific eQTLs provided insights into the genetic mechanisms underlying steatosis in the liver, revealing potential candidate genes for further study.
 
-In the analysis of eQTLs associated with liver steatosis, we observed significant differences in allele distribution across the three steatosis categories (<5%, 5-33%, and >33%) (@tbl-qtl). The alleles are coded as 0 for the major allele and 1 for the minor allele; no homozygous (2) minor allele carriers were found in our cohort, likely due to the small sample size.
+In the analysis of eQTLs associated with liver steatosis, we observed significant differences in allele distribution across the three steatosis categories (\<5%, 5-33%, and \>33%) (@tbl-qtl). The alleles are coded as 0 for the major allele and 1 for the minor allele; no homozygous (2) minor allele carriers were found in our cohort, likely due to the small sample size.
 
 ```{r}
 #| cache: true
 #| label: tbl-qtl
-#| tbl-cap: "Distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis categories.<br>p.overall: Chi square associated-p value for the comparison between steatosis categories."
+#| tbl-cap: "Distribution (%) of the major (0) and minor (1) alleles associated with steatosis across different steatosis categories.<br>p.overall: Chi square associated-p value for the comparison between steatosis categories."
+
+
+# eQTL´s target genes
+target0 <- eqtl_single_gene_steato |> 
+  filter(SNP%in%final$snp) 
+
+target <- target0 |> 
+  group_by(SNP) |> 
+  summarize(target_genes = str_c(gene, collapse = ", "),
+            beta = str_c(beta |> round(digits = 0), collapse = "/"))
+
+final <- final |> 
+  inner_join(target, by=c("snp" ="SNP"))
+
 
 # Use biomaRt to retrieve additional SNP information, including gene associations
 ensembl <- biomaRt::useEnsembl(biomart = "snps", dataset = "hsapiens_snp")
@@ -489,28 +512,12 @@ tq <- createTable(cq, show.all = T)
 export2md(tq, caption = "")
 ```
 
- 
+In obese individuals with steatosis, eQTLs regulate gene expression by linking specific genetic variants (SNPs) to changes in expression levels. For instance, the minor allele (1) of the [rs3127806](https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;v=rs3127806;vdb=variation){target="_blank"} was found to be negatively associated with the expression of the PDZ and LIM domain 7 (*PDLIM7*) gene, which acts as a ubiquitin E3 ligase and inhibitor of NF-κB-mediated inflammatory responses [@jodo2020]. *PDLIM7* has also been implicated as a promoter of adipogenesis, linking it to obesity and fat storage processes[@fang2024].
 
+Similarly, the minor allele of [rs937583](https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;r=15:20357066-20358066;v=rs937583;vdb=variation;vf=887136385){target="\"_blank"} was inversely associated with the expression of *FNL2*, a gene stimulated by hypoxia and linked to the development of hepatocellular carcinoma[@li2023]. Another notable eQTL involved the variant [chr3:9473234](https://www.ncbi.nlm.nih.gov/clinvar/variation/2663779/?oq=3%5BChromosome%5D+AND+9473234%5BCHRPOS%5D&m=NM_001080517.3(SETD5):c.3196-2A%3EG){target="\"_blank"} , which was negatively associated with the expression of *ETS2*, a central regulator of inflammatory macrophages in the liver, further emphasizing its role in the inflammatory processes underlying NAFLD [@stankey2024].
 
-For SNP rs3127806 in the *PLCL2* gene, the frequency of the minor allele (1) increased with higher steatosis, indicating a potential role in cellular signaling related to steatosis (p = 0.020). SNP rs326214 in the *GCKR* gene, known for its involvement in glucose metabolism, showed a significant association with higher steatosis severity (p = 0.009). Similarly, rs937583 in the *SLC16A1* gene, linked to monocarboxylate transport, demonstrated an increasing frequency of the minor allele with greater steatosis (p = 0.029). SNP chr3:9473234 in the *RHOA* gene, which regulates cellular structure and migration, also showed significant allele distribution differences (p = 0.024). Lastly, rs3739310 in the *TM6SF2* gene, associated with liver fat metabolism, displayed a significant association with steatosis severity (p = 0.008). These findings highlight the influence of metabolic pathways in the genetic predisposition to liver steatosis (@fig-bar).
+Lastly, the minor allele of [rs3739310](https://useast.ensembl.org/Homo_sapiens/Variation/Explore?db=core;r=8:13020798-13021798;v=rs3739310;vdb=variation;vf=543586301){target="\"_blank"} was positively associated with the expression of *MSR1* (macrophage scavenger receptor 1), a gene linked to the occurrence of lipid-laden foamy macrophages in the liver. *MSR1* expression correlates with the severity of steatosis and steatohepatitis in NAFLD patients[@govaere2022]. These findings highlight the role of eQTLs in regulating gene expression relevant to liver fat accumulation and inflammation, suggesting potential molecular mechanisms that contribute to the progression of NAFLD.
 
-```{r}
-#| label: fig-bar
-#| fig-cap: "Barplot with the distribution (%) of the major (0) and minor (1) associated with steatosis across different steatosis caetgories."
+## Conclusion
 
-# Visualization: Bar plot showing the distribution of alleles across steatosis categories
-ggplot(eqtl_long, aes(x = steatosis_3cat, fill = Allele)) +
-  geom_bar(position = "fill") +
-  scale_y_continuous("", labels = scales::percent_format()) +
-  xlab("\nSteatosis")+
-  theme_void() +
-  theme(axis.title = element_text(size = 16),
-        axis.text = element_text(size = 14),
-        strip.text = element_text(size = 16)) +
-  facet_wrap(~name, ncol = 3)
-
-```
-
-### Conclusion
-
-In conclusion, our study identified significant expression quantitative trait loci (eQTLs) associated with liver steatosis by leveraging whole exome sequencing and transcriptomic data from individuals with obesity. We observed that a substantial proportion of eQTL-SNPs have pleiotropic effects, influencing multiple genes, which underscores the complex genetic architecture underlying this condition. By distinguishing steatosis-specific eQTLs from those present in non-steatosis individuals, we have highlighted key genetic variants that may contribute to the pathogenesis of liver steatosis. These findings offer valuable insights into the molecular mechanisms of steatosis and provide a foundation for future research aimed at developing targeted therapeutic interventions for non-alcoholic fatty liver disease (NAFLD).
+In conclusion, our study identified significant expression quantitative trait loci (eQTLs) associated with liver steatosis by leveraging whole exome sequencing and transcriptomic data from individuals with obesity. We observed that a substantial proportion of eQTL-SNPs have pleiotropic effects, influencing multiple genes, which underscores the complex genetic architecture underlying this condition. By distinguishing steatosis-specific eQTLs from those present in non-steatosis individuals, we have highlighted key genetic variants that may contribute to the pathogenesis of liver steatosis. These findings offer valuable insights into the molecular mechanisms of steatosis and provide a foundation for future research aimed at developing targeted therapeutic interventions for steatosis non-alcoholic fatty liver disease (NAFLD).
