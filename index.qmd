@@ -10,7 +10,7 @@ toc: false
 
 ![](images/uvic_logo.png)
 
-## Omic Insights to decipher the role of Subcutaneous White Adipose Tissue Heterogeneity in metabolic-dysfunction associated steatotic liver disease (MASLD) Progression
+## Omic Insights to Decipher the Role of Subcutaneous White Adipose Tissue Heterogeneity in Metabolic-Dysfunction Associated Steatotic Liver Disease (MASLD) Progression
 
 by **Jose Miguel Arbones Mainar**
 
