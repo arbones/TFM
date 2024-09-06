@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.4">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -296,6 +296,11 @@ window.Quarto = {
 <h1 class="unnumbered">Omic Insights to Decipher the Role of Subcutaneous White Adipose Tissue Heterogeneity in Metabolic-Dysfunction Associated Steatotic Liver Disease (MASLD) Progression</h1>
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p><strong>Background</strong>: Metabolic-dysfunction associated steatotic liver disease (MASLD), formerly NAFLD, is a major liver condition linked to obesity, affecting around 30% of adults globally. Steatosis, the earliest stage of MASLD, progresses to inflammation, fibrosis, and hepatocellular carcinoma if left untreated. Understanding the role of adipose tissue, particularly subcutaneous white adipose tissue (scWAT), in the development of steatosis is crucial, as its dysfunction may contribute to ectopic fat deposition in the liver.</p>
+<p><strong>Objective</strong>: This study aimed to elucidate the molecular mechanisms of steatosis by performing a cross-tissue transcriptomic analysis of scWAT and liver tissue in obese individuals. In addition, exome-wide association studies (EWAS) and expression quantitative trait loci (eQTL) mapping were used to identify genetic variants linked to liver fat accumulation and MASLD progression.</p>
+<p><strong>Methods</strong>: We studied 80 obese individuals with liver biopsies from the FATe cohort. RNA-seq was performed on scWAT and liver samples to assess differential gene expression, while whole exome sequencing (WES) was used to identify genetic variants. Differential expression analysis was conducted using DESeq2, and eQTL mapping employed MatrixEQTL. Pathway enrichment analysis was used to investigate the biological processes associated with steatosis.</p>
+<p><strong>Results</strong>: Transcriptomic analysis revealed that, in scWAT, key genes involved in lipid metabolism, cel- lular structure, and adipocyte function were significantly dysregulated in individuals with high liver steatosis. Notably, genes regulating adipocyte expansion and negative regulation of cell growth were upregulated, indicating adipose tissue dysfunction. In liver tissue, genes associated with lipid uptake and storage were upregulated, while those involved in detoxification pathways were downregulated. EWAS identified genetic loci including S100A7, KIRREL3, USP30, and SPNS3, which are linked to lipid metabolism, inflammation, and mitochondrial function. eQTL analysis further uncovered variants regulating key genes such as ETS2 and MSR1, both involved in macrophage activity and inflammation.</p>
+<p><strong>Conclusion</strong>: Our findings highlight the critical role of scWAT in the early development of steatosis, with dysregulated adipose tissue function potentially contributing to ectopic fat deposition in the liver. The identification of specific genetic variants and dysregulated pathways in scWAT and liver provides valuable insights into MASLD progression and offers potential targets for future therapeutic interventions.</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -337,7 +342,7 @@ window.Quarto = {
 </section>
 <section id="statistical-and-bioinformatics-analyses" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-and-bioinformatics-analyses">Statistical and bioinformatics analyses</h3>
-<p>All statistical analyses were performed using R version 4.2.1 (2022-06-23) (http://www.r-project.org) and the appropiate packages.</p>
+<p>All statistical analyses were performed using R version 4.3.2 (2023-10-31) (http://www.r-project.org) and the appropiate packages.</p>
 <section id="phenotype-comparison" class="level4">
 <h4 class="anchored" data-anchor-id="phenotype-comparison">Phenotype comparison</h4>
 <p>Results are expressed as number of cases (%) or median [interquartile range]. Comparisons between individuals grouped according their liver steatosis were calculated using chi squared tests for categorical data and Kruskal-Wallis tests for continous variables. The significance level was set at 0.05.</p>
