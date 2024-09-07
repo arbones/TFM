@@ -33,7 +33,7 @@ meta_data <- read_csv("data/20240813_metadata.csv") |>
 
 # **Manuscript** {.unnumbered}
 
-# Omic Insights to Decipher the Role of Subcutaneous White Adipose Tissue Heterogeneity in Metabolic-Dysfunction Associated Steatotic Liver Disease (MASLD) Progression {.unnumbered}
+# Omic Insights to Decipher the Role of Subcutaneous White Adipose Tissue in Metabolic-Dysfunction Associated Steatotic Liver Disease (MASLD) {.unnumbered}
 
 ## Abstract
 
